@@ -5,17 +5,18 @@
     android:weightSum="1">
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.11"
+        android:text="TITOLO:" />
+
+    <TextView
         android:id="@+id/titoloText"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:layout_weight="0.11"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/genereText"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.08"
-        android:text="TextView" />
 
 </LinearLayout>

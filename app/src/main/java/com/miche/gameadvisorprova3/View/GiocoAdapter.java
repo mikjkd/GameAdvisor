@@ -52,11 +52,11 @@ public class GiocoAdapter extends BaseAdapter {
         if(view==null)
             view = LayoutInflater.from(context).inflate(R.layout.riga_gioco, parent,false);
         TextView titolo = (TextView)view.findViewById(R.id.titoloText);
-        TextView genere = (TextView)view.findViewById(R.id.genereText);
+        //TextView genere = (TextView)view.findViewById(R.id.genereText);
         DataGioco g = giochi.get(position);
         Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());
-        genere.setText(g.getGenere());
+        //genere.setText(g.getGenere());
         return view;
     }
 

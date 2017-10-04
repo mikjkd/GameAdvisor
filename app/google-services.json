@@ -1,0 +1,187 @@
+{
+  "project_info": {
+    "project_number": "748886042538",
+    "firebase_url": "https://gameadvisorprova-ab95b.firebaseio.com",
+    "project_id": "gameadvisorprova-ab95b",
+    "storage_bucket": "gameadvisorprova-ab95b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748886042538:android:d32ce74bc9ccc1c9",
+        "android_client_info": {
+          "package_name": "com.example.nicola.gameadvisorprova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748886042538-4hqmf3d7posadhjou9hah43mn00481pp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nicola.gameadvisorprova",
+            "certificate_hash": "5012d1fd20b4bbfe29a26099cd3a1e52b2051395"
+          }
+        },
+        {
+          "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNoxxE3Ii4jjuHP1Hyew6n3d8b33RxgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748886042538:android:68559e4a4a8c95b7",
+        "android_client_info": {
+          "package_name": "com.miche.gameadvisorprova"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748886042538-0cls03ria5u8g7p7d08g7i12krtj5nud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miche.gameadvisorprova",
+            "certificate_hash": "d583536fa40a62d597f029326567a1fb72dfb273"
+          }
+        },
+        {
+          "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNoxxE3Ii4jjuHP1Hyew6n3d8b33RxgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748886042538:android:426eb385ebdcb337",
+        "android_client_info": {
+          "package_name": "com.example.fabio.provafire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748886042538-50iiupffmd8vt40vvbl6jmkktpeas06p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fabio.provafire",
+            "certificate_hash": "34b10b63199f9ffb65eb3e2b0efaa3129fb59630"
+          }
+        },
+        {
+          "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNoxxE3Ii4jjuHP1Hyew6n3d8b33RxgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748886042538:android:ec78b236865001cc",
+        "android_client_info": {
+          "package_name": "com.miche.gameadvisorprova3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748886042538-bvrdc0iv22r49ksvbo8u91ujqtqeg0ga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.miche.gameadvisorprova3",
+            "certificate_hash": "d583536fa40a62d597f029326567a1fb72dfb273"
+          }
+        },
+        {
+          "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmNoxxE3Ii4jjuHP1Hyew6n3d8b33RxgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "748886042538-ogp7mcdtfs3fv524fn7c9lb4krjbq0nj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

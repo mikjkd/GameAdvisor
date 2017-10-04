@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listGame = (ListView) findViewById(R.id.listGame);
+        ListView listGame = (ListView)findViewById(R.id.listGame);
         adapter = new GiocoAdapter(this);
         archivio.osservaGiochi(new DatabaseLink.UpdateListener(){
             @Override
@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.update(archivio.elencoGiochi());
             }
         });
-
         listGame.setAdapter(adapter);
     }
 

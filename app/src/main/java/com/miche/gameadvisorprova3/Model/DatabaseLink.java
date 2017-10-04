@@ -36,6 +36,7 @@ public class DatabaseLink {
                 for(DataSnapshot e: dataSnapshot.getChildren()){
                     Log.w("children", e.toString());
                     DataGioco dg = e.getValue(DataGioco.class);
+                    giochi.add(dg);
                     Log.d("genere", "Value Genere is: " + dg.getGenere());
                 }
                 notifica.giochiAggiornati();

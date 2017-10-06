@@ -11,7 +11,17 @@ public class DataGioco {
     private String Titolo;
     private String Descrizione;
     private String URLimg;
+    private String Key;
     public DataGioco(){}
+
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String key) {
+        Key = key;
+    }
+
     public DataGioco(String genere, String link, String titolo, String descrizione, String URLimg) {
         Genere = genere;
         Link = link;

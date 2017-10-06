@@ -29,8 +29,6 @@ public class GiocoAdapter extends BaseAdapter {
     private final Context context;
     private List<DataGioco> giochi = new ArrayList<DataGioco>();
     public  GiocoAdapter(Context context){
-
-        Log.w("we we giocoadapter",context.toString());
         this.context = context;
     }
     public void update(List<DataGioco> aggiornamento){

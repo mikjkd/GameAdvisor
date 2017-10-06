@@ -1,6 +1,8 @@
 package com.miche.gameadvisorprova3.Model;
 
 
+import android.graphics.Bitmap;
+
 /**
  * Created by miche on 03/10/2017.
  */
@@ -12,6 +14,7 @@ public class DataGioco {
     private String Descrizione;
     private String URLimg;
     private String Key;
+    Bitmap immagine;
     public DataGioco(){}
 
     public String getKey() {

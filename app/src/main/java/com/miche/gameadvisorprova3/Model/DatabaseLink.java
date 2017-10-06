@@ -1,5 +1,7 @@
 package com.miche.gameadvisorprova3.Model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by miche on 03/10/2017.
@@ -55,10 +58,9 @@ public class DatabaseLink {
                     DataGioco dg = e.getValue(DataGioco.class);
                     dg.setKey(e.getKey());
                     try {
-                        scaricaImmagine(dg.getURLimg());
-
-                    } catch (IOException e1) {
-                        Log.w("errore scarica immagin","immagine");
+                        dg.setImmagine(scaricaImmagine(dg.getURLimg()));
+                    }catch (Exception ex){
+                        Log.w("non funziona ","marron");
                     }
                     giochi.add(dg);
 
@@ -80,18 +82,25 @@ public class DatabaseLink {
         }
     }
 
-    public File scaricaImmagine(final String imgName) throws IOException {
+    public Bitmap scaricaImmagine(final String imgName)throws  Exception{
         storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference().child(imgName);
-        final File localFile = File.createTempFile(imgName, "jpg");
+        final Bitmap img;
+        final File localFile;
+        storageRef = storage.getReference().child("Giochi/"+imgName);
+        Log.w("Scaricata immagine: ",storageRef.toString());
+        localFile = File.createTempFile(imgName, ".jpg");
+        Log.w("creato temp file",localFile.toString());
         storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 Log.w("immagine scaricata: ", imgName.toString());
-
             }
+
         });
-        return localFile;
+        Log.w("prima di creare bitmap",localFile.toString());
+       img = BitmapFactory.decodeFile(localFile.toString());
+       // return img;
+        return img;
     }
 
     public List<DataGioco> elencoGiochi(){

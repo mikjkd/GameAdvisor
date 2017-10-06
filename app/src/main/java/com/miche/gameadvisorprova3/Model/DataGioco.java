@@ -15,6 +15,8 @@ public class DataGioco {
     private String URLimg;
     private String Key;
     Bitmap immagine;
+
+
     public DataGioco(){}
 
     public String getKey() {
@@ -71,5 +73,13 @@ public class DataGioco {
 
     public void setURLimg(String URLimg) {
         this.URLimg = URLimg;
+    }
+
+    public Bitmap getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(Bitmap immagine) {
+        this.immagine = immagine;
     }
 }

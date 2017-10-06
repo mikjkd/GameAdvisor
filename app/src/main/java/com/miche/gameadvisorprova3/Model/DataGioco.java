@@ -9,31 +9,54 @@ public class DataGioco {
     private String Genere;
     private String Link;
     private String Titolo;
-
-    public DataGioco() { }
-    public DataGioco(String Genere, String Link, String Titolo) {
-        this.Titolo = Titolo;
-        this.Link = Link;
-        this.Genere = Genere;
+    private String Descrizione;
+    private String URLimg;
+    public DataGioco(){}
+    public DataGioco(String genere, String link, String titolo, String descrizione, String URLimg) {
+        Genere = genere;
+        Link = link;
+        Titolo = titolo;
+        Descrizione = descrizione;
+        this.URLimg = URLimg;
     }
 
     public String getGenere() {
         return Genere;
     }
-    public String getTitolo() {
-        return Titolo;
+
+    public void setGenere(String genere) {
+        Genere = genere;
     }
+
     public String getLink() {
         return Link;
+    }
+
+    public void setLink(String link) {
+        Link = link;
+    }
+
+    public String getTitolo() {
+        return Titolo;
     }
 
     public void setTitolo(String titolo) {
         Titolo = titolo;
     }
-    public void setLink(String link) {
-        Link = link;
+
+    public String getDescrizione() {
+        return Descrizione;
     }
-    public void setGenere(String genere) {
-        Genere = genere;
+
+    public void setDescrizione(String descrizione) {
+        Descrizione = descrizione;
+    }
+
+    public String getURLimg() {
+        return URLimg;
+    }
+
+    public void setURLimg(String URLimg) {
+        this.URLimg = URLimg;
     }
 }

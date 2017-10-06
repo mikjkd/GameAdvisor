@@ -18,6 +18,13 @@ import java.util.List;
  */
 
 public class DatabaseLink {
+    private String DB_GIOCHI = "Giochi";
+    private String DB_GENERE = "Genere";
+    private String DB_AVVENTURA="Avventura";
+    private String DB_AZIONE= "Azione";
+    private String DB_CORSE = "Corse";
+    private String DB_SPARATUTTO="Sparatutto";
+
     private ArrayList<DataGioco> giochi;
     private ValueEventListener listenerGiochi;
     public DatabaseLink(){giochi= new ArrayList<>();}
@@ -28,13 +35,13 @@ public class DatabaseLink {
 
     public void osservaGiochi(final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference();
+        DatabaseReference ref = db.getReference().child(DB_GIOCHI);
         listenerGiochi = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 giochi.clear();
                 for(DataSnapshot e: dataSnapshot.getChildren()){
-                    Log.w("children", e.toString());
+                    Log.w("children", e.getKey());
                     DataGioco dg = e.getValue(DataGioco.class);
                     giochi.add(dg);
                     Log.d("genere", "Value Genere is: " + dg.getGenere());
@@ -44,13 +51,9 @@ public class DatabaseLink {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         };
         ref.addValueEventListener(listenerGiochi);
-
-
     }
     public void nonOsservaGiochi(){
         if(listenerGiochi!=null){

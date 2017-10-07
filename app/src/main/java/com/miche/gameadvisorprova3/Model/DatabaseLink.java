@@ -116,11 +116,15 @@ public class DatabaseLink {
                 storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        dg.setUrlImmagineLocale(localFile.getAbsolutePath());
+                        Log.e("path: ",localFile.getAbsolutePath());
+
                        // Log.e("OnSuccess download","mannagg");
-                        BitmapFactory.Options op = new BitmapFactory.Options();
+                        /*  BitmapFactory.Options op = new BitmapFactory.Options();
                         op.inSampleSize=1;
                         bmp[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath(),op);
-                        dg.setImmagine(bmp[0]);
+                        dg.setImmagine(bmp[0]);*/
+
                         immagineCaricata.BitmapPronta();
                     }
                 }).addOnFailureListener(new OnFailureListener() {

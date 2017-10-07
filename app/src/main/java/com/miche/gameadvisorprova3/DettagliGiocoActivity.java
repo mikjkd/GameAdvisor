@@ -1,6 +1,7 @@
 package com.miche.gameadvisorprova3;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -10,7 +11,7 @@ import com.miche.gameadvisorprova3.Model.DataGioco;
 
 public class DettagliGiocoActivity extends AppCompatActivity {
 
-    private final static String EXTRA_GIOCO = "Ggioco";
+    private final static String EXTRA_GIOCO = "gioco";
 
     private TextView Titolo;
     private ImageView ImgGioco;
@@ -33,8 +34,10 @@ public class DettagliGiocoActivity extends AppCompatActivity {
         if(gioco != null){
 
             Titolo.setText(gioco.getTitolo());
+             if(gioco.getUrlImmagineLocale()!=null)
+                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
             //ImgGioco.setImageBitmap(gioco.getImgGioco);
-            //Descrizione.setText(gioco.getDescrizione);
+            Descrizione.setText(gioco.getDescrizione());
 
         }
 

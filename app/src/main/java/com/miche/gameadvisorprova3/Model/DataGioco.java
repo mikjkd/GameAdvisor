@@ -2,20 +2,24 @@ package com.miche.gameadvisorprova3.Model;
 
 
 import android.graphics.Bitmap;
+import android.os.Parcelable;
 import android.util.Log;
+
+import java.io.Serializable;
 
 /**
  * Created by miche on 03/10/2017.
  */
 
-public class DataGioco {
+public class DataGioco implements Serializable{
     private String Genere;
     private String Link;
     private String Titolo;
     private String Descrizione;
     private String URLimg;
     private String Key;
-    Bitmap immagine;
+    private String UrlImmagineLocale;
+   // Bitmap immagine;
 
 
     public DataGioco(){}
@@ -75,7 +79,7 @@ public class DataGioco {
     public void setURLimg(String URLimg) {
         this.URLimg = URLimg;
     }
-
+/*
     public Bitmap getImmagine() {
         if(immagine==null)
             Log.e("getImmagine null","Class DataGioco");
@@ -86,5 +90,13 @@ public class DataGioco {
         this.immagine = immagine;
         if(this.immagine==null)
             Log.e("setImmagine not null","Class DataGioco");
+    }
+*/
+    public String getUrlImmagineLocale() {
+        return UrlImmagineLocale;
+    }
+
+    public void setUrlImmagineLocale(String urlImmagineLocale) {
+        UrlImmagineLocale = urlImmagineLocale;
     }
 }

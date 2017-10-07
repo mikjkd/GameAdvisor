@@ -6,6 +6,7 @@ package com.miche.gameadvisorprova3.View;
 
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,8 +58,8 @@ public class GiocoAdapter extends BaseAdapter {
         DataGioco g = giochi.get(position);
        // Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());
-        if(g.getImmagine()!=null)
-            img.setImageBitmap(g.getImmagine());
+        if(g.getUrlImmagineLocale()!=null)
+            img.setImageBitmap(BitmapFactory.decodeFile(g.getUrlImmagineLocale()));
         //genere.setText(g.getGenere());
         return view;
     }

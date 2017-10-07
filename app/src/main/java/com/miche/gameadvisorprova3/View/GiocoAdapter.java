@@ -50,10 +50,10 @@ public class GiocoAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         if(view==null)
-            view = LayoutInflater.from(context).inflate(R.layout.riga_gioco, parent,false);
-        TextView titolo = (TextView)view.findViewById(R.id.titoloText);
+            view = LayoutInflater.from(context).inflate(R.layout.provariga_gioco, parent,false);
+        TextView titolo = (TextView)view.findViewById(R.id.textView2);
         //TextView genere = (TextView)view.findViewById(R.id.genereText);
-        ImageView img = (ImageView)view.findViewById(R.id.imageView);
+        ImageView img = (ImageView)view.findViewById(R.id.ivIMG);
         DataGioco g = giochi.get(position);
        // Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());

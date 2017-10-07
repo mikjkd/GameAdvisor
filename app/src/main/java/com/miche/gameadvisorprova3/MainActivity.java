@@ -16,12 +16,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ListView listGame = (ListView)findViewById(R.id.listGame);
         adapter = new GiocoAdapter(this);
+        archivio.logInAnonimo();
+
         archivio.osservaGiochi(new DatabaseLink.UpdateListener(){
+
+
             @Override
             public void giochiAggiornati() {
                 adapter.update(archivio.elencoGiochi());
+
             }
         });
+
         listGame.setAdapter(adapter);
     }
 

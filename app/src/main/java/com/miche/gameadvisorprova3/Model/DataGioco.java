@@ -2,6 +2,7 @@ package com.miche.gameadvisorprova3.Model;
 
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 /**
  * Created by miche on 03/10/2017.
@@ -76,10 +77,14 @@ public class DataGioco {
     }
 
     public Bitmap getImmagine() {
+        if(immagine==null)
+            Log.e("getImmagine null","Class DataGioco");
         return immagine;
     }
 
     public void setImmagine(Bitmap immagine) {
         this.immagine = immagine;
+        if(this.immagine==null)
+            Log.e("setImmagine not null","Class DataGioco");
     }
 }

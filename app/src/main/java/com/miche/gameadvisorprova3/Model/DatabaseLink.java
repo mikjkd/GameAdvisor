@@ -2,12 +2,20 @@ package com.miche.gameadvisorprova3.Model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 
 /**
  * Created by miche on 03/10/2017.
@@ -41,33 +50,45 @@ public class DatabaseLink {
     private StorageReference storageRef;
     private ArrayList<DataGioco> giochi;
     private ValueEventListener listenerGiochi;
+    private Bitmap immagine;
     public DatabaseLink(){giochi= new ArrayList<>();}
+
 
     public interface UpdateListener{
         void giochiAggiornati();
     }
-
+    public interface BitmapListener{
+        void BitmapPronta();
+    }
+    public void logInAnonimo(){
+        FirebaseAuth mauth = FirebaseAuth.getInstance();
+        mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+            }
+        });
+    }
     public void osservaGiochi(final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child(DB_GIOCHI);
+
         listenerGiochi = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 giochi.clear();
                 for(DataSnapshot e: dataSnapshot.getChildren()){
-                    DataGioco dg = e.getValue(DataGioco.class);
+                    final DataGioco dg = e.getValue(DataGioco.class);
                     dg.setKey(e.getKey());
-                    try {
-                        dg.setImmagine(scaricaImmagine(dg.getURLimg()));
-                    }catch (Exception ex){
-                        Log.w("non funziona ","marron");
-                    }
                     giochi.add(dg);
-
-                    Log.w("children", dg.getKey());
-                    Log.d("genere", "Value Genere is: " + dg.getGenere());
                 }
-                notifica.giochiAggiornati();
+
+               // notifica.giochiAggiornati();
+                scaricaImmagine(new DatabaseLink.BitmapListener(){
+                    @Override
+                    public void BitmapPronta() {
+                        notifica.giochiAggiornati();
+                    }
+                });
             }
 
             @Override
@@ -82,28 +103,42 @@ public class DatabaseLink {
         }
     }
 
-    public Bitmap scaricaImmagine(final String imgName)throws  Exception{
+    public void scaricaImmagine(final BitmapListener immagineCaricata){
+        final Bitmap[] bmp = new Bitmap[1];
         storage = FirebaseStorage.getInstance();
-        final Bitmap img;
-        final File localFile;
-        storageRef = storage.getReference().child("Giochi/"+imgName);
-        Log.w("Scaricata immagine: ",storageRef.toString());
-        localFile = File.createTempFile(imgName, ".jpg");
-        Log.w("creato temp file",localFile.toString());
-        storageRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                Log.w("immagine scaricata: ", imgName.toString());
+        storageRef = storage.getReference();
+        //Log.e("Scarica immagine","dim: "+giochi.size());
+        for (final DataGioco dg : giochi){
+            final File localFile;
+            //Log.e("Scarica","Immagine"+dg.getURLimg());
+            try {
+                localFile = File.createTempFile(dg.getURLimg(),".jpg");
+                storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                       // Log.e("OnSuccess download","mannagg");
+                        BitmapFactory.Options op = new BitmapFactory.Options();
+                        op.inSampleSize=1;
+                        bmp[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath(),op);
+                        dg.setImmagine(bmp[0]);
+                        immagineCaricata.BitmapPronta();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Niente"," Fallito e che cazz");
+                    }
+                });
+            } catch (IOException e) {
+                Log.e("errore","errore try catch");
             }
-
-        });
-        Log.w("prima di creare bitmap",localFile.toString());
-       img = BitmapFactory.decodeFile(localFile.toString());
-       // return img;
-        return img;
+        }
     }
 
     public List<DataGioco> elencoGiochi(){
         return giochi;
     }
+    public void setImmagineBitmap(Bitmap img){this.immagine= img;}
+    public Bitmap getImmagineBitmap(){ return this.immagine; }
+
 }

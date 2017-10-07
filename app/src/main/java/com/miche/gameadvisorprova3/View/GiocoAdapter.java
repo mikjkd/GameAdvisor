@@ -6,11 +6,13 @@ package com.miche.gameadvisorprova3.View;
 
 
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
@@ -51,9 +53,12 @@ public class GiocoAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.riga_gioco, parent,false);
         TextView titolo = (TextView)view.findViewById(R.id.titoloText);
         //TextView genere = (TextView)view.findViewById(R.id.genereText);
+        ImageView img = (ImageView)view.findViewById(R.id.imageView);
         DataGioco g = giochi.get(position);
-        Log.w("Titolo: ",g.getTitolo());
+       // Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());
+        if(g.getImmagine()!=null)
+            img.setImageBitmap(g.getImmagine());
         //genere.setText(g.getGenere());
         return view;
     }

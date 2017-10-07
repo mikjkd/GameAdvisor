@@ -40,6 +40,19 @@
             android:layout_marginLeft="15dp"
             />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Genere"
+            android:layout_alignBottom="@+id/ivIMG"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_marginBottom="11dp"
+            android:textColor="#FF9810"
+            android:textStyle="italic"
+
+             />
+
 
     </RelativeLayout>
 </LinearLayout>

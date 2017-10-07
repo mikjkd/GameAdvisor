@@ -53,11 +53,12 @@ public class GiocoAdapter extends BaseAdapter {
         if(view==null)
             view = LayoutInflater.from(context).inflate(R.layout.provariga_gioco, parent,false);
         TextView titolo = (TextView)view.findViewById(R.id.textView2);
-        //TextView genere = (TextView)view.findViewById(R.id.genereText);
+        TextView genere = (TextView)view.findViewById(R.id.textView);
         ImageView img = (ImageView)view.findViewById(R.id.ivIMG);
         DataGioco g = giochi.get(position);
        // Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());
+        genere.setText(g.getGenere());
         if(g.getUrlImmagineLocale()!=null)
             img.setImageBitmap(BitmapFactory.decodeFile(g.getUrlImmagineLocale()));
         //genere.setText(g.getGenere());

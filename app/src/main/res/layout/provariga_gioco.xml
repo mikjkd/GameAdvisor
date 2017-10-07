@@ -22,8 +22,8 @@
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:src="@mipmap/ic_launcher_round"
-            app:civ_border_width="2dp"
-            app:civ_border_color="#FFFFFF"/>
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FF9810"/>
 
         <TextView
             android:id="@+id/textView2"
@@ -32,7 +32,7 @@
             android:text="Titolo"
             android:textSize="19dp"
             android:textStyle="bold"
-            android:textColor="#ACACAC"
+            android:textColor="#FF9810"
             android:layout_alignBottom="@+id/ivIMG"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="29dp"

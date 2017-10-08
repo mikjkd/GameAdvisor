@@ -1,6 +1,7 @@
 package com.miche.gameadvisorprova3;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,55 +10,50 @@ import android.widget.ListView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
-import com.miche.gameadvisorprova3.View.GenereAdapter;
+import com.miche.gameadvisorprova3.View.DettagliGiocoActivity;
+import com.miche.gameadvisorprova3.View.GenereFragment;
+import com.miche.gameadvisorprova3.View.GiochiFragment;
 import com.miche.gameadvisorprova3.View.GiocoAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private GenereAdapter adapter;
-    private DatabaseLink archivio = new DatabaseLink();
-    private final static String EXTRA_GIOCO = "gioco";
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listGame = (ListView)findViewById(R.id.listGame);
-        adapter = new GenereAdapter(this);
 
-        archivio.logInAnonimo();
-        /*
-        archivio.osservaGiochi(new DatabaseLink.UpdateListener(){
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(2);
+
+        tabLayout= (TabLayout) findViewById(R.id.tablayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void giochiAggiornati() {
-                adapter.update(archivio.elencoGiochi());
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
-        listGame.setAdapter(adapter);
-
-        listGame.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle extras = new Bundle();
-                DataGioco gioco = adapter.getItem(i);
-              //  extras.putParcelable("imagebitmap",gioco.getImmagine());
-
-                Intent intent = new Intent(view.getContext(),DettagliGiocoActivity.class);
-                intent.putExtra(EXTRA_GIOCO, gioco);
-                startActivity(intent);
-            }
-        });*/
-        archivio.osservaGenere(new DatabaseLink.UpdateGeneriListener() {
-            @Override
-            public void generiAggiornati() {
-                adapter.update(archivio.elencoGenere());
-            }
-        });
-        listGame.setAdapter(adapter);
+        setupViewPager(viewPager);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        archivio.nonOsservaGiochi();
+    private void setupViewPager(ViewPager viewPager){
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        GiochiFragment giochiFragment = new GiochiFragment();
+        GenereFragment genereFragment = new GenereFragment();
+        adapter.addFragment(giochiFragment,"GIOCHI");
+        adapter.addFragment(genereFragment,"GENERI");
+        viewPager.setAdapter(adapter);
     }
 }

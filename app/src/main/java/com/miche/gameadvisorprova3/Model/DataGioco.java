@@ -18,7 +18,7 @@ public class DataGioco implements Serializable{
     private String Descrizione;
     private String URLimg;
     private String Key;
-    private String UrlImmagineLocale;
+    private String UrlIconaLocale;
    // Bitmap immagine;
 
 
@@ -92,11 +92,11 @@ public class DataGioco implements Serializable{
             Log.e("setImmagine not null","Class DataGioco");
     }
 */
-    public String getUrlImmagineLocale() {
-        return UrlImmagineLocale;
+    public String getUrlIconaLocale() {
+        return UrlIconaLocale;
     }
 
-    public void setUrlImmagineLocale(String urlImmagineLocale) {
-        UrlImmagineLocale = urlImmagineLocale;
+    public void setUrlIconaLocale(String urlIconaLocale) {
+        UrlIconaLocale = urlIconaLocale;
     }
 }

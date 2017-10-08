@@ -35,8 +35,8 @@ public class GenereAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = LayoutInflater.from(context).inflate(R.layout.generi_riga,viewGroup,false);
-        TextView titolo = (TextView)view.findViewById(R.id.textView2);
+            view = LayoutInflater.from(context).inflate(R.layout.provariga_genere,viewGroup,false);
+        TextView titolo = (TextView)view.findViewById(R.id.textView);
         DataGenere g = generi.get(i);
         titolo.setText(g.getKeyGenere());
         return view;

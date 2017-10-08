@@ -68,6 +68,7 @@ public class DatabaseLink {
     public interface UpdateGeneriListener{
         void generiAggiornati();
     }
+
     public void logInAnonimo(){
         FirebaseAuth mauth = FirebaseAuth.getInstance();
         mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -134,6 +135,7 @@ public class DatabaseLink {
         };
         ref.addValueEventListener(listenerGenere);
     }
+
     public void scaricaImmagine(final BitmapListener immagineCaricata){
         final Bitmap[] bmp = new Bitmap[1];
         storage = FirebaseStorage.getInstance();
@@ -147,7 +149,7 @@ public class DatabaseLink {
                 storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        dg.setUrlImmagineLocale(localFile.getAbsolutePath());
+                        dg.setUrlIconaLocale(localFile.getAbsolutePath());
                         Log.e("path: ",localFile.getAbsolutePath());
 
                        // Log.e("OnSuccess download","mannagg");

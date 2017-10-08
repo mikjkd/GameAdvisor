@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3;
+package com.miche.gameadvisorprova3.View;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
+import com.miche.gameadvisorprova3.R;
 
 public class DettagliGiocoActivity extends AppCompatActivity {
 
@@ -34,8 +35,8 @@ public class DettagliGiocoActivity extends AppCompatActivity {
         if(gioco != null){
 
             Titolo.setText(gioco.getTitolo());
-             if(gioco.getUrlImmagineLocale()!=null)
-                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
+             if(gioco.getUrlIconaLocale()!=null)
+                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlIconaLocale()));
             //ImgGioco.setImageBitmap(gioco.getImgGioco);
             Descrizione.setText(gioco.getDescrizione());
 

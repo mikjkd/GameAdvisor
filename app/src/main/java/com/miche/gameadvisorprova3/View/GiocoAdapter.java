@@ -31,6 +31,7 @@ public class GiocoAdapter extends BaseAdapter {
 
     private final Context context;
     private List<DataGioco> giochi = new ArrayList<DataGioco>();
+
     public  GiocoAdapter(Context context){
         this.context = context;
     }

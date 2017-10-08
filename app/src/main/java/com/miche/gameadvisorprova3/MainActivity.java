@@ -9,10 +9,11 @@ import android.widget.ListView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
+import com.miche.gameadvisorprova3.View.GenereAdapter;
 import com.miche.gameadvisorprova3.View.GiocoAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private GiocoAdapter adapter;
+    private GenereAdapter adapter;
     private DatabaseLink archivio = new DatabaseLink();
     private final static String EXTRA_GIOCO = "gioco";
     @Override
@@ -20,10 +21,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ListView listGame = (ListView)findViewById(R.id.listGame);
-        adapter = new GiocoAdapter(this);
+        adapter = new GenereAdapter(this);
 
         archivio.logInAnonimo();
-
+        /*
         archivio.osservaGiochi(new DatabaseLink.UpdateListener(){
             @Override
             public void giochiAggiornati() {
@@ -44,7 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(EXTRA_GIOCO, gioco);
                 startActivity(intent);
             }
+        });*/
+        archivio.osservaGenere(new DatabaseLink.UpdateGeneriListener() {
+            @Override
+            public void generiAggiornati() {
+                adapter.update(archivio.elencoGenere());
+            }
         });
+        listGame.setAdapter(adapter);
     }
 
     @Override

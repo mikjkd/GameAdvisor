@@ -49,9 +49,14 @@ public class DatabaseLink {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private ArrayList<DataGioco> giochi;
+    private ArrayList<DataGenere> generi;
     private ValueEventListener listenerGiochi;
+    private ValueEventListener listenerGenere;
     private Bitmap immagine;
-    public DatabaseLink(){giochi= new ArrayList<>();}
+    public DatabaseLink(){
+        giochi= new ArrayList<>();
+        generi = new ArrayList<>();
+    }
 
 
     public interface UpdateListener{
@@ -59,6 +64,9 @@ public class DatabaseLink {
     }
     public interface BitmapListener{
         void BitmapPronta();
+    }
+    public interface UpdateGeneriListener{
+        void generiAggiornati();
     }
     public void logInAnonimo(){
         FirebaseAuth mauth = FirebaseAuth.getInstance();
@@ -103,6 +111,29 @@ public class DatabaseLink {
         }
     }
 
+    public void osservaGenere(final UpdateGeneriListener notificaGenere){
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference().child(DB_GENERE);
+
+        listenerGenere = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                generi.clear();
+                for (DataSnapshot e: dataSnapshot.getChildren()){
+                    //Log.e("datasnap: ",e.getKey());
+                    final DataGenere gen = e.getValue(DataGenere.class);
+                    gen.setKeyGenere(e.getKey());
+                    generi.add(gen);
+
+                }
+                notificaGenere.generiAggiornati();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        };
+        ref.addValueEventListener(listenerGenere);
+    }
     public void scaricaImmagine(final BitmapListener immagineCaricata){
         final Bitmap[] bmp = new Bitmap[1];
         storage = FirebaseStorage.getInstance();
@@ -142,6 +173,7 @@ public class DatabaseLink {
     public List<DataGioco> elencoGiochi(){
         return giochi;
     }
+    public List<DataGenere> elencoGenere() { return generi; }
     public void setImmagineBitmap(Bitmap img){this.immagine= img;}
     public Bitmap getImmagineBitmap(){ return this.immagine; }
 

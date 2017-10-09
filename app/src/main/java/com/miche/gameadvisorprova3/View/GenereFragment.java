@@ -24,6 +24,8 @@ public class GenereFragment extends android.support.v4.app.Fragment{
     private GenereAdapter adapter;
     private transient DatabaseLinkParcel archivio ;
     private Bundle arg;
+    private final String EXTRA_ARCHIVIO = "ARCHIVIO";
+    private final String EXTRA_GENERE = "GENERE";
     public GenereFragment(){}
 
     @Override
@@ -39,7 +41,7 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         adapter = new GenereAdapter(getActivity());
         //archivio.logInAnonimo();
         arg = this.getArguments();
-        archivio =  arg.getParcelable("ARCHIVIO");
+        archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
         archivio.osservaGenere(new DatabaseLinkParcel.UpdateGeneriListener(){
             @Override
             public void generiAggiornati() {
@@ -51,9 +53,9 @@ public class GenereFragment extends android.support.v4.app.Fragment{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle extras = new Bundle();
-                extras.putParcelable("ARCHIVIO",archivio);
+                extras.putParcelable(EXTRA_ARCHIVIO,archivio);
                 DataGenere gen = adapter.getItem(i);
-                extras.putSerializable("GENERE",gen);
+                extras.putSerializable(EXTRA_GENERE,gen);
                 Intent intent = new Intent(getContext(),GiochiByGenereActivity.class);
                 intent.putExtras(extras);
                 getActivity().startActivity(intent);

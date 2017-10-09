@@ -27,6 +27,8 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     private DataGenere genereClick;
     private GiocoAdapter adapter;
     private final static String EXTRA_GIOCO = "gioco";
+    private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
+    private final static String EXTRA_GENERE = "GENERE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +36,8 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         Intent intent = getIntent();
         adapter = new GiocoAdapter(GiochiByGenereActivity.this);
         listGame =(ListView) findViewById(R.id.listGBG);
-        archivio = intent.getParcelableExtra("ARCHIVIO");
-        genereClick = (DataGenere) intent.getSerializableExtra("GENERE");
+        archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
+        genereClick = (DataGenere) intent.getSerializableExtra(EXTRA_GENERE);
         if(genereClick!=null && archivio!=null){
            archivio.osservaGiocoByGenere(genereClick.getKeyGenere(),new DatabaseLinkParcel.UpdateGBGListener(){
                @Override

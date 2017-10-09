@@ -23,6 +23,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         private transient DatabaseLinkParcel archivio;
         private Bundle arg;
         private final static String EXTRA_GIOCO = "gioco";
+        private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
         public GiochiFragment() { }
 
         @Override
@@ -37,7 +38,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 ListView listGame = (ListView)rootView.findViewById(R.id.listGame);
                 adapter = new GiocoAdapter(getActivity());
                 arg = this.getArguments();
-                archivio =  arg.getParcelable("ARCHIVIO");
+                archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
                // archivio.logInAnonimo();
                 archivio.osservaGiochi(new DatabaseLinkParcel.UpdateListener(){
                 @Override

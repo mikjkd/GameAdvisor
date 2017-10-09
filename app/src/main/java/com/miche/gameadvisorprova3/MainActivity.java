@@ -3,6 +3,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.GenereFragment;
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private Bundle argBundle = new Bundle();
     private final String EXTRA_GIOCHI = "GIOCHI";
     private final String EXTRA_GENERI = "GENERI";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

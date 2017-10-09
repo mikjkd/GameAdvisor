@@ -1,7 +1,10 @@
 package com.miche.gameadvisorprova3.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.miche.gameadvisorprova3.Model.DataGenere;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
@@ -29,13 +33,13 @@ public class GenereFragment extends android.support.v4.app.Fragment{
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.listagenere,container,false);
         ListView listGen = rootView.findViewById(R.id.listGenere);
         adapter = new GenereAdapter(getActivity());
         //archivio.logInAnonimo();
         arg = this.getArguments();
-        archivio = (DatabaseLinkParcel) arg.getParcelable("ARCHIVIO");
+        archivio =  arg.getParcelable("ARCHIVIO");
         archivio.osservaGenere(new DatabaseLinkParcel.UpdateGeneriListener(){
             @Override
             public void generiAggiornati() {
@@ -46,7 +50,13 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         listGen.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Bundle extras = new Bundle();
+                extras.putParcelable("ARCHIVIO",archivio);
+                DataGenere gen = adapter.getItem(i);
+                extras.putSerializable("GENERE",gen);
+                Intent intent = new Intent(getContext(),GiochiByGenereActivity.class);
+                intent.putExtras(extras);
+                getActivity().startActivity(intent);
             }
         });
 

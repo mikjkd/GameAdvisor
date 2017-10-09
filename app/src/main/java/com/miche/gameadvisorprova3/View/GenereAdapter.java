@@ -50,7 +50,7 @@ public class GenereAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) { return generi.get(i); }
+    public DataGenere getItem(int i) { return generi.get(i); }
 
     @Override
     public long getItemId(int i) {

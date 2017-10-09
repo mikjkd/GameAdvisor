@@ -3,6 +3,7 @@ package com.miche.gameadvisorprova3;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompatBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +34,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment, String title){
         fragmentList.add(fragment);
         titleList.add(title);
+    }
+    public void replaceFragment(Fragment fragment,String title, int index){
+        fragmentList.remove(index);
+        fragmentList.add(index, fragment);
+        notifyDataSetChanged();
     }
 }

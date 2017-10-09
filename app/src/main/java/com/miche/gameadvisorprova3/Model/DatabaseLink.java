@@ -54,6 +54,10 @@ public class DatabaseLink implements Serializable{
     private ValueEventListener listenerGiochi;
     private ValueEventListener listenerGenere;
     private Bitmap immagine;
+
+    private Bitmap icona;
+
+
     public DatabaseLink(){
         giochi= new ArrayList<>();
         generi = new ArrayList<>();
@@ -128,6 +132,12 @@ public class DatabaseLink implements Serializable{
                     generi.add(gen);
 
                 }
+                scaricaIcona(new DatabaseLink.BitmapListener(){
+                    @Override
+                    public void BitmapPronta() {
+                        notificaGenere.generiAggiornati();
+                    }
+                });
                 notificaGenere.generiAggiornati();
             }
 
@@ -177,11 +187,44 @@ public class DatabaseLink implements Serializable{
         }
     }
 
+    public void scaricaIcona(final BitmapListener immagineCaricata ){
+
+        final Bitmap[] bmp = new Bitmap[1];
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+        for (final DataGenere dge : generi){
+
+            final File localFile;
+
+            try{
+                localFile = File.createTempFile(dge.getKeyGenere(),".jpg");
+                storageRef.child("Iconegeneri/"+dge.getKeyGenere()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        dge.setPathlocale(localFile.getAbsolutePath());
+                        Log.e("path: ",localFile.getAbsolutePath());
+
+                        immagineCaricata.BitmapPronta();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Miss","Fallito");
+                    }
+                });
+            } catch (IOException e) {
+                Log.e("Errore","Try Catch");
+            }
+
+        }
+
+    }
+
     public List<DataGioco> elencoGiochi(){
         return giochi;
     }
     public List<DataGenere> elencoGenere() { return generi; }
-    public void setImmagineBitmap(Bitmap img){this.immagine= img;}
-    public Bitmap getImmagineBitmap(){ return this.immagine; }
 
 }

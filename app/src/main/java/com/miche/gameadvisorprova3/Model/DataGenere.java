@@ -10,11 +10,16 @@ public class DataGenere implements Serializable {
     private String KeyGenere;
     private String Titolo;
     private String KeyGioco;
+
+    private String URLico;
+    private String Pathlocale;
+
     public DataGenere(){}
-    public DataGenere(String genere, String titolo, String key) {
+    public DataGenere(String genere, String titolo, String key, String URLico) {
         KeyGenere = genere;
         Titolo = titolo;
         KeyGioco = key;
+        this.URLico = URLico;
     }
 
     public String getKeyGenere() { return KeyGenere; }
@@ -28,4 +33,20 @@ public class DataGenere implements Serializable {
     public String getKeyGioco() { return KeyGioco; }
 
     public void setKeyGioco(String key) { KeyGioco = key; }
+
+    public String getURLico() {
+        return URLico;
+    }
+
+    public void setURLico(String URLico) {
+        this.URLico = URLico;
+    }
+
+    public String getPathlocale() {
+        return Pathlocale;
+    }
+
+    public void setPathlocale(String pathlocale) {
+        Pathlocale = pathlocale;
+    }
 }

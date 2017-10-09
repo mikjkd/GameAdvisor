@@ -1,10 +1,13 @@
 package com.miche.gameadvisorprova3.View;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGenere;
@@ -37,8 +40,12 @@ public class GenereAdapter extends BaseAdapter {
         if (view == null)
             view = LayoutInflater.from(context).inflate(R.layout.provariga_genere,viewGroup,false);
         TextView titolo = (TextView)view.findViewById(R.id.textView);
+        ImageView icoGenere = (ImageView)view.findViewById(R.id.ivGenere);
+
         DataGenere g = generi.get(i);
         titolo.setText(g.getKeyGenere());
+        if(g.getPathlocale()!=null)
+            icoGenere.setImageBitmap(BitmapFactory.decodeFile(g.getPathlocale()));
         return view;
     }
 

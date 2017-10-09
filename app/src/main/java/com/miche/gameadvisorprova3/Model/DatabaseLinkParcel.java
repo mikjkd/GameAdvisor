@@ -161,6 +161,12 @@ public class DatabaseLinkParcel implements Parcelable{
                     generi.add(gen);
 
                 }
+                scaricaIcona(new DatabaseLinkParcel.BitmapListener(){
+                    @Override
+                    public void BitmapPronta() {
+                        notificaGenere.generiAggiornati();
+                    }
+                });
                 notificaGenere.generiAggiornati();
             }
 
@@ -223,6 +229,40 @@ public class DatabaseLinkParcel implements Parcelable{
                 Log.e("errore","errore try catch");
             }
         }
+    }
+    public void scaricaIcona(final DatabaseLinkParcel.BitmapListener immagineCaricata ){
+
+        final Bitmap[] bmp = new Bitmap[1];
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+        for (final DataGenere dge : generi){
+
+            final File localFile;
+
+            try{
+                localFile = File.createTempFile(dge.getKeyGenere(),".jpg");
+                storageRef.child("Iconegeneri/"+dge.getKeyGenere()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        dge.setPathlocale(localFile.getAbsolutePath());
+                        Log.e("path: ",localFile.getAbsolutePath());
+
+                        immagineCaricata.BitmapPronta();
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Miss","Fallito");
+                    }
+                });
+            } catch (IOException e) {
+                Log.e("Errore","Try Catch");
+            }
+
+        }
+
     }
     public List<DataGioco> elencoGiochi(){
         return giochi;

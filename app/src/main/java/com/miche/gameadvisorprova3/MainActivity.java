@@ -1,20 +1,12 @@
 package com.miche.gameadvisorprova3;
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.miche.gameadvisorprova3.Model.DataGioco;
-import com.miche.gameadvisorprova3.Model.DatabaseLink;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
-import com.miche.gameadvisorprova3.View.DettagliGiocoActivity;
 import com.miche.gameadvisorprova3.View.GenereFragment;
 import com.miche.gameadvisorprova3.View.GiochiFragment;
-import com.miche.gameadvisorprova3.View.GiocoAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();

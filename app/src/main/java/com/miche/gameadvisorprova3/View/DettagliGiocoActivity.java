@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.R;
 
-public class DettagliGiocoActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class DettagliGiocoActivity extends AppCompatActivity{
 
     private final static String EXTRA_GIOCO = "gioco";
 
@@ -24,7 +27,7 @@ public class DettagliGiocoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_gioco);
 
-
+        Log.e("Sono in activity","funziona");
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Descrizione = (TextView) findViewById(R.id.tvDescrizione);

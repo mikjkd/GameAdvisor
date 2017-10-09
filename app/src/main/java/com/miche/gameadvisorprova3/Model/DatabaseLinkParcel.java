@@ -131,6 +131,7 @@ public class DatabaseLinkParcel implements Parcelable{
                         notifica.giochiAggiornati();
                     }
                 });
+                scaricaImmagineHD();
             }
 
             @Override
@@ -179,18 +180,11 @@ public class DatabaseLinkParcel implements Parcelable{
             //Log.e("Scarica","Immagine"+dg.getURLimg());
             try {
                 localFile = File.createTempFile(dg.getURLimg(),".jpg");
-                storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                storageRef.child("Iconegiochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dg.setUrlIconaLocale(localFile.getAbsolutePath());
                         Log.e("path: ",localFile.getAbsolutePath());
-
-                        // Log.e("OnSuccess download","mannagg");
-                        /*  BitmapFactory.Options op = new BitmapFactory.Options();
-                        op.inSampleSize=1;
-                        bmp[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath(),op);
-                        dg.setImmagine(bmp[0]);*/
-
                         immagineCaricata.BitmapPronta();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -204,12 +198,35 @@ public class DatabaseLinkParcel implements Parcelable{
             }
         }
     }
-
+    private void scaricaImmagineHD(){
+        final Bitmap[] bmp = new Bitmap[1];
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+        for (final DataGioco dg : giochi){
+            final File localFile;
+            //Log.e("Scarica","Immagine"+dg.getURLimg());
+            try {
+                localFile = File.createTempFile("hd"+dg.getURLimg(),".jpg");
+                storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        dg.setUrlImmagineLocale(localFile.getAbsolutePath());
+                        Log.e("path: ",localFile.getAbsolutePath());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Niente"," Fallito e che cazz");
+                    }
+                });
+            } catch (IOException e) {
+                Log.e("errore","errore try catch");
+            }
+        }
+    }
     public List<DataGioco> elencoGiochi(){
         return giochi;
     }
     public List<DataGenere> elencoGenere() { return generi; }
-    public void setImmagineBitmap(Bitmap img){this.immagine= img;}
-    public Bitmap getImmagineBitmap(){ return this.immagine; }
 
 }

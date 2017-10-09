@@ -136,7 +136,11 @@ public class DatabaseLink implements Serializable{
         };
         ref.addValueEventListener(listenerGenere);
     }
-
+    public void nonOsservaGenere(){
+        if(listenerGiochi!=null){
+            FirebaseDatabase.getInstance().getReference("gameadvisorprova-ab95b").removeEventListener(listenerGenere);
+        }
+    }
     public void scaricaImmagine(final BitmapListener immagineCaricata){
         final Bitmap[] bmp = new Bitmap[1];
         storage = FirebaseStorage.getInstance();
@@ -146,8 +150,8 @@ public class DatabaseLink implements Serializable{
             final File localFile;
             //Log.e("Scarica","Immagine"+dg.getURLimg());
             try {
-                localFile = File.createTempFile(dg.getURLimg(),".jpg");
-                storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                localFile = File.createTempFile("ic"+dg.getURLimg(),".jpg");
+                storageRef.child("Iconegiochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dg.setUrlIconaLocale(localFile.getAbsolutePath());

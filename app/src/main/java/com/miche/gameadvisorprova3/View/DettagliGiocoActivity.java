@@ -39,7 +39,7 @@ public class DettagliGiocoActivity extends AppCompatActivity{
 
             Titolo.setText(gioco.getTitolo());
              if(gioco.getUrlIconaLocale()!=null)
-                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlIconaLocale()));
+                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
             //ImgGioco.setImageBitmap(gioco.getImgGioco);
             Descrizione.setText(gioco.getDescrizione());
 

@@ -38,7 +38,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 ListView listGame = (ListView)rootView.findViewById(R.id.listGame);
                 adapter = new GiocoAdapter(getActivity());
                 arg = this.getArguments();
-                archivio = (DatabaseLinkParcel) arg.getParcelable("ARCHIVIO");
+                archivio =  arg.getParcelable("ARCHIVIO");
                // archivio.logInAnonimo();
                 archivio.osservaGiochi(new DatabaseLinkParcel.UpdateListener(){
                 @Override

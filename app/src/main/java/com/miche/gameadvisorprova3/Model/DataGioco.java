@@ -19,6 +19,7 @@ public class DataGioco implements Serializable{
     private String URLimg;
     private String Key;
     private String UrlIconaLocale;
+    private String UrlImmagineLocale;
    // Bitmap immagine;
 
 
@@ -99,4 +100,8 @@ public class DataGioco implements Serializable{
     public void setUrlIconaLocale(String urlIconaLocale) {
         UrlIconaLocale = urlIconaLocale;
     }
+
+    public String getUrlImmagineLocale() {   return UrlImmagineLocale; }
+
+    public void setUrlImmagineLocale(String urlImmagineLocale) { UrlImmagineLocale = urlImmagineLocale; }
 }

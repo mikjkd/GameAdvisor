@@ -21,7 +21,6 @@ import java.util.List;
  */
 
 public class GenereAdapter extends BaseAdapter {
-
     private final Context context;
     private List<DataGenere> generi = new ArrayList<DataGenere>();
 

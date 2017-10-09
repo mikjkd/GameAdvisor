@@ -31,10 +31,6 @@ import java.util.List;
 public class DatabaseLinkParcel implements Parcelable{
     private String DB_GIOCHI = "Giochi";
     private String DB_GENERE = "Genere";
-    private String DB_AVVENTURA="Avventura";
-    private String DB_AZIONE= "Azione";
-    private String DB_CORSE = "Corse";
-    private String DB_SPARATUTTO="Sparatutto";
 
     private FirebaseStorage storage;
     private StorageReference storageRef;
@@ -44,12 +40,13 @@ public class DatabaseLinkParcel implements Parcelable{
     private ValueEventListener listenerGiochi;
     private ValueEventListener listenerGenere;
     private ValueEventListener listenerGiochiByGenere;
-    private Bitmap immagine;
+
     public DatabaseLinkParcel(){
         gbg = new ArrayList<>();
         giochi= new ArrayList<>();
         generi = new ArrayList<>();
     }
+
     public DatabaseLinkParcel(Parcel val){
         readFromParcel(val);
     }
@@ -118,7 +115,6 @@ public class DatabaseLinkParcel implements Parcelable{
                     giochi.add(dg);
                 }
 
-                // notifica.giochiAggiornati();
                 scaricaImmagine(new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
@@ -150,7 +146,6 @@ public class DatabaseLinkParcel implements Parcelable{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 generi.clear();
                 for (DataSnapshot e: dataSnapshot.getChildren()){
-                    //Log.e("datasnap: ",e.getKey());
                     final DataGenere gen = e.getValue(DataGenere.class);
                     gen.setKeyGenere(e.getKey());
                     generi.add(gen);
@@ -183,10 +178,9 @@ public class DatabaseLinkParcel implements Parcelable{
                 for (DataSnapshot e: dataSnapshot.getChildren()){
                     final DataGenere gen = e.getValue(DataGenere.class);
                     gen.setKeyGioco(e.getKey());
-                    Log.e("gioco : ",giochi.get(cercaGiocoKey(gen.getKeyGioco())).getKey().toString());
                     gbg.add(giochi.get(cercaGiocoKey(gen.getKeyGioco())));
                     if(gbg == null)
-                        Log.e("stu strunz","null");
+                        Log.e("OsservaGioco","null");
                 }
                 notifica.gbgAggiornati();
             }
@@ -204,24 +198,22 @@ public class DatabaseLinkParcel implements Parcelable{
         //Log.e("Scarica immagine","dim: "+giochi.size());
         for (final DataGioco dg : giochi){
             final File localFile;
-            //Log.e("Scarica","Immagine"+dg.getURLimg());
             try {
                 localFile = File.createTempFile(dg.getURLimg(),".jpg");
                 storageRef.child("Iconegiochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dg.setUrlIconaLocale(localFile.getAbsolutePath());
-                        Log.e("path: ",localFile.getAbsolutePath());
                         immagineCaricata.BitmapPronta();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Niente"," Fallito e che cazz");
+                        Log.e("ScaricaImmagine"," Fallito");
                     }
                 });
             } catch (IOException e) {
-                Log.e("errore","errore try catch");
+                Log.e("IOEXCEPTION","errore try catch");
             }
         }
     }
@@ -230,19 +222,17 @@ public class DatabaseLinkParcel implements Parcelable{
         storageRef = storage.getReference();
         for (final DataGioco dg : giochi){
             final File localFile;
-            //Log.e("Scarica","Immagine"+dg.getURLimg());
             try {
                 localFile = File.createTempFile("hd"+dg.getURLimg(),".jpg");
                 storageRef.child("Giochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dg.setUrlImmagineLocale(localFile.getAbsolutePath());
-                        Log.e("path: ",localFile.getAbsolutePath());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("Niente"," Fallito e che cazz");
+                        Log.e("ScaricaImmagineHD"," Fallito");
                     }
                 });
             } catch (IOException e) {
@@ -265,7 +255,6 @@ public class DatabaseLinkParcel implements Parcelable{
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dge.setPathlocale(localFile.getAbsolutePath());
-                        Log.e("path: ",localFile.getAbsolutePath());
 
                         immagineCaricata.BitmapPronta();
 

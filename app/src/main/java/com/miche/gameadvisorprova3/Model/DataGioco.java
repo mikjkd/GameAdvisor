@@ -80,19 +80,7 @@ public class DataGioco implements Serializable{
     public void setURLimg(String URLimg) {
         this.URLimg = URLimg;
     }
-/*
-    public Bitmap getImmagine() {
-        if(immagine==null)
-            Log.e("getImmagine null","Class DataGioco");
-        return immagine;
-    }
 
-    public void setImmagine(Bitmap immagine) {
-        this.immagine = immagine;
-        if(this.immagine==null)
-            Log.e("setImmagine not null","Class DataGioco");
-    }
-*/
     public String getUrlIconaLocale() {
         return UrlIconaLocale;
     }

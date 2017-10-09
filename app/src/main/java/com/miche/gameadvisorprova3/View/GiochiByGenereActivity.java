@@ -52,7 +52,6 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
                     Bundle extras = new Bundle();
                     DataGioco gioco = adapter.getItem(i);
                     extras.putSerializable(EXTRA_GIOCO,gioco);
-                    Log.e("Prima erroe","Intent");
                     Intent intent = new Intent(GiochiByGenereActivity.this,DettagliGiocoActivity.class);
                     intent.putExtras(extras);
                     startActivity(intent);

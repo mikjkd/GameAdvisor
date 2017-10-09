@@ -57,7 +57,6 @@ public class GiocoAdapter extends BaseAdapter {
         TextView genere = (TextView)view.findViewById(R.id.textView);
         ImageView img = (ImageView)view.findViewById(R.id.ivIMG);
         DataGioco g = giochi.get(position);
-       // Log.w("Titolo: ",g.getTitolo());
         titolo.setText(g.getTitolo());
         genere.setText(g.getGenere());
         if(g.getUrlIconaLocale()!=null)

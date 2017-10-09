@@ -3,9 +3,6 @@ package com.miche.gameadvisorprova3.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +36,6 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         View rootView = inflater.inflate(R.layout.listagenere,container,false);
         ListView listGen = rootView.findViewById(R.id.listGenere);
         adapter = new GenereAdapter(getActivity());
-        //archivio.logInAnonimo();
         arg = this.getArguments();
         archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
         archivio.osservaGenere(new DatabaseLinkParcel.UpdateGeneriListener(){
@@ -61,10 +57,7 @@ public class GenereFragment extends android.support.v4.app.Fragment{
                 getActivity().startActivity(intent);
             }
         });
-
-        Log.e("restituisco adapter","rootView");
         return rootView;
-
     }
 }
 

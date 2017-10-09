@@ -26,25 +26,16 @@ public class DettagliGiocoActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_gioco);
-
-        Log.e("Sono in activity","funziona");
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Descrizione = (TextView) findViewById(R.id.tvDescrizione);
-
         Intent intent = getIntent();
         DataGioco gioco = (DataGioco) intent.getSerializableExtra(EXTRA_GIOCO);
-
         if(gioco != null){
-
             Titolo.setText(gioco.getTitolo());
              if(gioco.getUrlIconaLocale()!=null)
                 ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
-            //ImgGioco.setImageBitmap(gioco.getImgGioco);
             Descrizione.setText(gioco.getDescrizione());
-
         }
-
-
     }
 }

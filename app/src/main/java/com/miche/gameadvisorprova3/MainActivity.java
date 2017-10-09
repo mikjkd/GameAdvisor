@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Bundle argBundle = new Bundle();
+    private final String EXTRA_GIOCHI = "GIOCHI";
+    private final String EXTRA_GENERI = "GENERI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +29,13 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
 
             @Override
-            public void onPageSelected(int position) {
-
-            }
+            public void onPageSelected(int position) { }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
+            public void onPageScrollStateChanged(int state) { }
         });
 
         archivioMain.logInAnonimo();
@@ -57,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         giochiFragment.setArguments(dati);
         genereFragment.setArguments(dati);
 
-        adapter.addFragment(giochiFragment,"GIOCHI");
-        adapter.addFragment(genereFragment,"GENERI");
+        adapter.addFragment(giochiFragment,EXTRA_GIOCHI);
+        adapter.addFragment(genereFragment,EXTRA_GENERI);
 
         viewPager.setAdapter(adapter);
     }

@@ -39,7 +39,6 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 adapter = new GiocoAdapter(getActivity());
                 arg = this.getArguments();
                 archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
-               // archivio.logInAnonimo();
                 archivio.osservaGiochi(new DatabaseLinkParcel.UpdateListener(){
                 @Override
                 public void giochiAggiornati() {
@@ -53,13 +52,11 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                         Bundle extras = new Bundle();
                         DataGioco gioco = adapter.getItem(i);
                         extras.putSerializable(EXTRA_GIOCO,gioco);
-                    Log.e("Prima erroe","Intent");
                         Intent intent = new Intent(getContext(),DettagliGiocoActivity.class);
                         intent.putExtras(extras);
                         getActivity().startActivity(intent);
                 }
         });
-        Log.e("restituisco adapter","rootView");
         return rootView;
 
         }

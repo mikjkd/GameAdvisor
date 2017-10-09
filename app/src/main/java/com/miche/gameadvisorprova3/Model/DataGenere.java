@@ -1,10 +1,12 @@
 package com.miche.gameadvisorprova3.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by miche on 07/10/2017.
  */
 
-public class DataGenere {
+public class DataGenere implements Serializable {
     private String KeyGenere;
     private String Titolo;
     private String KeyGioco;

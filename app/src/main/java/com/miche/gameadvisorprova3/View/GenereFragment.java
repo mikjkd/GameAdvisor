@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.miche.gameadvisorprova3.Model.DataGenere;
 import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
+import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
 /**
@@ -21,15 +22,13 @@ import com.miche.gameadvisorprova3.R;
 
 public class GenereFragment extends android.support.v4.app.Fragment{
     private GenereAdapter adapter;
-    private DatabaseLink archivio = new DatabaseLink();
-
+    private transient DatabaseLinkParcel archivio ;
+    private Bundle arg;
     public GenereFragment(){}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -38,14 +37,22 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         View rootView = inflater.inflate(R.layout.listagenere,container,false);
         ListView listGen = rootView.findViewById(R.id.listGenere);
         adapter = new GenereAdapter(getActivity());
-        archivio.logInAnonimo();
-        archivio.osservaGenere(new DatabaseLink.UpdateGeneriListener(){
+        //archivio.logInAnonimo();
+        arg = this.getArguments();
+        archivio = (DatabaseLinkParcel) arg.getParcelable("ARCHIVIO");
+        archivio.osservaGenere(new DatabaseLinkParcel.UpdateGeneriListener(){
             @Override
             public void generiAggiornati() {
                 adapter.update(archivio.elencoGenere());
             }
         });
         listGen.setAdapter(adapter);
+        listGen.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
 
         Log.e("restituisco adapter","rootView");
         return rootView;

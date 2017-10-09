@@ -3,6 +3,8 @@ package com.miche.gameadvisorprova3.Model;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -39,7 +41,7 @@ import java.util.concurrent.Executor;
  * Created by miche on 03/10/2017.
  */
 
-public class DatabaseLink implements Serializable{
+public class DatabaseLinkParcel implements Parcelable{
     private String DB_GIOCHI = "Giochi";
     private String DB_GENERE = "Genere";
     private String DB_AVVENTURA="Avventura";
@@ -54,9 +56,39 @@ public class DatabaseLink implements Serializable{
     private ValueEventListener listenerGiochi;
     private ValueEventListener listenerGenere;
     private Bitmap immagine;
-    public DatabaseLink(){
+    public DatabaseLinkParcel(){
         giochi= new ArrayList<>();
         generi = new ArrayList<>();
+    }
+    public DatabaseLinkParcel(Parcel val){
+        readFromParcel(val);
+    }
+
+    public static final Creator<DatabaseLinkParcel> CREATOR = new Creator<DatabaseLinkParcel>() {
+        @Override
+        public DatabaseLinkParcel createFromParcel(Parcel in) {
+            return new DatabaseLinkParcel(in);
+        }
+
+        @Override
+        public DatabaseLinkParcel[] newArray(int size) {
+            return new DatabaseLinkParcel[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest,int flags){
+        dest.writeList(giochi);
+        dest.writeList(generi);
+    }
+    public void readFromParcel(Parcel val){
+        giochi = val.readArrayList(DataGioco.class.getClassLoader());
+        generi = val.readArrayList(DataGenere.class.getClassLoader());
     }
 
 
@@ -92,8 +124,8 @@ public class DatabaseLink implements Serializable{
                     giochi.add(dg);
                 }
 
-               // notifica.giochiAggiornati();
-                scaricaImmagine(new DatabaseLink.BitmapListener(){
+                // notifica.giochiAggiornati();
+                scaricaImmagine(new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
                         notifica.giochiAggiornati();
@@ -153,7 +185,7 @@ public class DatabaseLink implements Serializable{
                         dg.setUrlIconaLocale(localFile.getAbsolutePath());
                         Log.e("path: ",localFile.getAbsolutePath());
 
-                       // Log.e("OnSuccess download","mannagg");
+                        // Log.e("OnSuccess download","mannagg");
                         /*  BitmapFactory.Options op = new BitmapFactory.Options();
                         op.inSampleSize=1;
                         bmp[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath(),op);

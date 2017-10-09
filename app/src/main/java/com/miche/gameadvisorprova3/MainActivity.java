@@ -10,14 +10,18 @@ import android.widget.ListView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
+import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.DettagliGiocoActivity;
 import com.miche.gameadvisorprova3.View.GenereFragment;
 import com.miche.gameadvisorprova3.View.GiochiFragment;
 import com.miche.gameadvisorprova3.View.GiocoAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Bundle argBundle = new Bundle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +49,25 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        setupViewPager(viewPager);
+
+        archivioMain.logInAnonimo();
+        argBundle.putParcelable("ARCHIVIO",archivioMain);
+        setupViewPager(viewPager,argBundle);
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager,Bundle dati){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
         GiochiFragment giochiFragment = new GiochiFragment();
         GenereFragment genereFragment = new GenereFragment();
+
+
+        giochiFragment.setArguments(dati);
+        genereFragment.setArguments(dati);
+
         adapter.addFragment(giochiFragment,"GIOCHI");
         adapter.addFragment(genereFragment,"GENERI");
+
         viewPager.setAdapter(adapter);
     }
 }

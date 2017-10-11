@@ -120,14 +120,13 @@ public class DatabaseLinkParcel implements Parcelable{
                     dg.setKey(e.getKey());
                     giochi.add(dg);
                 }
-
+                notifica.giochiAggiornati();
                 scaricaImmagine(new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
                         notifica.giochiAggiornati();
                     }
                 });
-                notifica.giochiAggiornati();
                // scaricaImmagineHD();
             }
 
@@ -147,13 +146,13 @@ public class DatabaseLinkParcel implements Parcelable{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
                 Log.e("valori: ",dataSnapshot.getKey());
+                notifica.giochiAggiornati();
                 scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
                         notifica.giochiAggiornati();
                     }
                 });
-                notifica.giochiAggiornati();
             }
 
             @Override

@@ -13,13 +13,13 @@ import java.io.Serializable;
 
 public class DataGioco implements Serializable{
     private String Genere;
-    private String Link;
+   // private String Link;
     private String Titolo;
-    private String Descrizione;
+   // private String Descrizione;
     private String URLimg;
     private String Key;
     private String UrlIconaLocale;
-    private String UrlImmagineLocale;
+  //  private String UrlImmagineLocale;
    // Bitmap immagine;
 
 
@@ -35,9 +35,9 @@ public class DataGioco implements Serializable{
 
     public DataGioco(String genere, String link, String titolo, String descrizione, String URLimg) {
         Genere = genere;
-        Link = link;
+     //   Link = link;
         Titolo = titolo;
-        Descrizione = descrizione;
+       // Descrizione = descrizione;
         this.URLimg = URLimg;
     }
 
@@ -49,13 +49,13 @@ public class DataGioco implements Serializable{
         Genere = genere;
     }
 
-    public String getLink() {
+  /*  public String getLink() {
         return Link;
-    }
+    }*/
 
-    public void setLink(String link) {
+  /*  public void setLink(String link) {
         Link = link;
-    }
+    }*/
 
     public String getTitolo() {
         return Titolo;
@@ -65,13 +65,13 @@ public class DataGioco implements Serializable{
         Titolo = titolo;
     }
 
-    public String getDescrizione() {
+  /*  public String getDescrizione() {
         return Descrizione;
-    }
+    }*/
 
-    public void setDescrizione(String descrizione) {
+ /*   public void setDescrizione(String descrizione) {
         Descrizione = descrizione;
-    }
+    }*/
 
     public String getURLimg() {
         return URLimg;
@@ -89,7 +89,7 @@ public class DataGioco implements Serializable{
         UrlIconaLocale = urlIconaLocale;
     }
 
-    public String getUrlImmagineLocale() {   return UrlImmagineLocale; }
+   /* public String getUrlImmagineLocale() {   return UrlImmagineLocale; }*/
 
-    public void setUrlImmagineLocale(String urlImmagineLocale) { UrlImmagineLocale = urlImmagineLocale; }
+ //   public void setUrlImmagineLocale(String urlImmagineLocale) { UrlImmagineLocale = urlImmagineLocale; }
 }

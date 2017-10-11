@@ -9,18 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
+import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
+import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
 import java.io.Serializable;
 
 public class DettagliGiocoActivity extends AppCompatActivity{
 
-    private final static String EXTRA_GIOCO = "gioco";
-
+    private final static String EXTRA_GIOCO = "GIOCOKEY";
+    private final static String EXTRA_ARCHIVIO="ARCHIVIO";
+    private String key;
     private TextView Titolo;
     private ImageView ImgGioco;
     private TextView Descrizione;
-
+    private DatabaseLinkParcel archivio;
+    private DataGiocoDettaglio gioco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +34,18 @@ public class DettagliGiocoActivity extends AppCompatActivity{
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Descrizione = (TextView) findViewById(R.id.tvDescrizione);
         Intent intent = getIntent();
-        DataGioco gioco = (DataGioco) intent.getSerializableExtra(EXTRA_GIOCO);
-        if(gioco != null){
-            Titolo.setText(gioco.getTitolo());
-             if(gioco.getUrlIconaLocale()!=null)
-                ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
-            Descrizione.setText(gioco.getDescrizione());
-        }
+        archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
+        key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
+        archivio.cercaGioco(key, new DatabaseLinkParcel.UpdateListener() {
+            @Override
+            public void giochiAggiornati() {
+               if( (gioco=archivio.giocoAggiornato())!=null){
+                   Titolo.setText(gioco.getTitolo());
+                   if(gioco.getUrlImmagineLocale()!=null)
+                       ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
+                   Descrizione.setText(gioco.getDescrizione());
+               }
+            }
+        });
     }
 }

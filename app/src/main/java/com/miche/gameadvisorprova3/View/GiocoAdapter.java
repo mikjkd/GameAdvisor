@@ -61,7 +61,7 @@ public class GiocoAdapter extends BaseAdapter {
         genere.setText(g.getGenere());
         if(g.getUrlIconaLocale()!=null)
             img.setImageBitmap(BitmapFactory.decodeFile(g.getUrlIconaLocale()));
-        //genere.setText(g.getGenere());
+        genere.setText(g.getGenere());
         return view;
     }
 

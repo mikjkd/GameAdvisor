@@ -31,17 +31,21 @@ import java.util.List;
 public class DatabaseLinkParcel implements Parcelable{
     private String DB_GIOCHI = "Giochi";
     private String DB_GENERE = "Genere";
-
+    private String DB_LISTGIOCHI="ListaGiochi";
     private FirebaseStorage storage;
     private StorageReference storageRef;
+    private FirebaseDatabase db;
     private ArrayList<DataGioco> giochi;
     private ArrayList<DataGenere> generi;
     private ArrayList<DataGioco> gbg;
+    private DataGiocoDettaglio gioco;
     private ValueEventListener listenerGiochi;
     private ValueEventListener listenerGenere;
     private ValueEventListener listenerGiochiByGenere;
 
     public DatabaseLinkParcel(){
+
+        gioco = new DataGiocoDettaglio();
         gbg = new ArrayList<>();
         giochi= new ArrayList<>();
         generi = new ArrayList<>();
@@ -70,11 +74,13 @@ public class DatabaseLinkParcel implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest,int flags){
+        dest.writeValue(gioco);
         dest.writeList(giochi);
         dest.writeList(generi);
         dest.writeList(gbg);
     }
     public void readFromParcel(Parcel val){
+        gioco = (DataGiocoDettaglio) val.readValue(DataGiocoDettaglio.class.getClassLoader());
         giochi = val.readArrayList(DataGioco.class.getClassLoader());
         generi = val.readArrayList(DataGenere.class.getClassLoader());
         gbg = val.readArrayList(DataGioco.class.getClassLoader());
@@ -103,7 +109,7 @@ public class DatabaseLinkParcel implements Parcelable{
     }
     public void osservaGiochi(final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference ref = db.getReference().child(DB_GIOCHI);
+        DatabaseReference ref = db.getReference().child(DB_LISTGIOCHI);
 
         listenerGiochi = new ValueEventListener() {
             @Override
@@ -122,7 +128,7 @@ public class DatabaseLinkParcel implements Parcelable{
                     }
                 });
                 notifica.giochiAggiornati();
-                scaricaImmagineHD();
+               // scaricaImmagineHD();
             }
 
             @Override
@@ -131,6 +137,32 @@ public class DatabaseLinkParcel implements Parcelable{
         };
         ref.addValueEventListener(listenerGiochi);
     }
+
+    public void cercaGioco(String keyGioco,final UpdateListener notifica){
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference().child(DB_GIOCHI).child(keyGioco);
+       // final DataGiocoDettaglio[] gioco = new DataGiocoDettaglio[1];
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
+                Log.e("valori: ",dataSnapshot.getKey());
+                scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){
+                    @Override
+                    public void BitmapPronta() {
+                        notifica.giochiAggiornati();
+                    }
+                });
+                notifica.giochiAggiornati();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public void nonOsservaGiochi(){
         if(listenerGiochi!=null){
             FirebaseDatabase.getInstance().getReference("gameadvisorprova-ab95b").removeEventListener(listenerGiochi);
@@ -217,10 +249,10 @@ public class DatabaseLinkParcel implements Parcelable{
             }
         }
     }
-    private void scaricaImmagineHD(){
+    private void scaricaImmagineHD(final DataGiocoDettaglio dg,final BitmapListener immagineCaricata){
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        for (final DataGioco dg : giochi){
+
             final File localFile;
             try {
                 localFile = File.createTempFile("hd"+dg.getURLimg(),".jpg");
@@ -228,6 +260,7 @@ public class DatabaseLinkParcel implements Parcelable{
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                         dg.setUrlImmagineLocale(localFile.getAbsolutePath());
+                        immagineCaricata.BitmapPronta();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -238,7 +271,6 @@ public class DatabaseLinkParcel implements Parcelable{
             } catch (IOException e) {
                 Log.e("errore","errore try catch");
             }
-        }
     }
     public void scaricaIcona(final DatabaseLinkParcel.BitmapListener immagineCaricata ){
 
@@ -290,5 +322,6 @@ public class DatabaseLinkParcel implements Parcelable{
     }
     public List<DataGenere> elencoGenere() { return generi; }
     public List<DataGioco> elencoGiocoByGenere(){return gbg;}
+    public DataGiocoDettaglio giocoAggiornato(){return gioco;}
 
 }

@@ -26,7 +26,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     private DatabaseLinkParcel archivio;
     private DataGenere genereClick;
     private GiocoAdapter adapter;
-    private final static String EXTRA_GIOCO = "gioco";
+    private final static String EXTRA_GIOCO = "GIOCOKEY";
     private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
     private final static String EXTRA_GENERE = "GENERE";
     @Override
@@ -50,8 +50,9 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Bundle extras = new Bundle();
-                    DataGioco gioco = adapter.getItem(i);
-                    extras.putSerializable(EXTRA_GIOCO,gioco);
+                    String giocoKey = adapter.getItem(i).getKey();
+                    extras.putSerializable(EXTRA_GIOCO,giocoKey);
+                    extras.putParcelable(EXTRA_ARCHIVIO,archivio);
                     Intent intent = new Intent(GiochiByGenereActivity.this,DettagliGiocoActivity.class);
                     intent.putExtras(extras);
                     startActivity(intent);

@@ -22,7 +22,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         private GiocoAdapter adapter;
         private transient DatabaseLinkParcel archivio;
         private Bundle arg;
-        private final static String EXTRA_GIOCO = "gioco";
+        private final static String EXTRA_GIOCO = "GIOCOKEY";
         private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
         public GiochiFragment() { }
 
@@ -50,8 +50,9 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         Bundle extras = new Bundle();
-                        DataGioco gioco = adapter.getItem(i);
-                        extras.putSerializable(EXTRA_GIOCO,gioco);
+                        String giocoKey = adapter.getItem(i).getKey();
+                        extras.putSerializable(EXTRA_GIOCO,giocoKey);
+                        extras.putParcelable(EXTRA_ARCHIVIO,archivio);
                         Intent intent = new Intent(getContext(),DettagliGiocoActivity.class);
                         intent.putExtras(extras);
                         getActivity().startActivity(intent);

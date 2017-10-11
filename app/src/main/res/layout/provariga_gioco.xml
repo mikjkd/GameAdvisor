@@ -9,13 +9,13 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="#3D3B3B"
+    android:background="#424242"
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3D3B3B">
+        android:background="#424242">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivIMG"
@@ -23,7 +23,7 @@
             android:layout_height="65dp"
             android:src="@mipmap/ic_launcher_round"
             app:civ_border_width="1dp"
-            app:civ_border_color="#FF9810"/>
+            app:civ_border_color="#ff5755"/>
 
         <TextView
             android:id="@+id/textView2"
@@ -32,7 +32,7 @@
             android:text="Titolo"
             android:textSize="19dp"
             android:textStyle="bold"
-            android:textColor="#FF9810"
+            android:textColor="#cfcfcf"
             android:layout_alignBottom="@+id/ivIMG"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="29dp"
@@ -48,7 +48,7 @@
             android:layout_alignBottom="@+id/ivIMG"
             android:layout_alignStart="@+id/textView2"
             android:layout_marginBottom="11dp"
-            android:textColor="#FF9810"
+            android:textColor="#ff5755"
             android:textStyle="italic"
 
              />

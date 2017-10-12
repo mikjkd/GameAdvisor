@@ -53,7 +53,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
                     String giocoKey = adapter.getItem(i).getKey();
                     extras.putSerializable(EXTRA_GIOCO,giocoKey);
                     extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                    Intent intent = new Intent(GiochiByGenereActivity.this,DettagliGiocoActivity.class);
+                    Intent intent = new Intent(GiochiByGenereActivity.this,NuovoDettagliGioco.class);
                     intent.putExtras(extras);
                     startActivity(intent);
                 }

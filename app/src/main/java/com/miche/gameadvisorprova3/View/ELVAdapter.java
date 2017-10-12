@@ -26,7 +26,7 @@ public class ELVAdapter extends BaseExpandableListAdapter{
 
 
 
-    private String[] groupName = {"Descrizione", "Requisiti", "Link"};
+    private String[] groupName = {"Descrizione", "Requisiti","Sviluppatore", "Link"};
     private HashMap<String,String> child = new HashMap<>() ;
     private final Context context;
     DataGiocoDettaglio gioco;
@@ -35,13 +35,14 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         this.gioco = gioco;
         child.put("Descrizione",gioco.getDescrizione());
         child.put("Requisiti",gioco.getRequisiti());
+        child.put("Sviluppatore",gioco.getSviluppatore());
         child.put("Link",gioco.getLink());
         this.context = context;
     }
 
     @Override
     public int getGroupCount() {
-        return 3;
+        return 4;
     }
 
     @Override

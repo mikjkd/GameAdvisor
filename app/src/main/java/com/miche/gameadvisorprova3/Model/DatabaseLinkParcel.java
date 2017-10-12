@@ -1,6 +1,7 @@
 package com.miche.gameadvisorprova3.Model;
 
 import android.graphics.Bitmap;
+import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -119,15 +120,23 @@ public class DatabaseLinkParcel implements Parcelable{
                     final DataGioco dg = e.getValue(DataGioco.class);
                     dg.setKey(e.getKey());
                     giochi.add(dg);
+                    notifica.giochiAggiornati();
+                    scaricaImmagine(dg, new DatabaseLinkParcel.BitmapListener(){
+                        @Override
+                        public void BitmapPronta() {
+                            notifica.giochiAggiornati();
+                        }
+                    });
                 }
                 notifica.giochiAggiornati();
-                scaricaImmagine(new DatabaseLinkParcel.BitmapListener(){
+
+             /*  scaricaImmagine(dg, new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
                         notifica.giochiAggiornati();
                     }
-                });
-               // scaricaImmagineHD();
+                });*/
+               // notifica.giochiAggiornati();
             }
 
             @Override
@@ -146,13 +155,13 @@ public class DatabaseLinkParcel implements Parcelable{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
                 Log.e("valori: ",dataSnapshot.getKey());
-                notifica.giochiAggiornati();
                 scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){
                     @Override
                     public void BitmapPronta() {
                         notifica.giochiAggiornati();
                     }
                 });
+                notifica.giochiAggiornati();
             }
 
             @Override
@@ -222,12 +231,11 @@ public class DatabaseLinkParcel implements Parcelable{
     }
 
 
-
-    public void scaricaImmagine(final BitmapListener immagineCaricata){
+    public void scaricaImmagine(final DataGioco dg,final BitmapListener immagineCaricata){
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
         //Log.e("Scarica immagine","dim: "+giochi.size());
-        for (final DataGioco dg : giochi){
+        //for (final DataGioco dg : giochi){
             final File localFile;
             try {
                 localFile = File.createTempFile(dg.getURLimg(),".jpg");
@@ -246,7 +254,7 @@ public class DatabaseLinkParcel implements Parcelable{
             } catch (IOException e) {
                 Log.e("IOEXCEPTION","errore try catch");
             }
-        }
+       // }
     }
     private void scaricaImmagineHD(final DataGiocoDettaglio dg,final BitmapListener immagineCaricata){
         storage = FirebaseStorage.getInstance();

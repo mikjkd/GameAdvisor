@@ -57,7 +57,7 @@
                 android:id="@+id/tvDescrizione"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Descrizione"
                 android:textColor="#cfcfcf"
                 android:textSize="19dp" />
         </LinearLayout>

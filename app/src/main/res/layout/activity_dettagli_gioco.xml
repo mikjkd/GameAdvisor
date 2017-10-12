@@ -26,7 +26,7 @@
         android:id="@+id/ivGioco"
         android:layout_width="347dp"
         android:layout_height="213dp"
-        app:srcCompat="@mipmap/ic_launcher"
+        app:srcCompat="@mipmap/loading"
         android:layout_marginTop="13dp"
         app:layout_constraintTop_toBottomOf="@+id/tvTitolo"
         android:layout_marginLeft="13dp"

@@ -21,7 +21,7 @@
             android:id="@+id/ivIMG"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@mipmap/loading"
             app:civ_border_width="1dp"
             app:civ_border_color="#ff5755"/>
 

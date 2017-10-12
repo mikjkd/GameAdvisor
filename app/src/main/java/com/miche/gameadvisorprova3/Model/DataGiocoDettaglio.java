@@ -15,6 +15,8 @@ public class DataGiocoDettaglio implements Serializable {
     private String Key;
     private String UrlIconaLocale;
     private String UrlImmagineLocale;
+    private String Requisiti;
+    private String Sviluppatore;
     // Bitmap immagine;
 
 
@@ -87,4 +89,21 @@ public class DataGiocoDettaglio implements Serializable {
     public String getUrlImmagineLocale() {   return UrlImmagineLocale; }
 
     public void setUrlImmagineLocale(String urlImmagineLocale) { UrlImmagineLocale = urlImmagineLocale; }
+
+    public String getSviluppatore() {
+        return Sviluppatore;
+    }
+
+    public void setSviluppatore(String sviluppatore) {
+        Sviluppatore = sviluppatore;
+    }
+
+    public String getRequisiti() {
+
+        return Requisiti;
+    }
+
+    public void setRequisiti(String requisiti) {
+        Requisiti = requisiti;
+    }
 }

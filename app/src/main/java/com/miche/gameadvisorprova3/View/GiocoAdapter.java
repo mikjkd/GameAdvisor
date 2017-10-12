@@ -35,6 +35,7 @@ public class GiocoAdapter extends BaseAdapter {
     public  GiocoAdapter(Context context){
         this.context = context;
     }
+
     public void update(List<DataGioco> aggiornamento){
         giochi = aggiornamento;
         notifyDataSetChanged();

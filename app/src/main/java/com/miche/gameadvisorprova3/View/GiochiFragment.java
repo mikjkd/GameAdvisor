@@ -53,7 +53,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                         String giocoKey = adapter.getItem(i).getKey();
                         extras.putSerializable(EXTRA_GIOCO,giocoKey);
                         extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                        Intent intent = new Intent(getContext(),DettagliGiocoActivity.class);
+                        Intent intent = new Intent(getContext(),NuovoDettagliGioco.class);
                         intent.putExtras(extras);
                         getActivity().startActivity(intent);
                 }

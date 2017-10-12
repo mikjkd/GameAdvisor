@@ -11,9 +11,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
+import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -24,16 +26,17 @@ public class ELVAdapter extends BaseExpandableListAdapter{
 
 
 
-    String[] groupName = {"Descrizione", "Requisiti", "Link"};
+    private String[] groupName = {"Descrizione", "Requisiti", "Link"};
+    private HashMap<String,String> child = new HashMap<>() ;
+    private final Context context;
+    DataGiocoDettaglio gioco;
 
-
-    Context context;
-    private List<DataGioco> giochi = new ArrayList<>();
-
-    public ELVAdapter(Context context) {this.context = context;}
-    public void update(List<DataGioco> aggiornamento){
-        giochi = aggiornamento;
-        notifyDataSetChanged();
+    public ELVAdapter(Context context, DataGiocoDettaglio gioco) {
+        this.gioco = gioco;
+        child.put("Descrizione",gioco.getDescrizione());
+        child.put("Requisiti",gioco.getRequisiti());
+        child.put("Link",gioco.getLink());
+        this.context = context;
     }
 
     @Override
@@ -42,18 +45,18 @@ public class ELVAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public int getChildrenCount(int i) {
-        return 0;
+    public int getChildrenCount(int childCount) {
+        return 1;
     }
 
     @Override
-    public Object getGroup(int i) {
-        return null;
+    public Object getGroup(int groupPosition) {
+        return groupName[groupPosition];
     }
 
     @Override
-    public Object getChild(int i, int i1) {
-        return giochi.get(i);
+    public String getChild(int groupPosition, int childPosition) {
+        return child.get(getGroup(groupPosition));
     }
 
     @Override
@@ -83,10 +86,14 @@ public class ELVAdapter extends BaseExpandableListAdapter{
     }
 
     @Override
-    public View getChildView(int i, int i1, boolean b, View view, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup parent) {
 
-
-        return null;
+        TextView txt = new TextView(context);
+        txt.setText(getChild(groupPosition, childPosition));
+        txt.setPadding(100, 0, 0, 0);
+        txt.setTextColor(Color.BLUE);
+        txt.setTextSize(20);
+        return txt;
     }
 
     @Override

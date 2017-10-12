@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#424242"
-    tools:context="com.miche.gameadvisorprova3.DettagliGiocoActivity">
+    tools:context="com.miche.gameadvisorprova3.View.DettagliGiocoActivity">
 
 
     <TextView

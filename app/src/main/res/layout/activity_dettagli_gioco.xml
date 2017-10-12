@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/ivGioco"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="161dp"
         app:srcCompat="@mipmap/loading"
         android:layout_marginTop="13dp"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.0" />
 
     <ScrollView
-        android:layout_width="349dp"
+        android:layout_width="match_parent"
         android:layout_height="247dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

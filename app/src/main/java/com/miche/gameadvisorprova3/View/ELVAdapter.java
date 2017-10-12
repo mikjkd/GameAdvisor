@@ -82,7 +82,7 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         txt.setText(groupName[i]);
         txt.setPadding(100, 0, 0, 0);
         txt.setTextColor(Color.parseColor("#FFFFFF"));
-        txt.setTextSize(30);
+        txt.setTextSize(25);
         return txt;
     }
 
@@ -93,7 +93,7 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         txt.setText(getChild(groupPosition, childPosition));
         txt.setPadding(100, 0, 0, 0);
         txt.setTextColor(Color.parseColor("#CFCFCF"));
-        txt.setTextSize(25);
+        txt.setTextSize(20);
         return txt;
     }
 

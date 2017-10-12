@@ -58,7 +58,11 @@
             <ExpandableListView
                 android:id="@+id/elvBio"
                 android:layout_width="match_parent"
-                android:layout_height="247dp" />
+                android:layout_height="247dp"
+                android:divider="#ff5755"
+                android:dividerHeight="1dp"
+                android:background="#575757"
+                />
         </LinearLayout>
     </ScrollView>
 

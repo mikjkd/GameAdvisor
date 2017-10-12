@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,13 +27,19 @@ public class DettagliGiocoActivity extends AppCompatActivity{
     private DatabaseLinkParcel archivio;
     private DataGiocoDettaglio gioco;
 
+    ExpandableListView expandableListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_gioco);
+
+
+        //expandableListView = (ExpandableListView) findViewById(R.id.elvBio);
+
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
-        Descrizione = (TextView) findViewById(R.id.tvDescrizione);
+        //Descrizione = (TextView) findViewById(R.id.tvDescrizione);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
@@ -43,7 +50,7 @@ public class DettagliGiocoActivity extends AppCompatActivity{
                    Titolo.setText(gioco.getTitolo());
                    if(gioco.getUrlImmagineLocale()!=null)
                        ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
-                   Descrizione.setText(gioco.getDescrizione());
+                   //Descrizione.setText(gioco.getDescrizione());
                }
             }
         });

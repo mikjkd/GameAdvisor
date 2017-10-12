@@ -129,14 +129,6 @@ public class DatabaseLinkParcel implements Parcelable{
                     });
                 }
                 notifica.giochiAggiornati();
-
-             /*  scaricaImmagine(dg, new DatabaseLinkParcel.BitmapListener(){
-                    @Override
-                    public void BitmapPronta() {
-                        notifica.giochiAggiornati();
-                    }
-                });*/
-               // notifica.giochiAggiornati();
             }
 
             @Override
@@ -149,7 +141,6 @@ public class DatabaseLinkParcel implements Parcelable{
     public void cercaGioco(String keyGioco,final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child(DB_GIOCHI).child(keyGioco);
-       // final DataGiocoDettaglio[] gioco = new DataGiocoDettaglio[1];
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -173,7 +164,7 @@ public class DatabaseLinkParcel implements Parcelable{
 
     public void nonOsservaGiochi(){
         if(listenerGiochi!=null){
-            FirebaseDatabase.getInstance().getReference("gameadvisorprova-ab95b").removeEventListener(listenerGiochi);
+            FirebaseDatabase.getInstance().getReference().removeEventListener(listenerGiochi);
         }
     }
 
@@ -206,7 +197,11 @@ public class DatabaseLinkParcel implements Parcelable{
         ref.addValueEventListener(listenerGenere);
     }
 
-
+    public void nonOsservaGeneri(){
+        if(listenerGenere!=null){
+            FirebaseDatabase.getInstance().getReference().removeEventListener(listenerGenere);
+        }
+    }
     public void osservaGiocoByGenere(String genereCercato,final UpdateGBGListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child(DB_GENERE).child(genereCercato);
@@ -230,31 +225,32 @@ public class DatabaseLinkParcel implements Parcelable{
         ref.addValueEventListener(listenerGiochiByGenere);
     }
 
-
+    public void nonOsservaGiochiByGenere(){
+        if(listenerGiochiByGenere!=null){
+            FirebaseDatabase.getInstance().getReference().removeEventListener(listenerGiochiByGenere);
+        }
+    }
     public void scaricaImmagine(final DataGioco dg,final BitmapListener immagineCaricata){
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        //Log.e("Scarica immagine","dim: "+giochi.size());
-        //for (final DataGioco dg : giochi){
-            final File localFile;
-            try {
-                localFile = File.createTempFile(dg.getURLimg(),".jpg");
-                storageRef.child("Iconegiochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        dg.setUrlIconaLocale(localFile.getAbsolutePath());
-                        immagineCaricata.BitmapPronta();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("ScaricaImmagine"," Fallito");
-                    }
-                });
-            } catch (IOException e) {
-                Log.e("IOEXCEPTION","errore try catch");
-            }
-       // }
+        final File localFile;
+        try {
+            localFile = File.createTempFile(dg.getURLimg(),".jpg");
+            storageRef.child("Iconegiochi/"+dg.getURLimg()+".jpg").getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    dg.setUrlIconaLocale(localFile.getAbsolutePath());
+                    immagineCaricata.BitmapPronta();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("ScaricaImmagine"," Fallito");
+                }
+            });
+        } catch (IOException e) {
+            Log.e("IOEXCEPTION","errore try catch");
+        }
     }
     private void scaricaImmagineHD(final DataGiocoDettaglio dg,final BitmapListener immagineCaricata){
         storage = FirebaseStorage.getInstance();
@@ -316,9 +312,7 @@ public class DatabaseLinkParcel implements Parcelable{
         boolean trovato=false;
         int index = 0;
         while(!trovato && index <giochi.size()){
-            if(giochi.get(index).getKey().equals(key)){
-                return index;
-            }
+            if(giochi.get(index).getKey().equals(key)){ return index;}
             ++index;
         }
         return -1;

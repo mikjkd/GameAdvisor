@@ -61,4 +61,10 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         return rootView;
 
         }
+
+        @Override
+        public void onDestroy() {
+                super.onDestroy();
+                archivio.nonOsservaGiochi();
+        }
 }

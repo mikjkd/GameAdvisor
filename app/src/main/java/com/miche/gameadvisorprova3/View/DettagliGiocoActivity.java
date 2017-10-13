@@ -29,6 +29,8 @@ public class DettagliGiocoActivity extends AppCompatActivity{
 
     ExpandableListView expandableListView;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

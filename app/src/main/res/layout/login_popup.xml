@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="Login"
+        android:textSize="23dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/idRelLay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:layout_below="@+id/tvLogin"
+        android:layout_alignStart="@+id/etPsw" />
+
+    <EditText
+        android:id="@+id/etPsw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        android:layout_below="@+id/idRelLay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp" />
+
+</RelativeLayout>

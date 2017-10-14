@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -33,6 +34,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listagiochibygenere);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         adapter = new GiocoAdapter(GiochiByGenereActivity.this);
         listGame =(ListView) findViewById(R.id.listGBG);
@@ -65,5 +67,17 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         archivio.nonOsservaGiochiByGenere();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 }

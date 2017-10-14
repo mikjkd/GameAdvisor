@@ -16,7 +16,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/idRelLay"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -33,8 +33,60 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/password"
-        android:layout_below="@+id/idRelLay"
+        android:layout_below="@+id/etEmail"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="7dp" />
+
+    <Button
+        android:id="@+id/AccediBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPsw"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Accedi" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/AccediBtn"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="13dp"
+        android:text="Non sei ancora registrato?" />
+
+    <Button
+        android:id="@+id/IscrivitiBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iscriviti"
+        android:background="null"
+        android:textColor="#FF3333"
+        android:textSize="14dp"
+        android:layout_below="@+id/AccediBtn"
+        android:layout_toEndOf="@+id/textView3"
+        android:paddingBottom="3dp"
+        android:paddingRight="9dp"/>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etPsw"
+        android:layout_below="@+id/IscrivitiBtn"
+        android:layout_marginTop="63dp"
+        android:text="No grazie, procedi come" />
+
+    <TextView
+        android:id="@+id/tvOspite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OSPITE"
+        android:layout_alignBaseline="@+id/textView6"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/AccediBtn"
+        android:paddingLeft="2dp"
+        android:onClick="OspiteBtn"/>
 
 </RelativeLayout>

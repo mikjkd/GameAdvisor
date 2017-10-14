@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="23dp"
+        android:text="Logon" />
+
+    <EditText
+        android:id="@+id/etEmailLo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="@string/emailLo"
+        />
+
+    <EditText
+        android:id="@+id/etPswLo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etEmailLo"
+        android:layout_below="@+id/etEmailLo"
+        android:layout_marginTop="7dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/passwordLo"/>
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/etPswLo"
+        android:layout_below="@+id/etPswLo"
+        android:layout_marginTop="9dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/conferma_password"/>
+
+    <Button
+        android:id="@+id/ConfermaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editText3"
+        android:layout_below="@+id/editText3"
+        android:layout_marginTop="17dp"
+        android:text="Registrati" />
+
+    <Button
+        android:id="@+id/AnnullaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/ConfermaBtn"
+        android:layout_alignBottom="@+id/ConfermaBtn"
+        android:layout_alignStart="@+id/editText3"
+        android:text="Annulla" />
+</RelativeLayout>

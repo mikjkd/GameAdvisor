@@ -5,9 +5,9 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
@@ -27,23 +27,13 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private DataGiocoDettaglio gioco;
     ExpandableListView expandableListView;
 
-    private TextView Votanti;
-    private TextView VotoMedio;
-    RatingBar rb;
-    private Button VotaBtn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_gioco);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
-
-        Votanti = (TextView) findViewById(R.id.tvVotanti);
-        VotoMedio = (TextView) findViewById(R.id.tvVotoMedio);
-        rb = (RatingBar) findViewById(R.id.ratingBar);
-        VotaBtn = (Button) findViewById(R.id.Votabtn);
-
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
@@ -62,5 +52,17 @@ public class NuovoDettagliGioco extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 }

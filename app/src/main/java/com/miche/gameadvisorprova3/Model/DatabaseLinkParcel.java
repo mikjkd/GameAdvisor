@@ -35,7 +35,6 @@ public class DatabaseLinkParcel implements Parcelable{
     private String DB_LISTGIOCHI="ListaGiochi";
     private FirebaseStorage storage;
     private StorageReference storageRef;
-    private FirebaseDatabase db;
     private ArrayList<DataGioco> giochi;
     private ArrayList<DataGenere> generi;
     private ArrayList<DataGioco> gbg;
@@ -45,7 +44,6 @@ public class DatabaseLinkParcel implements Parcelable{
     private ValueEventListener listenerGiochiByGenere;
 
     public DatabaseLinkParcel(){
-
         gioco = new DataGiocoDettaglio();
         gbg = new ArrayList<>();
         giochi= new ArrayList<>();
@@ -87,7 +85,6 @@ public class DatabaseLinkParcel implements Parcelable{
         gbg = val.readArrayList(DataGioco.class.getClassLoader());
     }
 
-
     public interface UpdateListener{
         void giochiAggiornati();
     }
@@ -100,14 +97,7 @@ public class DatabaseLinkParcel implements Parcelable{
     public interface UpdateGBGListener{
         void gbgAggiornati();
     }
-    public void logInAnonimo(){
-        FirebaseAuth mauth = FirebaseAuth.getInstance();
-        mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-            }
-        });
-    }
+
     public void osservaGiochi(final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child(DB_LISTGIOCHI);

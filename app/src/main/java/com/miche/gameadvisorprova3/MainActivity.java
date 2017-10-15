@@ -1,13 +1,22 @@
 package com.miche.gameadvisorprova3;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.GenereFragment;
 import com.miche.gameadvisorprova3.View.GiochiFragment;
+
+import static com.miche.gameadvisorprova3.R.id.AccediBtn;
+import static com.miche.gameadvisorprova3.R.id.etEmail;
+import static com.miche.gameadvisorprova3.R.id.etPsw;
 
 public class MainActivity extends AppCompatActivity {
     private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();
@@ -23,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(2);
@@ -45,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         argBundle.putParcelable("ARCHIVIO",archivioMain);
         setupViewPager(viewPager,argBundle);
     }
+
 
     private void setupViewPager(ViewPager viewPager,Bundle dati){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

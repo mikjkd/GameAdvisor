@@ -84,8 +84,6 @@ public class AuthenticationClass implements Serializable {
                                 utente.setPassword(Password);
                                 u.sendEmailVerification();
                             }
-
-
                         }
                     }
                 });
@@ -110,4 +108,6 @@ public class AuthenticationClass implements Serializable {
     public void removeListener(){
         mAuth.removeAuthStateListener(mAuthListener);
     }
+
+    public DataUtente logUtente(){return utente;}
 }

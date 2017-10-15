@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Bundle argBundle = new Bundle();
     private final String EXTRA_GIOCHI = "GIOCHI";
     private final String EXTRA_GENERI = "GENERI";
-
+    private AlertDialogLogin adl;
 
 
     @Override
@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
-
-        archivioMain.logInAnonimo();
+        adl = new AlertDialogLogin(MainActivity.this);
+        adl.show();
         argBundle.putParcelable("ARCHIVIO",archivioMain);
         setupViewPager(viewPager,argBundle);
     }
@@ -72,4 +72,5 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
     }
+
 }

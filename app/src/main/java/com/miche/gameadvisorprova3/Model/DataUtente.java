@@ -1,5 +1,8 @@
 package com.miche.gameadvisorprova3.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
@@ -13,14 +16,21 @@ public class DataUtente implements Serializable {
     private String Password;
     private String Email;
     private boolean Autenticated;
+    private Context context;
+    private static final String autenticazione = "AUTENTICAZIONE";
 
-    public DataUtente(){}
+    public DataUtente(Context context){
+        this.context=context;
+        SharedPreferences settings = context.getSharedPreferences(autenticazione,0);
+        Autenticated = settings.getBoolean("authPref",false);
+    }
 
-    public DataUtente(String username, String password, String email, boolean autenticated) {
+    public DataUtente(String username, String password, String email, boolean autenticated,Context context) {
         Username = username;
         Password = password;
         Email = email;
         Autenticated = autenticated;
+        this.context=context;
     }
 
     public String getUsername() { return Username;}
@@ -37,5 +47,10 @@ public class DataUtente implements Serializable {
 
     public boolean isAutenticated() {return Autenticated;}
 
-    public void setAutenticated(boolean autenticated) {Autenticated = autenticated;}
+    public void setAutenticated(boolean autenticated) {
+        Autenticated = autenticated;
+        SharedPreferences settings = context.getSharedPreferences(autenticazione,0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref",Autenticated);
+        editor.apply();
+    }
 }

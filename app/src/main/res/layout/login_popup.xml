@@ -41,10 +41,10 @@
         android:id="@+id/AccediBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPsw"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Accedi" />
+        android:text="Accedi"
+        android:layout_below="@+id/etPsw"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView3"
@@ -86,7 +86,7 @@
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
         android:layout_toEndOf="@+id/AccediBtn"
-        android:paddingLeft="2dp"
-        android:onClick="OspiteBtn"/>
+        android:paddingLeft="2dp"/>
+
 
 </RelativeLayout>

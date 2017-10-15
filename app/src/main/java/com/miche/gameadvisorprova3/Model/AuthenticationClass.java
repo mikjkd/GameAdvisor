@@ -1,5 +1,6 @@
 package com.miche.gameadvisorprova3.Model;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -26,46 +27,53 @@ public class AuthenticationClass implements Serializable {
     private FirebaseAuth mAuth;
     private DataUtente utente;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
     public AuthenticationClass(){
+
         mAuth=FirebaseAuth.getInstance();
-        utente = new DataUtente();
     }
+    public AuthenticationClass(DataUtente utente){   mAuth=FirebaseAuth.getInstance();this.utente=utente; }
 
     public AuthenticationClass(FirebaseAuth mAuth, DataUtente utente) {
         this.mAuth = mAuth;
         this.utente = utente;
     }
     public interface LoginUpdate{
-        public void loginEffettuato();
-        public void loginNonEffettuato();
+        void loginEffettuato();
+        void loginNonEffettuato();
+        void erroreAutenticazione();
     }
     public void logInAnonimo(){
+        utente.setAutenticated(false);
         FirebaseAuth mauth = FirebaseAuth.getInstance();
         mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                utente.setAutenticated(false);
                 utente.setEmail("");
                 utente.setPassword("");
             }
         });
     }
-    public void login(final String Email, final String Password){
+    public void login(final String Email, final String Password, final LoginUpdate loginUpdate){
+        Log.e("Login","class");
+        utente.setAutenticated(true);
         mAuth.signInWithEmailAndPassword(Email,Password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             if(mAuth.getCurrentUser()!=null){
-                                utente.setAutenticated(true);
-                                utente.setEmail(Email);
+                                Log.e("login","Riuscito");
                                 utente.setPassword(Password);
-
+                                utente.setEmail(Email);
+                                loginUpdate.loginEffettuato();
                             }
                         }
                         else{
                             Log.e("Errore ","Autenticazione non riuscita");
+                            utente.setAutenticated(false);
+                            utente.setPassword("");
+                            utente.setEmail("");
+                            loginUpdate.erroreAutenticazione();
                         }
                     }
                 });
@@ -73,7 +81,7 @@ public class AuthenticationClass implements Serializable {
 
     public void signUp(final String Email,final String Password){
         mAuth.createUserWithEmailAndPassword(Email, Password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
@@ -95,10 +103,14 @@ public class AuthenticationClass implements Serializable {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
+                Log.e("Autenticato: ",utente.isAutenticated() ? "Si ":"NO");
                 if(user!=null && utente.isAutenticated()==true){
+                    Log.e("Accesso","Effettuato");
                     u.loginEffettuato();
+
                 }
                 else if(user!= null && utente.isAutenticated()==false){
+                    Log.e("Accesso","Ospite");
                     u.loginNonEffettuato();
                 }
             }

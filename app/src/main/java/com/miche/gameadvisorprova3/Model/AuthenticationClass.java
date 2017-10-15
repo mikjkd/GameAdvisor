@@ -13,10 +13,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.miche.gameadvisorprova3.MainActivity;
 
 import java.io.Serializable;
 import java.net.PasswordAuthentication;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -24,6 +28,7 @@ import java.util.concurrent.Executor;
  */
 
 public class AuthenticationClass implements Serializable {
+    private FirebaseDatabase db;
     private FirebaseAuth mAuth;
     private DataUtente utente;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -92,6 +97,12 @@ public class AuthenticationClass implements Serializable {
                                 utente.setEmail(Email);
                                 utente.setPassword(Password);
                                 u.sendEmailVerification();
+                                db = FirebaseDatabase.getInstance();
+                                //creazione utente nel database
+                                Map<String,String> userData = new HashMap<String, String>();
+                                userData.put("Email",utente.getEmail());
+                                DatabaseReference ref = db.getReference().child("Utenti").child(u.getUid());
+                                ref.setValue(userData);
                             }
                         }
                         else {

@@ -5,11 +5,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.GenereFragment;
@@ -18,6 +21,7 @@ import com.miche.gameadvisorprova3.View.GiochiFragment;
 import static com.miche.gameadvisorprova3.R.id.AccediBtn;
 import static com.miche.gameadvisorprova3.R.id.etEmail;
 import static com.miche.gameadvisorprova3.R.id.etPsw;
+import static com.miche.gameadvisorprova3.R.id.utente;
 
 public class MainActivity extends AppCompatActivity {
     private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();
@@ -78,5 +82,27 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.utente:
+                View vitem = this.findViewById(R.id.utente);
+                PopupMenu popup = new PopupMenu(this,vitem);
+                popup.getMenuInflater().inflate(R.menu.popupmenu, popup.getMenu());
+
+                popup.getMenu().add("wewe");
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popup.show();
+                break;
+        }
+
+        return true;
     }
 }

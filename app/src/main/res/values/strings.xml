@@ -5,4 +5,5 @@
     <string name="emailLo">Email</string>
     <string name="passwordLo">Password</string>
     <string name="conferma_password">Conferma Password</string>
+    <string name="utente">utete</string>
 </resources>

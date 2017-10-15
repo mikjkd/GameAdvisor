@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
@@ -54,6 +55,11 @@ public class NuovoDettagliGioco extends AppCompatActivity {
 
     }
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         super.onOptionsItemSelected(item);
@@ -61,6 +67,9 @@ public class NuovoDettagliGioco extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.menu.menu:
+                break;
+
         }
 
         return true;

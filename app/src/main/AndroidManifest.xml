@@ -16,10 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.DettagliGiocoActivity">
-
-
-        </activity>
         <activity android:name=".View.GiochiByGenereActivity" >
         </activity>
         <activity android:name=".View.NuovoDettagliGioco">

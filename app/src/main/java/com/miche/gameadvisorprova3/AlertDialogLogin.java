@@ -104,6 +104,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
 
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
+        mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
         return mAlertDialog;
     }

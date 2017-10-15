@@ -41,6 +41,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         final EditText mEmail = mView.findViewById(etEmail);
         final EditText mPassword = mView.findViewById(etPsw);
         TextView mOspite = mView.findViewById(R.id.tvOspite);
+        Button mIscriviti = mView.findViewById(R.id.IscrivitiBtn);
         Button mAccedi = mView.findViewById(AccediBtn);
 
         auth.createListener(new AuthenticationClass.LoginUpdate() {
@@ -92,6 +93,15 @@ public class AlertDialogLogin extends AlertDialog.Builder {
                 auth.logInAnonimo();
             }
         });
+
+        mIscriviti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogLogon adl = new AlertDialogLogon(context);
+                adl.show();
+            }
+        });
+
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
         mAlertDialog.show();

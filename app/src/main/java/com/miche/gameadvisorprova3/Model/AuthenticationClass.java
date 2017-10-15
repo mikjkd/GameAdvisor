@@ -79,7 +79,8 @@ public class AuthenticationClass implements Serializable {
                 });
     }
 
-    public void signUp(final String Email,final String Password){
+    public void signUp(final String Email,final String Password, final LoginUpdate loginUpdate){
+        utente.setAutenticated(true);
         mAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
@@ -92,6 +93,13 @@ public class AuthenticationClass implements Serializable {
                                 utente.setPassword(Password);
                                 u.sendEmailVerification();
                             }
+                        }
+                        else {
+                            Log.e("Errore ","Registrazione non riuscita");
+                            utente.setAutenticated(false);
+                            utente.setPassword("");
+                            utente.setEmail("");
+                            loginUpdate.erroreAutenticazione();
                         }
                     }
                 });

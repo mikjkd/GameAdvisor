@@ -1,9 +1,11 @@
 package com.miche.gameadvisorprova3.View;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.Button;
 import android.view.MenuItem;
@@ -11,7 +13,10 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.miche.gameadvisorprova3.AlertDialogUtente;
+import com.miche.gameadvisorprova3.MainActivity;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
+import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
@@ -26,6 +31,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private TextView Descrizione;
     private DatabaseLinkParcel archivio;
     private DataGiocoDettaglio gioco;
+    private DataUtente utente;
     ExpandableListView expandableListView;
 
     @Override
@@ -37,6 +43,8 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
+        utente =(DataUtente)intent.getSerializableExtra("UTENTE");
+        Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
         archivio.cercaGioco(key, new DatabaseLinkParcel.UpdateListener() {
             @Override
@@ -65,11 +73,16 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("UTENTE",utente);
+                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
                 break;
-            case R.menu.menu:
+            case R.id.utente:
+                Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
+                AlertDialogUtente adu = new AlertDialogUtente(NuovoDettagliGioco.this,utente);
+                adu.show();
                 break;
-
         }
 
         return true;

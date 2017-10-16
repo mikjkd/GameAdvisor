@@ -3,6 +3,7 @@ package com.miche.gameadvisorprova3;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -32,14 +33,14 @@ public class AlertDialogUtente extends AlertDialog.Builder {
     public AlertDialogUtente(@NonNull Context context) {
         super(context);
         this.context=context;
-        utente= new DataUtente(context);
-        auth = new AuthenticationClass(utente);
+        utente= new DataUtente();
+        auth = new AuthenticationClass(utente,context);
     }
     public AlertDialogUtente(@NonNull Context context,DataUtente utente) {
         super(context);
         this.context=context;
         this.utente= utente;
-        auth = new AuthenticationClass(utente);
+        auth = new AuthenticationClass(utente,context);
     }
 
     @Override
@@ -48,14 +49,7 @@ public class AlertDialogUtente extends AlertDialog.Builder {
         View mView = LayoutInflater.from(context).inflate(R.layout.utente_popup,null);
         final TextView mUtente = mView.findViewById(R.id.mUtente);
         Button mLog = mView.findViewById(R.id.logBtn);
-        if(utente.isAutenticated()){
-            mUtente.setText(utente.getEmail());
-            mLog.setText("Logout");
-        }
-        else if(!utente.isAutenticated()){
-            mUtente.setText("Ospite");
-            mLog.setText("Login");
-        }
+        Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
         mLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +59,20 @@ public class AlertDialogUtente extends AlertDialog.Builder {
                 adl.show();
             }
         });
+        if(utente.isAutenticated()){
+            Log.e("utente",utente.getEmail());
+            mUtente.setText(utente.getEmail());
+            mLog.setText("Logout");
+        }
+        else if(!utente.isAutenticated()){
+            Log.e("utente",utente.getEmail());
+            mUtente.setText("Ospite");
+            mLog.setText("Login");
+        }
 
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
-        mAlertDialog.setCanceledOnTouchOutside(false);
+        //mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
         return mAlertDialog;
     }

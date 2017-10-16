@@ -1,5 +1,7 @@
 package com.miche.gameadvisorprova3.View;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,8 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.miche.gameadvisorprova3.Model.DataGioco;
+import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by miche on 08/10/2017.
@@ -24,11 +29,20 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         private Bundle arg;
         private final static String EXTRA_GIOCO = "GIOCOKEY";
         private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
+        private DataUtente utente;
+        UtenteUpdate utenteUpdate;
         public GiochiFragment() { }
 
+        public interface UtenteUpdate{
+                public void  utenteUpdate(DataUtente du);
+        }
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
+        }
+
+        public void AggiornaUtente(DataUtente u){
+                this.utente= u;
         }
 
         @Nullable
@@ -39,6 +53,8 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 adapter = new GiocoAdapter(getActivity());
                 arg = this.getArguments();
                 archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
+                utente = (DataUtente)arg.getSerializable("UTENTE");
+                Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
                 archivio.osservaGiochi(new DatabaseLinkParcel.UpdateListener(){
                 @Override
                 public void giochiAggiornati() {
@@ -53,13 +69,42 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                         String giocoKey = adapter.getItem(i).getKey();
                         extras.putSerializable(EXTRA_GIOCO,giocoKey);
                         extras.putParcelable(EXTRA_ARCHIVIO,archivio);
+                        extras.putSerializable("UTENTE",utente);
                         Intent intent = new Intent(getContext(),NuovoDettagliGioco.class);
                         intent.putExtras(extras);
-                        getActivity().startActivity(intent);
-                }
+                        startActivityForResult(intent,1);
+                  }
         });
         return rootView;
 
+        }
+
+        @Override
+        public void onAttach(Activity activity) {
+                super.onAttach(activity);
+                try{
+                        utenteUpdate = (UtenteUpdate)activity;
+                }catch(ClassCastException e){
+                        throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
+                }
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+                super.onActivityResult(requestCode, resultCode, data);
+                Log.e("On Activity ","result");
+                switch(requestCode) {
+                        case (1) : {
+                                if (resultCode == Activity.RESULT_OK) {
+                                        utente =(DataUtente)data.getSerializableExtra("UTENTE");
+                                        utenteUpdate.utenteUpdate(utente);
+                                        if(utente!=null)
+                                                Log.e("Utente on activity",utente.getEmail());
+                                }
+                                break;
+                        }
+                }
         }
 
         @Override

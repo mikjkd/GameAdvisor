@@ -1,5 +1,7 @@
 package com.miche.gameadvisorprova3.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,15 +26,24 @@ public class AuthenticationClass implements Serializable {
     private FirebaseAuth mAuth;
     private DataUtente utente;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private Context cont;
+
+    private static final String autenticazione = "AUTENTICAZIONE";
     public AuthenticationClass(){
 
         mAuth=FirebaseAuth.getInstance();
     }
-    public AuthenticationClass(DataUtente utente){   mAuth=FirebaseAuth.getInstance();this.utente=utente; }
+    public AuthenticationClass(DataUtente utente,Context context){
+        mAuth=FirebaseAuth.getInstance();
+        this.utente=utente;
+        this.cont=context;
 
-    public AuthenticationClass(FirebaseAuth mAuth, DataUtente utente) {
+    }
+
+    public AuthenticationClass(FirebaseAuth mAuth, DataUtente utente,Context context) {
         this.mAuth = mAuth;
         this.utente = utente;
+        this.cont=context;
     }
     public interface LoginUpdate{
         void loginEffettuato();
@@ -41,11 +52,14 @@ public class AuthenticationClass implements Serializable {
     }
     public void logInAnonimo(){
         utente.setAutenticated(false);
+        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        editor.apply();
         FirebaseAuth mauth = FirebaseAuth.getInstance();
         mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                utente.setEmail("");
+                utente.setEmail("Ospite");
                 utente.setPassword("");
             }
         });
@@ -53,6 +67,9 @@ public class AuthenticationClass implements Serializable {
     public void login(final String Email, final String Password, final LoginUpdate loginUpdate){
         Log.e("Login","class");
         utente.setAutenticated(true);
+        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        editor.apply();
         mAuth.signInWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
@@ -69,8 +86,12 @@ public class AuthenticationClass implements Serializable {
                         else{
                             Log.e("Errore ","Autenticazione non riuscita");
                             utente.setAutenticated(false);
-                            utente.setPassword("");
+                            utente.setPassword("Ospite");
                             utente.setEmail("");
+                            utente.setAutenticated(true);
+                            SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+                            SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+                            editor.apply();
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -79,6 +100,9 @@ public class AuthenticationClass implements Serializable {
 
     public void signUp(final String Email,final String Password, final LoginUpdate loginUpdate){
         utente.setAutenticated(true);
+        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        editor.apply();
         mAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
@@ -104,6 +128,9 @@ public class AuthenticationClass implements Serializable {
                             utente.setAutenticated(false);
                             utente.setPassword("");
                             utente.setEmail("");
+                            SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+                            SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+                            editor.apply();
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -112,6 +139,9 @@ public class AuthenticationClass implements Serializable {
 
     public void logout(){
         utente.setAutenticated(false);
+        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        editor.apply();
         utente.setEmail("");
         utente.setPassword("");
         utente.setUID("");

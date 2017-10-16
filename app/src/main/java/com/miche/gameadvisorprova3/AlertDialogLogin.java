@@ -30,14 +30,14 @@ public class AlertDialogLogin extends AlertDialog.Builder {
     public AlertDialogLogin(@NonNull Context context) {
         super(context);
         this.context=context;
-        utente= new DataUtente(context);
-        auth = new AuthenticationClass(utente);
+        utente= new DataUtente();
+        auth = new AuthenticationClass(utente,context);
     }
     public AlertDialogLogin(@NonNull Context context,DataUtente utente) {
         super(context);
         this.context=context;
         this.utente= utente;
-        auth = new AuthenticationClass(utente);
+        auth = new AuthenticationClass(utente,context);
     }
 
     @Override

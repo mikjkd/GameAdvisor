@@ -1,34 +1,19 @@
 package com.miche.gameadvisorprova3;
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.GenereFragment;
 import com.miche.gameadvisorprova3.View.GiochiFragment;
 
-import static com.miche.gameadvisorprova3.R.id.AccediBtn;
-import static com.miche.gameadvisorprova3.R.id.etEmail;
-import static com.miche.gameadvisorprova3.R.id.etPsw;
-import static com.miche.gameadvisorprova3.R.id.utente;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GiochiFragment.UtenteUpdate, GenereFragment.UtenteUpdateG {
     private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -37,6 +22,15 @@ public class MainActivity extends AppCompatActivity {
     private final String EXTRA_GENERI = "GENERI";
     private AlertDialogLogin adl;
     private DataUtente utente;
+    private GiochiFragment giochiFragment;
+    private GenereFragment genereFragment;
+    private static final String autenticazione = "AUTENTICAZIONE";
+    @Override
+    public void utenteUpdate(DataUtente utente) {
+        this.utente = utente;
+        giochiFragment.AggiornaUtente(this.utente);
+        genereFragment.AggiornaUtente(this.utente);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +54,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
-        utente = new DataUtente(this);
+        utente = new DataUtente();
+        SharedPreferences settings = MainActivity.this.getSharedPreferences(autenticazione, 0);
+        utente.setAutenticated(settings.getBoolean("authPref", false));
         adl = new AlertDialogLogin(MainActivity.this,utente);
         adl.show();
         argBundle.putParcelable("ARCHIVIO",archivioMain);
+        argBundle.putSerializable("UTENTE",utente);
         setupViewPager(viewPager,argBundle);
     }
 
@@ -71,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager,Bundle dati){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        GiochiFragment giochiFragment = new GiochiFragment();
-        GenereFragment genereFragment = new GenereFragment();
+        giochiFragment = new GiochiFragment();
+        genereFragment = new GenereFragment();
 
 
         giochiFragment.setArguments(dati);

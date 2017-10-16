@@ -17,6 +17,7 @@ public class DataUtente implements Serializable {
     private String Email;
     private boolean Autenticated;
     private Context context;
+    private String UID;
     private static final String autenticazione = "AUTENTICAZIONE";
 
     public DataUtente(Context context){
@@ -53,4 +54,8 @@ public class DataUtente implements Serializable {
         SharedPreferences.Editor editor = settings.edit().putBoolean("authPref",Autenticated);
         editor.apply();
     }
+
+    public String getUID() {  return UID; }
+
+    public void setUID(String UID) { this.UID = UID; }
 }

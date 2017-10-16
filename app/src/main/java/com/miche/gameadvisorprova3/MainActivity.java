@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.View.GenereFragment;
 import com.miche.gameadvisorprova3.View.GiochiFragment;
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private final String EXTRA_GIOCHI = "GIOCHI";
     private final String EXTRA_GENERI = "GENERI";
     private AlertDialogLogin adl;
-
+    private DataUtente utente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
-        adl = new AlertDialogLogin(MainActivity.this);
+        utente = new DataUtente(this);
+        adl = new AlertDialogLogin(MainActivity.this,utente);
         adl.show();
         argBundle.putParcelable("ARCHIVIO",archivioMain);
         setupViewPager(viewPager,argBundle);

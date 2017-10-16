@@ -33,6 +33,12 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         utente= new DataUtente(context);
         auth = new AuthenticationClass(utente);
     }
+    public AlertDialogLogin(@NonNull Context context,DataUtente utente) {
+        super(context);
+        this.context=context;
+        this.utente= utente;
+        auth = new AuthenticationClass(utente);
+    }
 
     @Override
     public AlertDialog show() {
@@ -47,7 +53,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         auth.createListener(new AuthenticationClass.LoginUpdate() {
             @Override
             public void loginEffettuato() {
-                Toast.makeText(context,"Login effettuato",Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context,"Login effettuato",Toast.LENGTH_LONG).show();
                 mAlertDialog.dismiss();
             }
 
@@ -73,11 +79,14 @@ public class AlertDialogLogin extends AlertDialog.Builder {
                     auth.login(mEmail.getText().toString(), mPassword.getText().toString(), new AuthenticationClass.LoginUpdate() {
                         @Override
                         public void loginEffettuato() {
+                            Toast.makeText(context,"Effettuato login come:"+utente.getEmail(),Toast.LENGTH_LONG).show();
                             mAlertDialog.dismiss();
                         }
 
                         @Override
-                        public void loginNonEffettuato() {}
+                        public void loginNonEffettuato() {
+                          //  Toast.makeText(context,"Accesso come Ospite",Toast.LENGTH_LONG).show();
+                        }
 
                         @Override
                         public void erroreAutenticazione() {

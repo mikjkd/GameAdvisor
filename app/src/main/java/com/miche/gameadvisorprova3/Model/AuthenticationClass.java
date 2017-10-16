@@ -70,6 +70,7 @@ public class AuthenticationClass implements Serializable {
                                 Log.e("login","Riuscito");
                                 utente.setPassword(Password);
                                 utente.setEmail(Email);
+                                utente.setUID(mAuth.getCurrentUser().getUid());
                                 loginUpdate.loginEffettuato();
                             }
                         }
@@ -103,6 +104,7 @@ public class AuthenticationClass implements Serializable {
                                 userData.put("Email",utente.getEmail());
                                 DatabaseReference ref = db.getReference().child("Utenti").child(u.getUid());
                                 ref.setValue(userData);
+                                utente.setUID(u.getUid());
                             }
                         }
                         else {

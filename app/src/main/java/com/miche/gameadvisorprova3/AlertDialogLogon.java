@@ -1,11 +1,8 @@
 package com.miche.gameadvisorprova3;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +26,12 @@ public class AlertDialogLogon extends AlertDialog.Builder {
         super(context);
         this.context=context;
         utente= new DataUtente(context);
+        auth = new AuthenticationClass(utente);
+    }
+    public AlertDialogLogon(@NonNull Context context,DataUtente utente) {
+        super(context);
+        this.context=context;
+        this.utente= utente;
         auth = new AuthenticationClass(utente);
     }
 

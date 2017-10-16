@@ -53,7 +53,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         auth.createListener(new AuthenticationClass.LoginUpdate() {
             @Override
             public void loginEffettuato() {
-              //  Toast.makeText(context,"Login effettuato",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Effettuato login come:"+utente.getEmail(),Toast.LENGTH_LONG).show();
                 mAlertDialog.dismiss();
             }
 
@@ -78,15 +78,10 @@ public class AlertDialogLogin extends AlertDialog.Builder {
                 else if(!mEmail.getText().toString().isEmpty() && !mPassword.getText().toString().isEmpty()){
                     auth.login(mEmail.getText().toString(), mPassword.getText().toString(), new AuthenticationClass.LoginUpdate() {
                         @Override
-                        public void loginEffettuato() {
-                            Toast.makeText(context,"Effettuato login come:"+utente.getEmail(),Toast.LENGTH_LONG).show();
-                            mAlertDialog.dismiss();
-                        }
+                        public void loginEffettuato() { mAlertDialog.dismiss(); }
 
                         @Override
-                        public void loginNonEffettuato() {
-                          //  Toast.makeText(context,"Accesso come Ospite",Toast.LENGTH_LONG).show();
-                        }
+                        public void loginNonEffettuato() {}
 
                         @Override
                         public void erroreAutenticazione() {
@@ -106,7 +101,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         mIscriviti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialogLogon adl = new AlertDialogLogon(context);
+                AlertDialogLogon adl = new AlertDialogLogon(context,utente);
                 adl.show();
             }
         });

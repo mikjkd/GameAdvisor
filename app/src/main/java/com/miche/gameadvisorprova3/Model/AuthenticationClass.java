@@ -2,6 +2,7 @@ package com.miche.gameadvisorprova3.Model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -121,16 +122,23 @@ public class AuthenticationClass implements Serializable {
 
     public void createListener(final LoginUpdate u){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
+
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 Log.e("Autenticato: ",utente.isAutenticated() ? "Si ":"NO");
+
                 if(user!=null && utente.isAutenticated()==true){
+                    utente.setEmail(user.getEmail());
+                    utente.setUID(user.getUid());
+
                     Log.e("Accesso","Effettuato");
                     u.loginEffettuato();
 
                 }
                 else if(user!= null && utente.isAutenticated()==false){
+                    utente.setEmail("");
+                    utente.setUID(user.getUid());
                     Log.e("Accesso","Ospite");
                     u.loginNonEffettuato();
                 }

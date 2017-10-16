@@ -50,14 +50,14 @@ public class AlertDialogVota extends AlertDialog.Builder {
         OkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"OK",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Hai votato correttamente",Toast.LENGTH_SHORT).show();
                 mAlertDialog.dismiss();
             }
         });
         AnnullaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"ANNULLA",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"La votazione è stata annullata",Toast.LENGTH_SHORT).show();
                 mAlertDialog.dismiss();
             }
         });

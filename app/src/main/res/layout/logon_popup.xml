@@ -55,7 +55,10 @@
         android:layout_alignEnd="@+id/etPswLoR"
         android:layout_below="@+id/etPswLoR"
         android:layout_marginTop="17dp"
-        android:text="Registrati" />
+        android:text="Registrati"
+        android:background="@null"
+        android:textColor="#FF3333"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/AnnullaBtn"
@@ -64,5 +67,8 @@
         android:layout_alignBaseline="@+id/ConfermaBtn"
         android:layout_alignBottom="@+id/ConfermaBtn"
         android:layout_alignStart="@+id/etPswLoR"
-        android:text="Annulla" />
+        android:text="Annulla"
+        android:background="@null"
+        android:textColor="#FF3333"
+        android:layout_marginBottom="10dp"/>
 </RelativeLayout>

@@ -135,7 +135,7 @@ public class DatabaseLinkParcel implements Parcelable{
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
-
+                gioco.setKey(dataSnapshot.getKey());
                 Log.e("valori: ",dataSnapshot.getKey());
                 scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){
                     @Override

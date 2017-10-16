@@ -17,8 +17,8 @@ public class DataGiocoDettaglio implements Serializable {
     private String UrlImmagineLocale;
     private String Requisiti;
     private String Sviluppatore;
-    private float Votazione;
-    private int NumeroVotanti;
+    private Float Votazione;
+    private Integer NumeroVotanti;
     // Bitmap immagine;
 
 
@@ -109,19 +109,19 @@ public class DataGiocoDettaglio implements Serializable {
         Requisiti = requisiti;
     }
 
-    public float getVotazione() {
+    public Float getVotazione() {
         return Votazione;
     }
 
-    public void setVotazione(float votazione) {
+    public void setVotazione(Float votazione) {
         Votazione = votazione;
     }
 
-    public int getNumeroVotanti() {
+    public Integer getNumeroVotanti() {
         return NumeroVotanti;
     }
 
-    public void setNumeroVotanti(int numeroVotanti) {
+    public void setNumeroVotanti(Integer numeroVotanti) {
         NumeroVotanti = numeroVotanti;
     }
 }

@@ -71,24 +71,26 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                     voti.setRating(gioco.getVotazione());
                     tvVotanti.setText(String.valueOf(gioco.getNumeroVotanti()));
                     expandableListView.setAdapter(adapter);
+                    Votabtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(!utente.isAutenticated()){
+                                auth = new AuthenticationClass(utente,NuovoDettagliGioco.this);
+                                auth.logout();
+                                AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this,utente);
+                                adl.show();
+                            }
+                            else{
+                                Log.e("key",gioco.getKey());
+                                AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente,gioco);
+                                adv.show();
+                            }
+                        }
+                    });
                 }
             }
         });
-        Votabtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!utente.isAutenticated()){
-                    auth = new AuthenticationClass(utente,NuovoDettagliGioco.this);
-                    auth.logout();
-                    AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this,utente);
-                    adl.show();
-                }
-                else{
-                    AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente);
-                    adv.show();
-                }
-            }
-        });
+
 
     }
     @Override

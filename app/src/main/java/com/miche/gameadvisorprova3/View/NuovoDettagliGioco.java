@@ -7,20 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Button;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.AlertDialogUtente;
-import com.miche.gameadvisorprova3.MainActivity;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
-import static android.app.PendingIntent.getActivity;
 
 public class NuovoDettagliGioco extends AppCompatActivity {
     private final static String EXTRA_GIOCO = "GIOCOKEY";
@@ -60,6 +57,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                 }
             }
         });
+
 
     }
     @Override

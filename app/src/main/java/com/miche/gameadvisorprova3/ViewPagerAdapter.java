@@ -3,7 +3,6 @@ package com.miche.gameadvisorprova3;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NotificationCompatBase;
 
 import java.util.ArrayList;
 import java.util.List;

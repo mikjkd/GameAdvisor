@@ -1,7 +1,6 @@
 package com.miche.gameadvisorprova3.View;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
 
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by miche on 08/10/2017.

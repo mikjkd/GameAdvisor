@@ -7,18 +7,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 
-import static com.miche.gameadvisorprova3.R.id.AccediBtn;
-import static com.miche.gameadvisorprova3.R.id.etEmail;
-import static com.miche.gameadvisorprova3.R.id.etPsw;
-import static com.miche.gameadvisorprova3.R.id.up;
-import static com.miche.gameadvisorprova3.R.id.utente;
 
 /**
  * Created by miche on 16/10/2017.

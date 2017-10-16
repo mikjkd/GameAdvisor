@@ -7,8 +7,6 @@ package com.miche.gameadvisorprova3.View;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

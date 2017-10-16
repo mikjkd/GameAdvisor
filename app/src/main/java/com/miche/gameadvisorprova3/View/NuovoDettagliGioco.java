@@ -39,6 +39,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private DataUtente utente;
     private AuthenticationClass auth  ;
     private TextView mediaVoti;
+    private TextView tvVotanti;
     ExpandableListView expandableListView;
 
     @Override
@@ -51,6 +52,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         Votabtn =(Button) findViewById(R.id.Votabtn);
          mediaVoti = (TextView) findViewById(R.id.mediaVoti);
         voti = (RatingBar)findViewById(R.id.ratingBar);
+        tvVotanti = (TextView)findViewById(R.id.tvVotanti);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         utente =(DataUtente)intent.getSerializableExtra("UTENTE");
@@ -67,6 +69,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                     ELVAdapter adapter = new ELVAdapter(NuovoDettagliGioco.this,gioco);
                     mediaVoti.setText(String.valueOf(gioco.getVotazione()));
                     voti.setRating(gioco.getVotazione());
+                    tvVotanti.setText(String.valueOf(gioco.getNumeroVotanti()));
                     expandableListView.setAdapter(adapter);
                 }
             }

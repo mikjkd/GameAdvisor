@@ -53,7 +53,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         auth.createListener(new AuthenticationClass.LoginUpdate() {
             @Override
             public void loginEffettuato() {
-                Toast.makeText(context,"Effettuato login come:"+utente.getEmail(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Effettuato login come: "+utente.getEmail(),Toast.LENGTH_LONG).show();
                 mAlertDialog.dismiss();
             }
 

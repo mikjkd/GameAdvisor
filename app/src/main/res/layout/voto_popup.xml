@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RatingBar
+        android:id="@+id/ratingBar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:textSize="20dp"
+        android:text="Valuta questo gioco" />
+
+    <EditText
+        android:id="@+id/etCommento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_below="@+id/ratingBar2"
+        android:hint="@string/facci_sapere_la_tua_opinione"
+        android:layout_alignEnd="@+id/ratingBar2"
+        android:layout_alignStart="@+id/ratingBar2" />
+
+    <Button
+        android:id="@+id/AnnullaBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Annulla"
+        android:background="@null"
+        android:layout_below="@+id/etCommento"
+        android:layout_alignStart="@+id/etCommento"
+        android:textColor="#FF3333"/>
+
+    <Button
+        android:id="@+id/OkBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/etCommento"
+        android:layout_alignTop="@+id/AnnullaBtn"
+        android:text="Conferma"
+        android:background="@null"
+        android:textColor="#FF3333"/>
+
+</RelativeLayout>

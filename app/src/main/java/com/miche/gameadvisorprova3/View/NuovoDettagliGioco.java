@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.miche.gameadvisorprova3.AlertDialogLogin;
 import com.miche.gameadvisorprova3.AlertDialogUtente;
+import com.miche.gameadvisorprova3.AlertDialogVota;
+import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
@@ -24,11 +29,13 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private final static String EXTRA_ARCHIVIO="ARCHIVIO";
     private String key;
     private TextView Titolo;
+    private Button Votabtn;
     private ImageView ImgGioco;
     private TextView Descrizione;
     private DatabaseLinkParcel archivio;
     private DataGiocoDettaglio gioco;
     private DataUtente utente;
+    private AuthenticationClass auth  ;
     ExpandableListView expandableListView;
 
     @Override
@@ -38,10 +45,10 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
+        Votabtn =(Button) findViewById(R.id.Votabtn);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         utente =(DataUtente)intent.getSerializableExtra("UTENTE");
-        Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
         archivio.cercaGioco(key, new DatabaseLinkParcel.UpdateListener() {
             @Override
@@ -57,7 +64,21 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                 }
             }
         });
-
+        Votabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!utente.isAutenticated()){
+                    auth = new AuthenticationClass(utente,NuovoDettagliGioco.this);
+                    auth.logout();
+                    AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this,utente);
+                    adl.show();
+                }
+                else{
+                    AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente);
+                    adv.show();
+                }
+            }
+        });
 
     }
     @Override

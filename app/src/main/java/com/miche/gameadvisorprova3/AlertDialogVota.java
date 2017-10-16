@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataUtente;
@@ -26,15 +27,15 @@ public class AlertDialogVota extends AlertDialog.Builder {
 
     public AlertDialogVota(@NonNull Context context) {
         super(context);
-        this.context = context;
-        utente = new DataUtente(context);
-        auth = new AuthenticationClass(utente);
+        this.context=context;
+        utente= new DataUtente();
+        auth = new AuthenticationClass(utente,context);
     }
     public AlertDialogVota(@NonNull Context context,DataUtente utente) {
         super(context);
-        this.context = context;
-        this.utente = utente;
-        auth = new AuthenticationClass(utente);
+        this.context=context;
+        this.utente= utente;
+        auth = new AuthenticationClass(utente,context);
     }
 
     @Override
@@ -46,8 +47,24 @@ public class AlertDialogVota extends AlertDialog.Builder {
         Button AnnullaBtn = mView.findViewById(R.id.AnnullaBtn);
         Button OkBtn = mView.findViewById(R.id.OkBtn);
 
+        OkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,"OK",Toast.LENGTH_SHORT).show();
+                mAlertDialog.dismiss();
+            }
+        });
+        AnnullaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,"ANNULLA",Toast.LENGTH_SHORT).show();
+                mAlertDialog.dismiss();
+            }
+        });
 
-
-        return null;
+        mBuilder.setView(mView);
+        mAlertDialog= mBuilder.create();
+        mAlertDialog.show();
+        return mAlertDialog;
     }
 }

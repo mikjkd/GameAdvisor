@@ -25,8 +25,8 @@ public class AlertDialogLogin extends AlertDialog.Builder {
     private Context context;
     private AlertDialog mAlertDialog;
     private DataUtente utente;
-
     private AuthenticationClass auth ;
+
     public AlertDialogLogin(@NonNull Context context) {
         super(context);
         this.context=context;
@@ -53,13 +53,13 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         auth.createListener(new AuthenticationClass.LoginUpdate() {
             @Override
             public void loginEffettuato() {
-                Toast.makeText(context,"Effettuato login come: "+utente.getEmail(),Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context,"Effettuato login come: "+utente.getEmail(),Toast.LENGTH_SHORT).show();
                 mAlertDialog.dismiss();
             }
 
             @Override
             public void loginNonEffettuato() {
-                Toast.makeText(context,"Accesso come Ospite",Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,"Accesso come Ospite",Toast.LENGTH_SHORT).show();
                 mAlertDialog.dismiss();
             }
 

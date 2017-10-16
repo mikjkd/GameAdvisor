@@ -110,7 +110,13 @@ public class AuthenticationClass implements Serializable {
                 });
     }
 
-
+    public void logout(){
+        utente.setAutenticated(false);
+        utente.setEmail("");
+        utente.setPassword("");
+        utente.setUID("");
+        mAuth.signOut();
+    }
     public void createListener(final LoginUpdate u){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 

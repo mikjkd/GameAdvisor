@@ -94,18 +94,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.utente:
-                View vitem = this.findViewById(R.id.utente);
-                PopupMenu popup = new PopupMenu(this,vitem);
-                popup.getMenuInflater().inflate(R.menu.popupmenu, popup.getMenu());
-
-                popup.getMenu().add("wewe");
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(MainActivity.this,"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-                popup.show();
+                AlertDialogUtente adu = new AlertDialogUtente(MainActivity.this,utente);
+                adu.show();
                 break;
         }
 

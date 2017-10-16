@@ -1,13 +1,7 @@
 package com.miche.gameadvisorprova3.Model;
 
-import android.content.Context;
-import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -16,13 +10,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.miche.gameadvisorprova3.MainActivity;
 
 import java.io.Serializable;
-import java.net.PasswordAuthentication;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 /**
  * Created by miche on 15/10/2017.

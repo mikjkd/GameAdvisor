@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.AlertDialogLogin;
@@ -28,6 +29,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private final static String EXTRA_GIOCO = "GIOCOKEY";
     private final static String EXTRA_ARCHIVIO="ARCHIVIO";
     private String key;
+    private RatingBar voti;
     private TextView Titolo;
     private Button Votabtn;
     private ImageView ImgGioco;
@@ -36,6 +38,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private DataGiocoDettaglio gioco;
     private DataUtente utente;
     private AuthenticationClass auth  ;
+    private TextView mediaVoti;
     ExpandableListView expandableListView;
 
     @Override
@@ -46,6 +49,8 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Votabtn =(Button) findViewById(R.id.Votabtn);
+         mediaVoti = (TextView) findViewById(R.id.mediaVoti);
+        voti = (RatingBar)findViewById(R.id.ratingBar);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         utente =(DataUtente)intent.getSerializableExtra("UTENTE");
@@ -60,6 +65,8 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                     //Descrizione.setText(gioco.getDescrizione());
                     expandableListView = (ExpandableListView) findViewById(R.id.elvBio);
                     ELVAdapter adapter = new ELVAdapter(NuovoDettagliGioco.this,gioco);
+                    mediaVoti.setText(String.valueOf(gioco.getVotazione()));
+                    voti.setRating(gioco.getVotazione());
                     expandableListView.setAdapter(adapter);
                 }
             }

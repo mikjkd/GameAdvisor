@@ -3,6 +3,7 @@ package com.miche.gameadvisorprova3.Model;
 import android.app.Application;
 import android.app.ApplicationErrorReport;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -10,6 +11,7 @@ import android.os.Parcelable;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by miche on 15/10/2017.
@@ -23,7 +25,7 @@ public class DataUtente implements Serializable {
     private String Email;
     private boolean Autenticated;
     private String UID;
-
+    private HashMap<String ,Integer> valutazioneGioco = new HashMap<>();
     public DataUtente() { }
 
     public DataUtente(String username, String password, String email, boolean autenticated) {

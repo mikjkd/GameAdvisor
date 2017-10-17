@@ -1,8 +1,11 @@
 package com.miche.gameadvisorprova3;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -105,13 +108,22 @@ public class AlertDialogLogin extends AlertDialog.Builder {
                 adl.show();
             }
         });
-
+        mBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if (keyCode== KeyEvent.KEYCODE_BACK) {
+                    Toast.makeText(context,"Non puoi uscire premendo back!",Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
         mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
         return mAlertDialog;
     }
+
 
 
 }

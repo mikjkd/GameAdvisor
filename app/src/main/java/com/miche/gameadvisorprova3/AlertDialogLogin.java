@@ -108,18 +108,10 @@ public class AlertDialogLogin extends AlertDialog.Builder {
                 adl.show();
             }
         });
-        mBuilder.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (keyCode== KeyEvent.KEYCODE_BACK) {
-                    Toast.makeText(context,"Non puoi uscire premendo back!",Toast.LENGTH_SHORT).show();
-                }
-                return true;
-            }
-        });
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
         mAlertDialog.setCanceledOnTouchOutside(false);
+        mAlertDialog.setCancelable(false);
         mAlertDialog.show();
         return mAlertDialog;
     }

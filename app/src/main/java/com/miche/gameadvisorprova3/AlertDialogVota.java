@@ -55,7 +55,7 @@ public class AlertDialogVota extends AlertDialog.Builder {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         View mView = LayoutInflater.from(context).inflate(R.layout.voto_popup, null);
         final RatingBar rb = mView.findViewById(R.id.ratingBar2);
-        EditText etCommento = mView.findViewById(R.id.etCommento);
+        final EditText etCommento = mView.findViewById(R.id.etCommento);
         Button AnnullaBtn = mView.findViewById(R.id.AnnullaBtn);
         Button OkBtn = mView.findViewById(R.id.OkBtn);
 
@@ -76,7 +76,7 @@ public class AlertDialogVota extends AlertDialog.Builder {
                             bisogna modificare la vecchia valutazione con la nuova
                             e aggiornare la media
                              */
-                           Float votazione = (Float) dataSnapshot.child("Giochi").child(dataGiocoDettaglio.getKey()).child("Votazione").getValue(Float.class);
+                            Float votazione = (Float) dataSnapshot.child("Giochi").child(dataGiocoDettaglio.getKey()).child("Votazione").getValue(Float.class);
                             Log.e("Votazione vecchia",votazione.toString());
                             ref = db.getReference().child("Giochi").child(dataGiocoDettaglio.getKey());
                             float vecchiovoto = ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())-votazione)/(dataGiocoDettaglio.getNumeroVotanti()-1);
@@ -85,24 +85,45 @@ public class AlertDialogVota extends AlertDialog.Builder {
                                     voto
                             );
                             dataGiocoDettaglio.setVotazione(voto);
+                            ref.child("Commento").child(utente.getUID()).setValue(utente.getEmail()+":"+etCommento.getText().toString());
                             userData.put("Votazione",rb.getRating());
                             ref = db.getReference().child("Utenti").child(utente.getUID())
                                     .child("Giochi").child(dataGiocoDettaglio.getKey());
                             ref.setValue(userData);
+                           ref.child("Commento").setValue(etCommento.getText().toString());
 
                         }else{
-
+                            /*
+                              * inizio votazione
+                             */
+                            //voto db Gioco
                             ref = db.getReference().child("Giochi").child(dataGiocoDettaglio.getKey());
                             float voto = ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())+rb.getRating())/
                                     (dataGiocoDettaglio.getNumeroVotanti()+1);
                             ref.child("Votazione").setValue(voto);
                             dataGiocoDettaglio.setVotazione(voto);
-                            userData.put("Votazione",rb.getRating());
+                            ref.child("Commento").child(utente.getUID()).setValue(utente.getEmail()+":"+etCommento.getText().toString());
+
+
                             dataGiocoDettaglio.setNumeroVotanti((dataGiocoDettaglio.getNumeroVotanti()+1));
                             ref.child("NumeroVotanti").setValue(dataGiocoDettaglio.getNumeroVotanti());
+
+                            //voto db Utente
                             ref = db.getReference().child("Utenti").child(utente.getUID())
                                     .child("Giochi").child(dataGiocoDettaglio.getKey());
+                            userData.put("Votazione",rb.getRating());
                             ref.setValue(userData);
+                            //commento utente
+                            ref.child("Commento").setValue(etCommento.getText().toString());
+                            /*
+                             *   fine votazione
+                             */
+
+
+
+                            /*
+                             * fine commento
+                             */
                         }
 
                     }

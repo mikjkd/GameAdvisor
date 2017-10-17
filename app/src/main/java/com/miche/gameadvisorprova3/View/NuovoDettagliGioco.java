@@ -3,11 +3,14 @@ package com.miche.gameadvisorprova3.View;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -41,7 +44,14 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     private AuthenticationClass auth  ;
     private TextView mediaVoti;
     private TextView tvVotanti;
+    private GestureDetectorCompat gestureDetectorCompat;
     ExpandableListView expandableListView;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetectorCompat.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,9 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
         utente =(DataUtente)intent.getSerializableExtra("UTENTE");
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
+        gestureDetectorCompat = new GestureDetectorCompat(this, new GestisciGesture());
+
+
         archivio.cercaGioco(key, new DatabaseLinkParcel.UpdateListener() {
             @Override
             public void giochiAggiornati() {
@@ -88,10 +101,11 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                             }
                         }
                     });
+
+
                 }
             }
         });
-
 
     }
     @Override
@@ -130,5 +144,18 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         setResult(Activity.RESULT_OK, resultIntent);
         super.onBackPressed();
 
+    }
+
+    // gestione Gesture
+    class GestisciGesture extends GestureDetector.SimpleOnGestureListener{
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            //Toast.makeText(NuovoDettagliGioco.this,"sei salito",Toast.LENGTH_SHORT).show();
+            if(e2.getY()<e1.getY()){
+                AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente,gioco);
+                adv.show();
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
     }
 }

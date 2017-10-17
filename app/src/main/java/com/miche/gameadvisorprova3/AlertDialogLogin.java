@@ -88,7 +88,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
 
                         @Override
                         public void erroreAutenticazione() {
-                            Toast.makeText(context,"ERRORE LOGIN",Toast.LENGTH_LONG).show();
+                            Toast.makeText(context,"I dati inseriti non sono corretti. Riprovare",Toast.LENGTH_LONG).show();
                         }
                     });
                 }

@@ -90,6 +90,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             if(!utente.isAutenticated()){
+                                Toast.makeText(NuovoDettagliGioco.this,"Per votare e commentare devi essere loggato",Toast.LENGTH_SHORT).show();
                                 auth = new AuthenticationClass(utente,NuovoDettagliGioco.this);
                                 auth.logout();
                                 AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this,utente);

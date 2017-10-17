@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.AlertDialogUtente;
 import com.miche.gameadvisorprova3.MainActivity;
@@ -116,5 +117,17 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Toast.makeText(GiochiByGenereActivity.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
+        Bundle b = new Bundle();
+        b.putSerializable("UTENTE",utente);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtras(b);
+        setResult(Activity.RESULT_OK, resultIntent);
+        super.onBackPressed();
+
     }
 }

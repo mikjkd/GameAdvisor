@@ -14,6 +14,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.AlertDialogLogin;
 import com.miche.gameadvisorprova3.AlertDialogUtente;
@@ -117,5 +118,17 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+      //  Toast.makeText(NuovoDettagliGioco.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
+        Bundle b = new Bundle();
+        b.putSerializable("UTENTE",utente);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtras(b);
+        setResult(Activity.RESULT_OK, resultIntent);
+        super.onBackPressed();
+
     }
 }

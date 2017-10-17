@@ -2,6 +2,8 @@ package com.miche.gameadvisorprova3;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -45,6 +47,7 @@ public class CommentiDialog  extends AlertDialog.Builder {
         });
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
+        mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
         return mAlertDialog;

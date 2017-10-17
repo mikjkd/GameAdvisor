@@ -50,7 +50,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         Titolo = (TextView) findViewById(R.id.tvTitolo);
         ImgGioco = (ImageView) findViewById(R.id.ivGioco);
         Votabtn =(Button) findViewById(R.id.Votabtn);
-         mediaVoti = (TextView) findViewById(R.id.mediaVoti);
+        mediaVoti = (TextView) findViewById(R.id.mediaVoti);
         voti = (RatingBar)findViewById(R.id.ratingBar);
         tvVotanti = (TextView)findViewById(R.id.tvVotanti);
         Intent intent = getIntent();

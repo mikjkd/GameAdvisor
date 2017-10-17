@@ -23,7 +23,6 @@ public class DataGiocoDettaglio implements Serializable {
     private Float Votazione;
     private Integer NumeroVotanti;
     private List<String> Commenti;
-    // Bitmap immagine;
 
 
     public DataGiocoDettaglio(){

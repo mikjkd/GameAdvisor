@@ -4,14 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.miche.gameadvisorprova3.Model.AuthenticationClass;
-import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.View.CommentiAdapter;
 
 import java.util.ArrayList;

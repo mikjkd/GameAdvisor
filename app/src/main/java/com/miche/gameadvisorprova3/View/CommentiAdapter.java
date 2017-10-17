@@ -50,7 +50,8 @@ public class CommentiAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.riga_commento, parent, false);
         TextView commento = (TextView)view.findViewById(R.id.tvCommento);
         String c = commenti.get(position);
-        commento.setText(c);
+        if(!c.isEmpty())
+            commento.setText(c);
         return view;
     }
 }

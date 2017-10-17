@@ -1,7 +1,6 @@
 package com.miche.gameadvisorprova3;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -71,21 +70,23 @@ public class AlertDialogVota extends AlertDialog.Builder {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DatabaseReference ref;
                         if(dataSnapshot.child("Giochi").child(dataGiocoDettaglio.getKey()).exists()){
-                            //utente già ha messo la sua valutazione
-                            /*
-                            bisogna modificare la vecchia valutazione con la nuova
-                            e aggiornare la media
-                             */
                             Float votazione = (Float) dataSnapshot.child("Giochi").child(dataGiocoDettaglio.getKey()).child("Votazione").getValue(Float.class);
                             Log.e("Votazione vecchia",votazione.toString());
+                            Log.e("Numero utenti",dataGiocoDettaglio.getNumeroVotanti().toString());
                             ref = db.getReference().child("Giochi").child(dataGiocoDettaglio.getKey());
-                            float vecchiovoto = ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())-votazione)/(dataGiocoDettaglio.getNumeroVotanti()-1);
+                            float vecchiovoto;
+                            if(dataGiocoDettaglio.getNumeroVotanti()>1)
+                                 vecchiovoto= ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())-votazione)/(dataGiocoDettaglio.getNumeroVotanti()-1);
+                            else
+                                vecchiovoto = 0;
                             float voto = ((vecchiovoto*(dataGiocoDettaglio.getNumeroVotanti()-1))+rb.getRating())/dataGiocoDettaglio.getNumeroVotanti();
                             ref.child("Votazione").setValue(
                                     voto
                             );
                             dataGiocoDettaglio.setVotazione(voto);
-                            ref.child("Commento").child(utente.getUID()).setValue(utente.getEmail()+":"+etCommento.getText().toString());
+                            if(etCommento.getText().toString().isEmpty())
+                                etCommento.setText("Nessun Commento");
+                            ref.child("Commento").child(utente.getUID()).setValue(utente.getEmail()+": "+etCommento.getText().toString());
                             userData.put("Votazione",rb.getRating());
                             ref = db.getReference().child("Utenti").child(utente.getUID())
                                     .child("Giochi").child(dataGiocoDettaglio.getKey());
@@ -93,10 +94,6 @@ public class AlertDialogVota extends AlertDialog.Builder {
                            ref.child("Commento").setValue(etCommento.getText().toString());
 
                         }else{
-                            /*
-                              * inizio votazione
-                             */
-                            //voto db Gioco
                             ref = db.getReference().child("Giochi").child(dataGiocoDettaglio.getKey());
                             float voto = ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())+rb.getRating())/
                                     (dataGiocoDettaglio.getNumeroVotanti()+1);
@@ -107,23 +104,12 @@ public class AlertDialogVota extends AlertDialog.Builder {
 
                             dataGiocoDettaglio.setNumeroVotanti((dataGiocoDettaglio.getNumeroVotanti()+1));
                             ref.child("NumeroVotanti").setValue(dataGiocoDettaglio.getNumeroVotanti());
-
-                            //voto db Utente
                             ref = db.getReference().child("Utenti").child(utente.getUID())
                                     .child("Giochi").child(dataGiocoDettaglio.getKey());
                             userData.put("Votazione",rb.getRating());
                             ref.setValue(userData);
-                            //commento utente
                             ref.child("Commento").setValue(etCommento.getText().toString());
-                            /*
-                             *   fine votazione
-                             */
 
-
-
-                            /*
-                             * fine commento
-                             */
                         }
 
                     }

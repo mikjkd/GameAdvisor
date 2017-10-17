@@ -79,7 +79,6 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                     Titolo.setText(gioco.getTitolo());
                     if(gioco.getUrlImmagineLocale()!=null)
                         ImgGioco.setImageBitmap(BitmapFactory.decodeFile(gioco.getUrlImmagineLocale()));
-                    //Descrizione.setText(gioco.getDescrizione());
 
                     expandableListView = (ExpandableListView) findViewById(R.id.elvBio);
                     ELVAdapter adapter = new ELVAdapter(NuovoDettagliGioco.this,gioco);

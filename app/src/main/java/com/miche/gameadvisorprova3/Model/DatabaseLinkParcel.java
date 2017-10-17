@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -23,7 +25,10 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by miche on 03/10/2017.
@@ -136,6 +141,16 @@ public class DatabaseLinkParcel implements Parcelable{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
                 gioco.setKey(dataSnapshot.getKey());
+               if(dataSnapshot.hasChild("Commento")){
+                   //Log.e("commento",dataSnapshot.child("Commento").getValue(String.class).toString());
+                   Log.e("Ok ci sono","i commenti");
+                   for (DataSnapshot c: dataSnapshot.child("Commento").getChildren())
+                    gioco.addCommenti(c.getValue(String.class));
+
+               }
+               else {
+                   Log.e("non ci sono","i commenti");
+               }
                 Log.e("valori: ",dataSnapshot.getKey());
                 scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){
                     @Override

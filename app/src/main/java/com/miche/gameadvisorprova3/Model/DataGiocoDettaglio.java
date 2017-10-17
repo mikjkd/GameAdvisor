@@ -2,6 +2,7 @@ package com.miche.gameadvisorprova3.Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by miche on 11/10/2017.
@@ -21,7 +22,7 @@ public class DataGiocoDettaglio implements Serializable {
     private String Sviluppatore;
     private Float Votazione;
     private Integer NumeroVotanti;
-    private ArrayList<String> Commenti;
+    private List<String> Commenti;
     // Bitmap immagine;
 
 
@@ -131,11 +132,14 @@ public class DataGiocoDettaglio implements Serializable {
         NumeroVotanti = numeroVotanti;
     }
 
-    public ArrayList<String> getCommenti() {
+    public List<String> getCommenti() {
         return Commenti;
     }
 
-    public void setCommenti(ArrayList<String> commenti) {
+    public void setCommenti(List<String> commenti) {
         Commenti = commenti;
+    }
+    public void addCommenti(String c){
+        this.Commenti.add(c);
     }
 }

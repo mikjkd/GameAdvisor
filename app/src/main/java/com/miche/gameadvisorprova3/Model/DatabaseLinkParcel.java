@@ -150,6 +150,7 @@ public class DatabaseLinkParcel implements Parcelable{
                }
                else {
                    Log.e("non ci sono","i commenti");
+                   gioco.setCommenti(null);
                }
                 Log.e("valori: ",dataSnapshot.getKey());
                 scaricaImmagineHD(gioco,new DatabaseLinkParcel.BitmapListener(){

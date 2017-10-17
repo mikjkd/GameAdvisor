@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.miche.gameadvisorprova3.AlertDialogLogin;
 import com.miche.gameadvisorprova3.AlertDialogUtente;
 import com.miche.gameadvisorprova3.AlertDialogVota;
+import com.miche.gameadvisorprova3.CommentiDialog;
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.Model.DataUtente;
@@ -102,8 +103,6 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                             }
                         }
                     });
-
-
                 }
             }
         });
@@ -153,8 +152,13 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             //Toast.makeText(NuovoDettagliGioco.this,"sei salito",Toast.LENGTH_SHORT).show();
             if(e2.getY()<e1.getY()){
-                AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente,gioco);
-                adv.show();
+                if(gioco.getCommenti()!=null) {
+                    CommentiDialog cd = new CommentiDialog(NuovoDettagliGioco.this, gioco.getCommenti());
+                    cd.show();
+                }
+                else {
+                    Toast.makeText(NuovoDettagliGioco.this,"Non ci sono commenti",Toast.LENGTH_SHORT).show();
+                }
             }
             return super.onFling(e1, e2, velocityX, velocityY);
         }

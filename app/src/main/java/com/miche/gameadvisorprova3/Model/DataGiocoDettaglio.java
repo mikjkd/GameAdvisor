@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class DataGiocoDettaglio implements Serializable {
+
     private String Genere;
     private String Link;
     private String Titolo;

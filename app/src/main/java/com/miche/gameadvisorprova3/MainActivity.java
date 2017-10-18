@@ -20,16 +20,16 @@ public class MainActivity extends AppCompatActivity implements GiochiFragment.Ut
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Bundle argBundle = new Bundle();
-    private final String EXTRA_GIOCHI = "GIOCHI";
-    private final String EXTRA_GENERI = "GENERI";
-    private AlertDialogLogin adl;
-    private DataUtente utente;
-    private GiochiFragment giochiFragment;
-    private GenereFragment genereFragment;
+    private static final String EXTRA_GIOCHI = "GIOCHI";
+    private static final String EXTRA_GENERI = "GENERI";
     private static final String Autenticazione = "AUTENTICAZIONE";
     private static final String Prefezente = "authPref";
     private static final String EXTRA_ARCHVIO = "ARCHIVIO";
     private static final String EXTRA_UTENTE = "UTENTE";
+    private AlertDialogLogin adl;
+    private DataUtente utente;
+    private GiochiFragment giochiFragment;
+    private GenereFragment genereFragment;
     @Override
     public void utenteUpdate(DataUtente utente) {
         this.utente = utente;

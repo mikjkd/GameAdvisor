@@ -25,7 +25,6 @@ public class DataUtente implements Serializable {
     private String Email;
     private boolean Autenticated;
     private String UID;
-    private HashMap<String ,Integer> valutazioneGioco = new HashMap<>();
     public DataUtente() { }
 
     public DataUtente(String username, String password, String email, boolean autenticated) {

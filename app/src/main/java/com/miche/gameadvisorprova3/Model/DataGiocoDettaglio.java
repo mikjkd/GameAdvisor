@@ -42,7 +42,6 @@ public class DataGiocoDettaglio implements Serializable {
         Link = link;
         Titolo = titolo;
         Descrizione = descrizione;
-
         this.URLimg = URLimg;
     }
 

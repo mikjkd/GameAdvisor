@@ -38,6 +38,7 @@ public class DatabaseLinkParcel implements Parcelable{
     private String DB_GIOCHI = "Giochi";
     private String DB_GENERE = "Genere";
     private String DB_LISTGIOCHI="ListaGiochi";
+
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private ArrayList<DataGioco> giochi;
@@ -102,7 +103,6 @@ public class DatabaseLinkParcel implements Parcelable{
     public interface UpdateGBGListener{
         void gbgAggiornati();
     }
-
     public void osservaGiochi(final UpdateListener notifica){
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference ref = db.getReference().child(DB_LISTGIOCHI);

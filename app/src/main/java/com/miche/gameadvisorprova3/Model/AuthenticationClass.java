@@ -41,6 +41,7 @@ public class AuthenticationClass implements Serializable {
     private static final String Votazione = "Votazione";
     private static final String Commento = "Commento";
     private static final String NumeroVotanti ="NumeroVotanti";
+
     public AuthenticationClass(){
 
         mAuth=FirebaseAuth.getInstance();
@@ -170,8 +171,6 @@ public class AuthenticationClass implements Serializable {
                 DatabaseReference ref;
                 if(dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).exists()){
                     Float votazione = (Float) dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).child(Votazione).getValue(Float.class);
-                  //  Log.e("Votazione vecchia",votazione.toString());
-                  //   Log.e("Numero utenti",dataGiocoDettaglio.getNumeroVotanti().toString());
                     ref = db.getReference().child(Giochi).child(dataGiocoDettaglio.getKey());
                     float vecchiovoto;
                     if(dataGiocoDettaglio.getNumeroVotanti()>1)

@@ -13,14 +13,10 @@ import java.io.Serializable;
 
 public class DataGioco implements Serializable{
     private String Genere;
-   // private String Link;
     private String Titolo;
-   // private String Descrizione;
     private String URLimg;
     private String Key;
     private String UrlIconaLocale;
-  //  private String UrlImmagineLocale;
-   // Bitmap immagine;
 
 
     public DataGioco(){}
@@ -33,11 +29,10 @@ public class DataGioco implements Serializable{
         Key = key;
     }
 
-    public DataGioco(String genere, String link, String titolo, String descrizione, String URLimg) {
+    public DataGioco(String genere, String titolo,  String URLimg) {
         Genere = genere;
-     //   Link = link;
+
         Titolo = titolo;
-       // Descrizione = descrizione;
         this.URLimg = URLimg;
     }
 
@@ -49,14 +44,6 @@ public class DataGioco implements Serializable{
         Genere = genere;
     }
 
-  /*  public String getLink() {
-        return Link;
-    }*/
-
-  /*  public void setLink(String link) {
-        Link = link;
-    }*/
-
     public String getTitolo() {
         return Titolo;
     }
@@ -65,13 +52,6 @@ public class DataGioco implements Serializable{
         Titolo = titolo;
     }
 
-  /*  public String getDescrizione() {
-        return Descrizione;
-    }*/
-
- /*   public void setDescrizione(String descrizione) {
-        Descrizione = descrizione;
-    }*/
 
     public String getURLimg() {
         return URLimg;
@@ -89,7 +69,4 @@ public class DataGioco implements Serializable{
         UrlIconaLocale = urlIconaLocale;
     }
 
-   /* public String getUrlImmagineLocale() {   return UrlImmagineLocale; }*/
-
- //   public void setUrlImmagineLocale(String urlImmagineLocale) { UrlImmagineLocale = urlImmagineLocale; }
 }

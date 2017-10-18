@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;

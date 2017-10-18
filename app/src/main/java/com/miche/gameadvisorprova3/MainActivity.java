@@ -9,8 +9,10 @@ import android.view.MenuItem;
 
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
-import com.miche.gameadvisorprova3.View.GenereFragment;
-import com.miche.gameadvisorprova3.View.GiochiFragment;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogLogin;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
+import com.miche.gameadvisorprova3.View.Fragment.GenereFragment;
+import com.miche.gameadvisorprova3.View.Fragment.GiochiFragment;
 
 
 public class MainActivity extends AppCompatActivity implements GiochiFragment.UtenteUpdate, GenereFragment.UtenteUpdateG {
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity implements GiochiFragment.Ut
     private DataUtente utente;
     private GiochiFragment giochiFragment;
     private GenereFragment genereFragment;
-    private static final String autenticazione = "AUTENTICAZIONE";
+    private static final String Autenticazione = "AUTENTICAZIONE";
+    private static final String Prefezente = "authPref";
+    private static final String EXTRA_ARCHVIO = "ARCHIVIO";
+    private static final String EXTRA_UTENTE = "UTENTE";
     @Override
     public void utenteUpdate(DataUtente utente) {
         this.utente = utente;
@@ -55,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements GiochiFragment.Ut
             public void onPageScrollStateChanged(int state) { }
         });
         utente = new DataUtente();
-        SharedPreferences settings = MainActivity.this.getSharedPreferences(autenticazione, 0);
-        utente.setAutenticated(settings.getBoolean("authPref", false));
+        SharedPreferences settings = MainActivity.this.getSharedPreferences(Autenticazione, 0);
+        utente.setAutenticated(settings.getBoolean(Prefezente, false));
         adl = new AlertDialogLogin(MainActivity.this,utente);
         adl.show();
-        argBundle.putParcelable("ARCHIVIO",archivioMain);
-        argBundle.putSerializable("UTENTE",utente);
+        argBundle.putParcelable(EXTRA_ARCHVIO,archivioMain);
+        argBundle.putSerializable(EXTRA_UTENTE,utente);
         setupViewPager(viewPager,argBundle);
     }
 

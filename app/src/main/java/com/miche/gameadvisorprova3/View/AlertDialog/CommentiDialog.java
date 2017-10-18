@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3;
+package com.miche.gameadvisorprova3.View.AlertDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import com.miche.gameadvisorprova3.View.CommentiAdapter;
+
+import com.miche.gameadvisorprova3.R;
+import com.miche.gameadvisorprova3.View.Adapter.CommentiAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class CommentiDialog  extends AlertDialog.Builder {
         mAlertDialog=mBuilder.create();
         mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //mAlertDialog.setCanceledOnTouchOutside(false);
+        mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mAlertDialog.show();
         return mAlertDialog;
     }

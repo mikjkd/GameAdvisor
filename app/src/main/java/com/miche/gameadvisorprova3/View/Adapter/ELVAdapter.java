@@ -1,9 +1,10 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +26,23 @@ import java.util.List;
 public class ELVAdapter extends BaseExpandableListAdapter{
 
 
-
-    private String[] groupName = {"Descrizione", "Requisiti","Sviluppatore", "Link"};
+    private static String Descrizione = "Descrizione";
+    private static String Requisiti = "Requisiti";
+    private static String Sviluppatore = "Sviluppatore";
+    private static String Link = "Link";
+    private static String ColoreBianco = "#FFFFFF";
+    private static String ColoreGrigio = "#CFCFCF";
+    private String[] groupName = {Descrizione, Requisiti,Sviluppatore, Link};
     private HashMap<String,String> child = new HashMap<>() ;
     private final Context context;
     DataGiocoDettaglio gioco;
 
     public ELVAdapter(Context context, DataGiocoDettaglio gioco) {
         this.gioco = gioco;
-        child.put("Descrizione",gioco.getDescrizione());
-        child.put("Requisiti",gioco.getRequisiti());
-        child.put("Sviluppatore",gioco.getSviluppatore());
-        child.put("Link",gioco.getLink());
+        child.put(Descrizione,gioco.getDescrizione());
+        child.put(Requisiti,gioco.getRequisiti());
+        child.put(Sviluppatore,gioco.getSviluppatore());
+        child.put(Link,gioco.getLink());
         this.context = context;
     }
 
@@ -81,7 +87,7 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         TextView txt = new TextView(context);
         txt.setText(groupName[i]);
         txt.setPadding(100, 0, 0, 0);
-        txt.setTextColor(Color.parseColor("#FFFFFF"));
+        txt.setTextColor(Color.parseColor(ColoreBianco));
         txt.setTextSize(25);
         return txt;
     }
@@ -92,7 +98,7 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         TextView txt = new TextView(context);
         txt.setText(getChild(groupPosition, childPosition));
         txt.setPadding(100, 0, 0, 0);
-        txt.setTextColor(Color.parseColor("#CFCFCF"));
+        txt.setTextColor(Color.parseColor(ColoreGrigio));
         txt.setTextSize(20);
         return txt;
     }

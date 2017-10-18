@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,17 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.miche.gameadvisorprova3.AlertDialogUtente;
-import com.miche.gameadvisorprova3.MainActivity;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
 import com.miche.gameadvisorprova3.Model.DataGenere;
-import com.miche.gameadvisorprova3.Model.DataGioco;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
-
-import java.util.List;
+import com.miche.gameadvisorprova3.View.Adapter.GiocoAdapter;
 
 /**
  * Created by miche on 09/10/2017.
@@ -35,6 +31,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     private final static String EXTRA_GIOCO = "GIOCOKEY";
     private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
     private final static String EXTRA_GENERE = "GENERE";
+    private final static String EXTRA_UTENTE="UTENTE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +41,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         adapter = new GiocoAdapter(GiochiByGenereActivity.this);
         listGame =(ListView) findViewById(R.id.listGBG);
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
-        utente = (DataUtente)intent.getSerializableExtra("UTENTE");
+        utente = (DataUtente)intent.getSerializableExtra(EXTRA_UTENTE);
         genereClick = (DataGenere) intent.getSerializableExtra(EXTRA_GENERE);
         if(genereClick!=null && archivio!=null){
            archivio.osservaGiocoByGenere(genereClick.getKeyGenere(),new DatabaseLinkParcel.UpdateGBGListener(){
@@ -61,7 +58,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
                     String giocoKey = adapter.getItem(i).getKey();
                     extras.putSerializable(EXTRA_GIOCO,giocoKey);
                     extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                    extras.putSerializable("UTENTE",utente);
+                    extras.putSerializable(EXTRA_UTENTE,utente);
                     Intent intent = new Intent(GiochiByGenereActivity.this,NuovoDettagliGioco.class);
                     intent.putExtras(extras);
                     startActivityForResult(intent,1);
@@ -89,7 +86,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         switch(requestCode) {
             case (1) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    utente =(DataUtente)data.getSerializableExtra("UTENTE");
+                    utente =(DataUtente)data.getSerializableExtra(EXTRA_UTENTE);
                     if(utente!=null)
                         Log.e("Utente on activity",utente.getEmail());
                 }
@@ -104,7 +101,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Bundle b = new Bundle();
-                b.putSerializable("UTENTE",utente);
+                b.putSerializable(EXTRA_UTENTE,utente);
                 Intent resultIntent = new Intent();
                 resultIntent.putExtras(b);
                 setResult(Activity.RESULT_OK, resultIntent);
@@ -123,7 +120,7 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
     public void onBackPressed() {
         //Toast.makeText(GiochiByGenereActivity.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
         Bundle b = new Bundle();
-        b.putSerializable("UTENTE",utente);
+        b.putSerializable(EXTRA_UTENTE,utente);
         Intent resultIntent = new Intent();
         resultIntent.putExtras(b);
         setResult(Activity.RESULT_OK, resultIntent);

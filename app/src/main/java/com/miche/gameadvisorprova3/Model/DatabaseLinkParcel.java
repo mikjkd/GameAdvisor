@@ -325,6 +325,7 @@ public class DatabaseLinkParcel implements Parcelable{
         return -1;
     }
 
+
     public List<DataGioco> elencoGiochi(){
         return giochi;
     }

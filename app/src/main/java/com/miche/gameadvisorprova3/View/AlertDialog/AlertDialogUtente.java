@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3;
+package com.miche.gameadvisorprova3.View.AlertDialog;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataUtente;
+import com.miche.gameadvisorprova3.R;
 
 
 /**

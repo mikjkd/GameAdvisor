@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,20 +19,22 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miche.gameadvisorprova3.AlertDialogLogin;
-import com.miche.gameadvisorprova3.AlertDialogUtente;
-import com.miche.gameadvisorprova3.AlertDialogVota;
-import com.miche.gameadvisorprova3.CommentiDialog;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogLogin;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
+import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogVota;
+import com.miche.gameadvisorprova3.View.AlertDialog.CommentiDialog;
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
+import com.miche.gameadvisorprova3.View.Adapter.ELVAdapter;
 
 
 public class NuovoDettagliGioco extends AppCompatActivity {
     private final static String EXTRA_GIOCO = "GIOCOKEY";
     private final static String EXTRA_ARCHIVIO="ARCHIVIO";
+    private final static String EXTRA_UTENTE = "UTENTE";
     private String key;
     private RatingBar voti;
     private TextView Titolo;
@@ -67,7 +69,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         tvVotanti = (TextView)findViewById(R.id.tvVotanti);
         Intent intent = getIntent();
         archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
-        utente =(DataUtente)intent.getSerializableExtra("UTENTE");
+        utente =(DataUtente)intent.getSerializableExtra(EXTRA_UTENTE);
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
         gestureDetectorCompat = new GestureDetectorCompat(this, new GestisciGesture());
 
@@ -120,7 +122,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra("UTENTE",utente);
+                resultIntent.putExtra(EXTRA_UTENTE,utente);
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
                 break;
@@ -138,7 +140,7 @@ public class NuovoDettagliGioco extends AppCompatActivity {
     public void onBackPressed() {
       //  Toast.makeText(NuovoDettagliGioco.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
         Bundle b = new Bundle();
-        b.putSerializable("UTENTE",utente);
+        b.putSerializable(EXTRA_UTENTE,utente);
         Intent resultIntent = new Intent();
         resultIntent.putExtras(b);
         setResult(Activity.RESULT_OK, resultIntent);

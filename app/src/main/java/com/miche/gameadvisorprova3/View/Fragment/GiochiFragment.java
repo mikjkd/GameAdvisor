@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.ListView;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
+import com.miche.gameadvisorprova3.View.Adapter.GiocoAdapter;
+import com.miche.gameadvisorprova3.View.Activity.NuovoDettagliGioco;
 
 
 /**
@@ -26,6 +28,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         private Bundle arg;
         private final static String EXTRA_GIOCO = "GIOCOKEY";
         private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
+        private final static String EXTRA_UTENTE = "UTENTE";
         private DataUtente utente;
         UtenteUpdate utenteUpdate;
         public GiochiFragment() { }
@@ -50,7 +53,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                 adapter = new GiocoAdapter(getActivity());
                 arg = this.getArguments();
                 archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
-                utente = (DataUtente)arg.getSerializable("UTENTE");
+                utente = (DataUtente)arg.getSerializable(EXTRA_UTENTE);
                 Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
                 archivio.osservaGiochi(new DatabaseLinkParcel.UpdateListener(){
                 @Override
@@ -66,7 +69,7 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
                         String giocoKey = adapter.getItem(i).getKey();
                         extras.putSerializable(EXTRA_GIOCO,giocoKey);
                         extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                        extras.putSerializable("UTENTE",utente);
+                        extras.putSerializable(EXTRA_UTENTE,utente);
                         Intent intent = new Intent(getContext(),NuovoDettagliGioco.class);
                         intent.putExtras(extras);
                         startActivityForResult(intent,1);
@@ -88,16 +91,13 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
                 super.onActivityResult(requestCode, resultCode, data);
                 Log.e("On Activity ","result");
                 switch(requestCode) {
                         case (1) : {
                                 if (resultCode == Activity.RESULT_OK) {
-                                        utente =(DataUtente)data.getSerializableExtra("UTENTE");
+                                        utente =(DataUtente)data.getSerializableExtra(EXTRA_UTENTE);
                                         utenteUpdate.utenteUpdate(utente);
-                                        if(utente!=null)
-                                                Log.e("Utente on activity",utente.getEmail());
                                 }
                                 break;
                         }

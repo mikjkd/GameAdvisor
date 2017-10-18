@@ -1,4 +1,4 @@
-package com.miche.gameadvisorprova3.View;
+package com.miche.gameadvisorprova3.View.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,8 @@ import com.miche.gameadvisorprova3.Model.DataGenere;
 import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
 import com.miche.gameadvisorprova3.R;
+import com.miche.gameadvisorprova3.View.Adapter.GenereAdapter;
+import com.miche.gameadvisorprova3.View.Activity.GiochiByGenereActivity;
 
 /**
  * Created by miche on 08/10/2017.
@@ -26,6 +28,7 @@ public class GenereFragment extends android.support.v4.app.Fragment{
     private Bundle arg;
     private final String EXTRA_ARCHIVIO = "ARCHIVIO";
     private final String EXTRA_GENERE = "GENERE";
+    private final String EXTRA_UTENTE = "UTENTE";
     private DataUtente utente;
     private UtenteUpdateG utenteUpdate;
     public GenereFragment(){}
@@ -52,7 +55,7 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         adapter = new GenereAdapter(getActivity());
         arg = this.getArguments();
         archivio =  arg.getParcelable(EXTRA_ARCHIVIO);
-        utente =(DataUtente)arg.getSerializable("UTENTE");
+        utente =(DataUtente)arg.getSerializable(EXTRA_UTENTE);
         archivio.osservaGenere(new DatabaseLinkParcel.UpdateGeneriListener(){
             @Override
             public void generiAggiornati() {
@@ -65,7 +68,7 @@ public class GenereFragment extends android.support.v4.app.Fragment{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle extras = new Bundle();
                 extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                extras.putSerializable("UTENTE",utente);
+                extras.putSerializable(EXTRA_UTENTE,utente);
                 DataGenere gen = adapter.getItem(i);
                 extras.putSerializable(EXTRA_GENERE,gen);
                 Intent intent = new Intent(getContext(),GiochiByGenereActivity.class);
@@ -93,10 +96,9 @@ public class GenereFragment extends android.support.v4.app.Fragment{
         switch(requestCode) {
             case (1) : {
                 if (resultCode == Activity.RESULT_OK) {
-                    utente =(DataUtente)data.getSerializableExtra("UTENTE");
+                    utente =(DataUtente)data.getSerializableExtra(EXTRA_UTENTE);
                     utenteUpdate.utenteUpdate(utente);
-                    if(utente!=null)
-                        Log.e("Utente on activity",utente.getEmail());
+
                 }
                 break;
             }

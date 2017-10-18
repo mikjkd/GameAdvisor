@@ -1,11 +1,8 @@
-package com.miche.gameadvisorprova3;
+package com.miche.gameadvisorprova3.View.AlertDialog;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +12,7 @@ import android.widget.Toast;
 
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataUtente;
+import com.miche.gameadvisorprova3.R;
 
 import static com.miche.gameadvisorprova3.R.id.AccediBtn;
 import static com.miche.gameadvisorprova3.R.id.etEmail;

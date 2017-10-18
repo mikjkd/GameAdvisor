@@ -4,14 +4,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -28,7 +33,14 @@ public class AuthenticationClass implements Serializable {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private Context cont;
 
-    private static final String autenticazione = "AUTENTICAZIONE";
+    private static final String Autenticazione = "AUTENTICAZIONE";
+    private static final String Preferenze = "authPref";
+    private static final String Ospite = "Ospite";
+    private static final String Utenti = "Utenti";
+    private static final String Giochi = "Giochi";
+    private static final String Votazione = "Votazione";
+    private static final String Commento = "Commento";
+    private static final String NumeroVotanti ="NumeroVotanti";
     public AuthenticationClass(){
 
         mAuth=FirebaseAuth.getInstance();
@@ -52,23 +64,23 @@ public class AuthenticationClass implements Serializable {
     }
     public void logInAnonimo(){
         utente.setAutenticated(false);
-        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
         editor.apply();
         FirebaseAuth mauth = FirebaseAuth.getInstance();
         mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                utente.setEmail("Ospite");
-                utente.setPassword("");
+                utente.setEmail(Ospite);
+                utente.setPassword(Ospite);
             }
         });
     }
     public void login(final String Email, final String Password, final LoginUpdate loginUpdate){
         Log.e("Login","class");
         utente.setAutenticated(true);
-        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
         editor.apply();
         mAuth.signInWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -86,11 +98,11 @@ public class AuthenticationClass implements Serializable {
                         else{
                             Log.e("Errore ","Autenticazione non riuscita");
                             utente.setAutenticated(false);
-                            utente.setPassword("Ospite");
-                            utente.setEmail("");
+                            utente.setPassword(Ospite);
+                            utente.setEmail(Ospite);
                             utente.setAutenticated(true);
-                            SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-                            SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+                            SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+                            SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
                             editor.apply();
                             loginUpdate.erroreAutenticazione();
                         }
@@ -100,8 +112,8 @@ public class AuthenticationClass implements Serializable {
 
     public void signUp(final String Email,final String Password, final LoginUpdate loginUpdate){
         utente.setAutenticated(true);
-        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
         editor.apply();
         mAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -118,7 +130,7 @@ public class AuthenticationClass implements Serializable {
                                 //creazione utente nel database
                                 Map<String,String> userData = new HashMap<String, String>();
                                 userData.put("Email",utente.getEmail());
-                                DatabaseReference ref = db.getReference().child("Utenti").child(u.getUid());
+                                DatabaseReference ref = db.getReference().child(Utenti).child(u.getUid());
                                 ref.setValue(userData);
                                 utente.setUID(u.getUid());
                             }
@@ -128,8 +140,8 @@ public class AuthenticationClass implements Serializable {
                             utente.setAutenticated(false);
                             utente.setPassword("");
                             utente.setEmail("");
-                            SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-                            SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+                            SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+                            SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
                             editor.apply();
                             loginUpdate.erroreAutenticazione();
                         }
@@ -139,14 +151,79 @@ public class AuthenticationClass implements Serializable {
 
     public void logout(){
         utente.setAutenticated(false);
-        SharedPreferences settings = cont.getSharedPreferences(autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean("authPref", utente.isAutenticated());
+        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
+        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
         editor.apply();
-        utente.setEmail("");
-        utente.setPassword("");
+        utente.setEmail(Ospite);
+        utente.setPassword(Ospite);
         utente.setUID("");
         mAuth.signOut();
     }
+
+    public void vota(final DataGiocoDettaglio dataGiocoDettaglio, final String commento,final Float rating){
+        final Map<String,Float> userData = new HashMap<String, Float>();
+        db = FirebaseDatabase.getInstance();
+        DatabaseReference ut =db.getReference().child(Utenti).child(utente.getUID());
+        ut.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DatabaseReference ref;
+                if(dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).exists()){
+                    Float votazione = (Float) dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).child(Votazione).getValue(Float.class);
+                  //  Log.e("Votazione vecchia",votazione.toString());
+                  //   Log.e("Numero utenti",dataGiocoDettaglio.getNumeroVotanti().toString());
+                    ref = db.getReference().child(Giochi).child(dataGiocoDettaglio.getKey());
+                    float vecchiovoto;
+                    if(dataGiocoDettaglio.getNumeroVotanti()>1)
+                        vecchiovoto= ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())-votazione)/(dataGiocoDettaglio.getNumeroVotanti()-1);
+                    else
+                        vecchiovoto = 0;
+                    float voto = ((vecchiovoto*(dataGiocoDettaglio.getNumeroVotanti()-1))+rating)/dataGiocoDettaglio.getNumeroVotanti();
+                    ref.child(Votazione).setValue(
+                            voto
+                    );
+                    dataGiocoDettaglio.setVotazione(voto);
+                    ref.child(Commento).child(utente.getUID()).setValue(utente.getEmail()+":  "+commento.toString());
+                    userData.put(Votazione,rating);
+                    ref = db.getReference().child(Utenti).child(utente.getUID())
+                            .child(Giochi).child(dataGiocoDettaglio.getKey());
+                    ref.setValue(userData);
+                    ref.child(Commento).setValue(commento.toString());
+
+                }else{
+                    ref = db.getReference().child(Giochi).child(dataGiocoDettaglio.getKey());
+                    float voto = ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())+rating)/
+                            (dataGiocoDettaglio.getNumeroVotanti()+1);
+                    ref.child(Votazione).setValue(voto);
+                    dataGiocoDettaglio.setVotazione(voto);
+                    ref.child(Commento).child(utente.getUID()).setValue(utente.getEmail()+":  "+commento.toString());
+
+
+                    dataGiocoDettaglio.setNumeroVotanti((dataGiocoDettaglio.getNumeroVotanti()+1));
+                    ref.child(NumeroVotanti).setValue(dataGiocoDettaglio.getNumeroVotanti());
+                    ref = db.getReference().child(Utenti).child(utente.getUID())
+                            .child(Giochi).child(dataGiocoDettaglio.getKey());
+                    userData.put(Votazione,rating);
+                    ref.setValue(userData);
+                    ref.child(Commento).setValue(commento);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        Toast.makeText(cont,"Hai votato correttamente",Toast.LENGTH_SHORT).show();
+
+
+    }
+
     public void createListener(final LoginUpdate u){
         mAuthListener = new FirebaseAuth.AuthStateListener() {
 

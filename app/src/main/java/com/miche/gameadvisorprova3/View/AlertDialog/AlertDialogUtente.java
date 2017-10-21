@@ -27,14 +27,9 @@ public class AlertDialogUtente extends AlertDialog.Builder {
     public AlertDialogUtente(@NonNull Context context) {
         super(context);
         this.context=context;
-        utente= new DataUtente();
-        auth = new AuthenticationClass(utente,context);
-    }
-    public AlertDialogUtente(@NonNull Context context,DataUtente utente) {
-        super(context);
-        this.context=context;
-        this.utente= utente;
-        auth = new AuthenticationClass(utente,context);
+        auth =AuthenticationClass.getInstance(this.context);
+        utente=auth.getUtente();
+
     }
 
     @Override
@@ -48,7 +43,7 @@ public class AlertDialogUtente extends AlertDialog.Builder {
             @Override
             public void onClick(View view) {
                 auth.logout();
-                AlertDialogLogin adl = new AlertDialogLogin(context,utente);
+                AlertDialogLogin adl = new AlertDialogLogin(context);
                 mAlertDialog.dismiss();
                 adl.show();
             }
@@ -66,7 +61,6 @@ public class AlertDialogUtente extends AlertDialog.Builder {
 
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
-        //mAlertDialog.setCanceledOnTouchOutside(false);
         mAlertDialog.show();
         return mAlertDialog;
     }

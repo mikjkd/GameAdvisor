@@ -11,10 +11,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
 import com.miche.gameadvisorprova3.Model.DataGenere;
 import com.miche.gameadvisorprova3.Model.DataUtente;
-import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
+import com.miche.gameadvisorprova3.Model.DatabaseLink;
 import com.miche.gameadvisorprova3.R;
 import com.miche.gameadvisorprova3.View.Adapter.GiocoAdapter;
 
@@ -24,14 +25,15 @@ import com.miche.gameadvisorprova3.View.Adapter.GiocoAdapter;
 
 public class GiochiByGenereActivity  extends AppCompatActivity {
     private ListView listGame;
-    private DatabaseLinkParcel archivio;
     private DataGenere genereClick;
     private GiocoAdapter adapter;
     private DataUtente utente;
     private final static String EXTRA_GIOCO = "GIOCOKEY";
-    private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
     private final static String EXTRA_GENERE = "GENERE";
-    private final static String EXTRA_UTENTE="UTENTE";
+
+    private DatabaseLink archivio;
+    private AuthenticationClass mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +42,12 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         Intent intent = getIntent();
         adapter = new GiocoAdapter(GiochiByGenereActivity.this);
         listGame =(ListView) findViewById(R.id.listGBG);
-        archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
-        utente = (DataUtente)intent.getSerializableExtra(EXTRA_UTENTE);
+        archivio = DatabaseLink.getInstance();
+        mAuth = AuthenticationClass.getInstance(this);
+        utente = mAuth.getUtente();
         genereClick = (DataGenere) intent.getSerializableExtra(EXTRA_GENERE);
         if(genereClick!=null && archivio!=null){
-           archivio.osservaGiocoByGenere(genereClick.getKeyGenere(),new DatabaseLinkParcel.UpdateGBGListener(){
+           archivio.osservaGiocoByGenere(genereClick.getKeyGenere(),new DatabaseLink.UpdateGBGListener(){
                @Override
                public void gbgAggiornati() {
                    adapter.update(archivio.elencoGiocoByGenere());
@@ -57,11 +60,9 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
                     Bundle extras = new Bundle();
                     String giocoKey = adapter.getItem(i).getKey();
                     extras.putSerializable(EXTRA_GIOCO,giocoKey);
-                    extras.putParcelable(EXTRA_ARCHIVIO,archivio);
-                    extras.putSerializable(EXTRA_UTENTE,utente);
                     Intent intent = new Intent(GiochiByGenereActivity.this,NuovoDettagliGioco.class);
                     intent.putExtras(extras);
-                    startActivityForResult(intent,1);
+                    startActivity(intent);
                 }
             });
         }
@@ -77,38 +78,16 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.e("On Activity ","result");
-        switch(requestCode) {
-            case (1) : {
-                if (resultCode == Activity.RESULT_OK) {
-                    utente =(DataUtente)data.getSerializableExtra(EXTRA_UTENTE);
-                    if(utente!=null)
-                        Log.e("Utente on activity",utente.getEmail());
-                }
-                break;
-            }
-        }
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
-                Bundle b = new Bundle();
-                b.putSerializable(EXTRA_UTENTE,utente);
-                Intent resultIntent = new Intent();
-                resultIntent.putExtras(b);
-                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
                 break;
             case R.id.utente:
-                AlertDialogUtente adu = new AlertDialogUtente(GiochiByGenereActivity.this,utente);
+                AlertDialogUtente adu = new AlertDialogUtente(GiochiByGenereActivity.this);
                 adu.show();
                 break;
         }
@@ -116,15 +95,4 @@ public class GiochiByGenereActivity  extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        //Toast.makeText(GiochiByGenereActivity.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
-        Bundle b = new Bundle();
-        b.putSerializable(EXTRA_UTENTE,utente);
-        Intent resultIntent = new Intent();
-        resultIntent.putExtras(b);
-        setResult(Activity.RESULT_OK, resultIntent);
-        super.onBackPressed();
-
-    }
 }

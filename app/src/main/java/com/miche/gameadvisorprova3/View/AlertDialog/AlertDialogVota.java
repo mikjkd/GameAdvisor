@@ -35,18 +35,11 @@ public class AlertDialogVota extends AlertDialog.Builder {
     private DataUtente utente;
     private AuthenticationClass auth;
     private DataGiocoDettaglio dataGiocoDettaglio;
-    private FirebaseDatabase db;
-    public AlertDialogVota(@NonNull Context context) {
+
+    public AlertDialogVota(@NonNull Context context, DataGiocoDettaglio dataGiocoDettaglio) {
         super(context);
-        this.context=context;
-        utente= new DataUtente();
-        auth = new AuthenticationClass(utente,context);
-    }
-    public AlertDialogVota(@NonNull Context context, DataUtente utente, DataGiocoDettaglio dataGiocoDettaglio) {
-        super(context);
-        this.context=context;
-        this.utente= utente;
-        auth = new AuthenticationClass(utente,context);
+        this.context=context;auth = AuthenticationClass.getInstance(this.context);
+        utente= auth.getUtente();
         this.dataGiocoDettaglio = dataGiocoDettaglio;
     }
 

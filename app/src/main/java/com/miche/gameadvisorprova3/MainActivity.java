@@ -7,41 +7,36 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataUtente;
-import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
+import com.miche.gameadvisorprova3.Model.DatabaseLink;
 import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogLogin;
 import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
 import com.miche.gameadvisorprova3.View.Fragment.GenereFragment;
 import com.miche.gameadvisorprova3.View.Fragment.GiochiFragment;
 
 
-public class MainActivity extends AppCompatActivity implements GiochiFragment.UtenteUpdate, GenereFragment.UtenteUpdateG {
-    private transient DatabaseLinkParcel archivioMain  = new DatabaseLinkParcel();
+public class MainActivity extends AppCompatActivity  {
+    private DatabaseLink archivioMain;
+    private AuthenticationClass utenteMain;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Bundle argBundle = new Bundle();
+
     private static final String EXTRA_GIOCHI = "GIOCHI";
     private static final String EXTRA_GENERI = "GENERI";
-    private static final String Autenticazione = "AUTENTICAZIONE";
-    private static final String Prefezente = "authPref";
-    private static final String EXTRA_ARCHVIO = "ARCHIVIO";
-    private static final String EXTRA_UTENTE = "UTENTE";
+
     private AlertDialogLogin adl;
-    private DataUtente utente;
     private GiochiFragment giochiFragment;
     private GenereFragment genereFragment;
-    @Override
-    public void utenteUpdate(DataUtente utente) {
-        this.utente = utente;
-        giochiFragment.AggiornaUtente(this.utente);
-        genereFragment.AggiornaUtente(this.utente);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        archivioMain = DatabaseLink.getInstance();
+
+        utenteMain = AuthenticationClass.getInstance(MainActivity.this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(2);
@@ -59,26 +54,17 @@ public class MainActivity extends AppCompatActivity implements GiochiFragment.Ut
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
-        utente = new DataUtente();
-        SharedPreferences settings = MainActivity.this.getSharedPreferences(Autenticazione, 0);
-        utente.setAutenticated(settings.getBoolean(Prefezente, false));
-        adl = new AlertDialogLogin(MainActivity.this,utente);
+        adl = new AlertDialogLogin(MainActivity.this);
         adl.show();
-        argBundle.putParcelable(EXTRA_ARCHVIO,archivioMain);
-        argBundle.putSerializable(EXTRA_UTENTE,utente);
-        setupViewPager(viewPager,argBundle);
+        setupViewPager(viewPager);
     }
 
 
-    private void setupViewPager(ViewPager viewPager,Bundle dati){
+    private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         giochiFragment = new GiochiFragment();
         genereFragment = new GenereFragment();
-
-
-        giochiFragment.setArguments(dati);
-        genereFragment.setArguments(dati);
 
         adapter.addFragment(giochiFragment,EXTRA_GIOCHI);
         adapter.addFragment(genereFragment,EXTRA_GENERI);
@@ -96,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements GiochiFragment.Ut
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.utente:
-                AlertDialogUtente adu = new AlertDialogUtente(MainActivity.this,utente);
+                AlertDialogUtente adu = new AlertDialogUtente(MainActivity.this);
                 adu.show();
                 break;
         }

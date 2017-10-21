@@ -26,12 +26,11 @@ import java.util.Map;
  * Created by miche on 15/10/2017.
  */
 
-public class AuthenticationClass implements Serializable {
+public class AuthenticationClass {
     private FirebaseDatabase db;
-    private FirebaseAuth mAuth;
-    private DataUtente utente;
+
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private Context cont;
+    private static Context cont;
 
     private static final String Autenticazione = "AUTENTICAZIONE";
     private static final String Preferenze = "authPref";
@@ -42,34 +41,49 @@ public class AuthenticationClass implements Serializable {
     private static final String Commento = "Commento";
     private static final String NumeroVotanti ="NumeroVotanti";
 
-    public AuthenticationClass(){
+    private static AuthenticationClass authenticationClass = null;
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        mAuth=FirebaseAuth.getInstance();
+    private DataUtente utente;
+   private AuthenticationClass(){
+       utente= new DataUtente();
+       SharedPreferences settings = cont.getSharedPreferences(Autenticazione,0);
+       utente.setAutenticated(settings.getBoolean(Preferenze,false));
+
+   }
+
+    public static AuthenticationClass getInstance(Context context){
+        if(authenticationClass == null){
+            cont = context;
+            authenticationClass = new AuthenticationClass();
+
+        }
+        return authenticationClass;
     }
-    public AuthenticationClass(DataUtente utente,Context context){
-        mAuth=FirebaseAuth.getInstance();
-        this.utente=utente;
+
+    public void setContext(Context context){
         this.cont=context;
-
+    }
+    public Context getContext(){
+        return this.cont;
     }
 
-    public AuthenticationClass(FirebaseAuth mAuth, DataUtente utente,Context context) {
-        this.mAuth = mAuth;
-        this.utente = utente;
-        this.cont=context;
-    }
     public interface LoginUpdate{
         void loginEffettuato();
         void loginNonEffettuato();
         void erroreAutenticazione();
     }
-    public void logInAnonimo(){
-        utente.setAutenticated(false);
+
+    private void setAuth(boolean val){
+        utente.setAutenticated(val);
         SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
         SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
         editor.apply();
-        FirebaseAuth mauth = FirebaseAuth.getInstance();
-        mauth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+    }
+
+    public void logInAnonimo(){
+        setAuth(false);
+        mAuth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 utente.setEmail(Ospite);
@@ -79,10 +93,7 @@ public class AuthenticationClass implements Serializable {
     }
     public void login(final String Email, final String Password, final LoginUpdate loginUpdate){
         Log.e("Login","class");
-        utente.setAutenticated(true);
-        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
-        editor.apply();
+        setAuth(true);
         mAuth.signInWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
@@ -101,10 +112,7 @@ public class AuthenticationClass implements Serializable {
                             utente.setAutenticated(false);
                             utente.setPassword(Ospite);
                             utente.setEmail(Ospite);
-                            utente.setAutenticated(true);
-                            SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
-                            SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
-                            editor.apply();
+                            setAuth(false);
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -112,10 +120,7 @@ public class AuthenticationClass implements Serializable {
     }
 
     public void signUp(final String Email,final String Password, final LoginUpdate loginUpdate){
-        utente.setAutenticated(true);
-        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
-        editor.apply();
+        setAuth(true);
         mAuth.createUserWithEmailAndPassword(Email, Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
@@ -141,9 +146,7 @@ public class AuthenticationClass implements Serializable {
                             utente.setAutenticated(false);
                             utente.setPassword("");
                             utente.setEmail("");
-                            SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
-                            SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
-                            editor.apply();
+                            setAuth(false);
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -151,10 +154,7 @@ public class AuthenticationClass implements Serializable {
     }
 
     public void logout(){
-        utente.setAutenticated(false);
-        SharedPreferences settings = cont.getSharedPreferences(Autenticazione, 0);
-        SharedPreferences.Editor editor = settings.edit().putBoolean(Preferenze, utente.isAutenticated());
-        editor.apply();
+        setAuth(false);
         utente.setEmail(Ospite);
         utente.setPassword(Ospite);
         utente.setUID("");
@@ -253,5 +253,6 @@ public class AuthenticationClass implements Serializable {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
-    public DataUtente logUtente(){return utente;}
+    public DataUtente getUtente(){return utente;}
+
 }

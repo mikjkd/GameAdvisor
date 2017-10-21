@@ -31,14 +31,8 @@ public class AlertDialogLogin extends AlertDialog.Builder {
     public AlertDialogLogin(@NonNull Context context) {
         super(context);
         this.context=context;
-        utente= new DataUtente();
-        auth = new AuthenticationClass(utente,context);
-    }
-    public AlertDialogLogin(@NonNull Context context,DataUtente utente) {
-        super(context);
-        this.context=context;
-        this.utente= utente;
-        auth = new AuthenticationClass(utente,context);
+        auth = AuthenticationClass.getInstance(this.context);
+        utente = auth.getUtente();
     }
 
     @Override
@@ -102,7 +96,7 @@ public class AlertDialogLogin extends AlertDialog.Builder {
         mIscriviti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialogLogon adl = new AlertDialogLogon(context,utente);
+                AlertDialogLogon adl = new AlertDialogLogon(context);
                 adl.show();
             }
         });

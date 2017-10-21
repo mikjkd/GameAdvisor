@@ -26,22 +26,24 @@ import com.miche.gameadvisorprova3.View.AlertDialog.CommentiDialog;
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
 import com.miche.gameadvisorprova3.Model.DataGiocoDettaglio;
 import com.miche.gameadvisorprova3.Model.DataUtente;
-import com.miche.gameadvisorprova3.Model.DatabaseLinkParcel;
+import com.miche.gameadvisorprova3.Model.DatabaseLink;
 import com.miche.gameadvisorprova3.R;
 import com.miche.gameadvisorprova3.View.Adapter.ELVAdapter;
 
 
 public class NuovoDettagliGioco extends AppCompatActivity {
     private final static String EXTRA_GIOCO = "GIOCOKEY";
-    private final static String EXTRA_ARCHIVIO="ARCHIVIO";
-    private final static String EXTRA_UTENTE = "UTENTE";
+
     private String key;
     private RatingBar voti;
     private TextView Titolo;
     private Button Votabtn;
     private ImageView ImgGioco;
     private TextView Descrizione;
-    private DatabaseLinkParcel archivio;
+
+    private DatabaseLink archivio;
+    private AuthenticationClass mAuth;
+
     private DataGiocoDettaglio gioco;
     private DataUtente utente;
     private AuthenticationClass auth  ;
@@ -68,13 +70,16 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         voti = (RatingBar)findViewById(R.id.ratingBar);
         tvVotanti = (TextView)findViewById(R.id.tvVotanti);
         Intent intent = getIntent();
-        archivio = intent.getParcelableExtra(EXTRA_ARCHIVIO);
-        utente =(DataUtente)intent.getSerializableExtra(EXTRA_UTENTE);
+        archivio = DatabaseLink.getInstance();
+        mAuth = AuthenticationClass.getInstance(this);
+
+        utente =mAuth.getUtente();
         key =(String) intent.getSerializableExtra(EXTRA_GIOCO);
+
         gestureDetectorCompat = new GestureDetectorCompat(this, new GestisciGesture());
 
 
-        archivio.cercaGioco(key, new DatabaseLinkParcel.UpdateListener() {
+        archivio.cercaGioco(key, new DatabaseLink.UpdateListener() {
             @Override
             public void giochiAggiornati() {
                 if( (gioco=archivio.giocoAggiornato())!=null){
@@ -93,14 +98,13 @@ public class NuovoDettagliGioco extends AppCompatActivity {
                         public void onClick(View view) {
                             if(!utente.isAutenticated()){
                                 Toast.makeText(NuovoDettagliGioco.this,"Per votare e commentare devi essere loggato",Toast.LENGTH_SHORT).show();
-                                auth = new AuthenticationClass(utente,NuovoDettagliGioco.this);
-                                auth.logout();
-                                AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this,utente);
+                                mAuth.logout();
+                                AlertDialogLogin adl = new AlertDialogLogin(NuovoDettagliGioco.this);
                                 adl.show();
                             }
                             else{
                                 Log.e("key",gioco.getKey());
-                                AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,utente,gioco);
+                                AlertDialogVota adv = new AlertDialogVota(NuovoDettagliGioco.this,gioco);
                                 adv.show();
                             }
                         }
@@ -121,31 +125,15 @@ public class NuovoDettagliGioco extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra(EXTRA_UTENTE,utente);
-                setResult(Activity.RESULT_OK, resultIntent);
                 finish();
                 break;
             case R.id.utente:
-                Log.e("autenticato? ",utente.isAutenticated() ? "SI":"NO");
-                AlertDialogUtente adu = new AlertDialogUtente(NuovoDettagliGioco.this,utente);
+                AlertDialogUtente adu = new AlertDialogUtente(NuovoDettagliGioco.this);
                 adu.show();
                 break;
         }
 
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-      //  Toast.makeText(NuovoDettagliGioco.this,"Hai premuto back!",Toast.LENGTH_SHORT).show();
-        Bundle b = new Bundle();
-        b.putSerializable(EXTRA_UTENTE,utente);
-        Intent resultIntent = new Intent();
-        resultIntent.putExtras(b);
-        setResult(Activity.RESULT_OK, resultIntent);
-        super.onBackPressed();
-
     }
 
     // gestione Gesture

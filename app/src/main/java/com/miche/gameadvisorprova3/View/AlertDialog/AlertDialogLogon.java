@@ -26,15 +26,10 @@ public class AlertDialogLogon extends AlertDialog.Builder {
     public AlertDialogLogon(@NonNull Context context) {
         super(context);
         this.context=context;
-        utente= new DataUtente();
-        auth = new AuthenticationClass(utente,context);
+        auth = AuthenticationClass.getInstance(this.context);
+        utente = auth.getUtente();
     }
-    public AlertDialogLogon(@NonNull Context context,DataUtente utente) {
-        super(context);
-        this.context=context;
-        this.utente= utente;
-        auth = new AuthenticationClass(utente,context);
-    }
+
 
     @Override
     public AlertDialog show() {

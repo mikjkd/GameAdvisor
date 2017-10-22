@@ -66,24 +66,30 @@ public class AlertDialogLogon extends AlertDialog.Builder {
             public void onClick(View view) {
                 if(mEmail.getText().toString().isEmpty() || mPassword.getText().toString().isEmpty() || mPasswordR.getText().toString().isEmpty()  ){
                     Toast.makeText(context,"Riempire i campi obbligatori",Toast.LENGTH_LONG).show();
+
                 }
                 else if(!mEmail.getText().toString().isEmpty() && !mPassword.getText().toString().isEmpty() && !mPasswordR.getText().toString().isEmpty()){
-                    if(mPassword.getText().toString().equals(mPasswordR.getText().toString()) ){
+                    if (mPassword.getText().toString().equals(mPasswordR.getText().toString())) {
                         auth.signUp(mEmail.getText().toString(), mPassword.getText().toString(), new AuthenticationClass.LoginUpdate() {
                             @Override
-                            public void loginEffettuato() { }
+                            public void loginEffettuato() {
+                            }
 
                             @Override
-                            public void loginNonEffettuato() {}
+                            public void loginNonEffettuato() {
+                            }
 
                             @Override
                             public void erroreAutenticazione() {
-                                Toast.makeText(context,"Errore registrazione: Utente già esistente",Toast.LENGTH_LONG).show();
+                                if(mPassword.getText().toString().length()<6){
+                                    Toast.makeText(context, "Errore registrazione: La password deve contenere almeno sei caratteri", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                    Toast.makeText(context, "Errore registrazione: Utente già esistente", Toast.LENGTH_LONG).show();
                             }
                         });
-                    }
-                    else{
-                        Toast.makeText(context,"Password non corrispondenti",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "Password non corrispondenti", Toast.LENGTH_LONG).show();
                     }
                 }
             }

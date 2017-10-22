@@ -136,7 +136,9 @@ public class AuthenticationClass {
                                 //creazione utente nel database
                                 Map<String,String> userData = new HashMap<String, String>();
                                 userData.put("Email",utente.getEmail());
-                                DatabaseReference ref = db.getReference().child(Utenti).child(u.getUid());
+                                DatabaseReference ref = db.getReference()
+                                        .child(Utenti)
+                                        .child(u.getUid());
                                 ref.setValue(userData);
                                 utente.setUID(u.getUid());
                             }
@@ -164,27 +166,40 @@ public class AuthenticationClass {
     public void vota(final DataGiocoDettaglio dataGiocoDettaglio, final String commento,final Float rating){
         final Map<String,Float> userData = new HashMap<String, Float>();
         db = FirebaseDatabase.getInstance();
-        DatabaseReference ut =db.getReference().child(Utenti).child(utente.getUID());
+        DatabaseReference ut =db.getReference()
+                .child(Utenti)
+                .child(utente.getUID());
         ut.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DatabaseReference ref;
                 if(dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).exists()){
-                    Float votazione = (Float) dataSnapshot.child(Giochi).child(dataGiocoDettaglio.getKey()).child(Votazione).getValue(Float.class);
-                    ref = db.getReference().child(Giochi).child(dataGiocoDettaglio.getKey());
+                    Float votazione = (Float) dataSnapshot
+                            .child(Giochi)
+                            .child(dataGiocoDettaglio.getKey())
+                            .child(Votazione)
+                            .getValue(Float.class);
+                    ref = db.getReference()
+                            .child(Giochi)
+                            .child(dataGiocoDettaglio.getKey());
                     float vecchiovoto;
                     if(dataGiocoDettaglio.getNumeroVotanti()>1)
                         vecchiovoto= ((dataGiocoDettaglio.getVotazione()*dataGiocoDettaglio.getNumeroVotanti())-votazione)/(dataGiocoDettaglio.getNumeroVotanti()-1);
                     else
                         vecchiovoto = 0;
                     float voto = ((vecchiovoto*(dataGiocoDettaglio.getNumeroVotanti()-1))+rating)/dataGiocoDettaglio.getNumeroVotanti();
-                    ref.child(Votazione).setValue(
-                            voto
-                    );
+                    ref.child(Votazione)
+                            .setValue(
+                                voto
+                            );
                     dataGiocoDettaglio.setVotazione(voto);
-                    ref.child(Commento).child(utente.getUID()).setValue(utente.getEmail()+":  "+commento.toString());
+
+                    ref.child(Commento)
+                            .child(utente.getUID())
+                            .setValue(utente.getEmail()+":  "+commento.toString());
                     userData.put(Votazione,rating);
-                    ref = db.getReference().child(Utenti).child(utente.getUID())
+                    ref = db.getReference()
+                            .child(Utenti).child(utente.getUID())
                             .child(Giochi).child(dataGiocoDettaglio.getKey());
                     ref.setValue(userData);
                     ref.child(Commento).setValue(commento.toString());

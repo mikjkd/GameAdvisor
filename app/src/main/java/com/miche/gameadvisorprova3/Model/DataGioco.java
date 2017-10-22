@@ -52,7 +52,6 @@ public class DataGioco implements Serializable{
         Titolo = titolo;
     }
 
-
     public String getURLimg() {
         return URLimg;
     }

@@ -26,10 +26,8 @@ import com.miche.gameadvisorprova3.View.Activity.GiochiByGenereActivity;
 public class GenereFragment extends android.support.v4.app.Fragment{
     private GenereAdapter adapter;
     private DatabaseLink archivio ;
-    private AuthenticationClass mAuth;
 
     private final String EXTRA_GENERE = "GENERE";
-    private DataUtente utente;
 
     public GenereFragment(){}
 

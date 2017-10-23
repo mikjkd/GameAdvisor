@@ -1,18 +1,16 @@
 package com.miche.gameadvisorprova3.View.Fragment;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.miche.gameadvisorprova3.Model.AuthenticationClass;
-import com.miche.gameadvisorprova3.Model.DataUtente;
+
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
 import com.miche.gameadvisorprova3.R;
 import com.miche.gameadvisorprova3.View.Adapter.GiocoAdapter;
@@ -26,12 +24,7 @@ import com.miche.gameadvisorprova3.View.Activity.NuovoDettagliGioco;
 public class GiochiFragment extends android.support.v4.app.Fragment{
         private GiocoAdapter adapter;
         private DatabaseLink archivio;
-        private AuthenticationClass mAuth;
-        private Bundle arg;
         private final static String EXTRA_GIOCO = "GIOCOKEY";
-        private final static String EXTRA_ARCHIVIO = "ARCHIVIO";
-        private final static String EXTRA_UTENTE = "UTENTE";
-        private DataUtente utente;
 
         public GiochiFragment() { }
 
@@ -45,14 +38,14 @@ public class GiochiFragment extends android.support.v4.app.Fragment{
         @Override
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
                 View rootView = inflater.inflate(R.layout.listagioco,container,false);
-                ListView listGame = (ListView)rootView.findViewById(R.id.listGame);
+                ListView listGame = rootView.findViewById(R.id.listGame);
                 archivio =  DatabaseLink.getInstance();
                 adapter = new GiocoAdapter(getActivity());
                 archivio.osservaGiochi(new DatabaseLink.UpdateListener(){
-                @Override
-                public void giochiAggiornati() {
-                        adapter.update(archivio.elencoGiochi());
-                }
+                        @Override
+                        public void giochiAggiornati() {
+                                adapter.update(archivio.elencoGiochi());
+                        }
                 });
                 listGame.setAdapter(adapter);
                 listGame.setOnItemClickListener(new AdapterView.OnItemClickListener(){

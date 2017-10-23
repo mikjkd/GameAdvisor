@@ -24,8 +24,6 @@ import java.util.List;
  */
 
 public class ELVAdapter extends BaseExpandableListAdapter{
-
-
     private static String Descrizione = "Descrizione";
     private static String Requisiti = "Requisiti";
     private static String Sviluppatore = "Sviluppatore";
@@ -36,7 +34,6 @@ public class ELVAdapter extends BaseExpandableListAdapter{
     private HashMap<String,String> child = new HashMap<>() ;
     private final Context context;
     DataGiocoDettaglio gioco;
-
     public ELVAdapter(Context context, DataGiocoDettaglio gioco) {
         this.gioco = gioco;
         child.put(Descrizione,gioco.getDescrizione());
@@ -45,45 +42,34 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         child.put(Link,gioco.getLink());
         this.context = context;
     }
-
     @Override
     public int getGroupCount() {
         return 4;
     }
-
     @Override
     public int getChildrenCount(int childCount) {
         return 1;
     }
-
     @Override
     public Object getGroup(int groupPosition) {
         return groupName[groupPosition];
     }
-
     @Override
-    public String getChild(int groupPosition, int childPosition) {
-        return child.get(getGroup(groupPosition));
-    }
-
+    public String getChild(int groupPosition, int childPosition) { return child.get(getGroup(groupPosition));  }
     @Override
     public long getGroupId(int i) {
         return 0;
     }
-
     @Override
     public long getChildId(int i, int i1) {
         return 0;
     }
-
     @Override
     public boolean hasStableIds() {
         return false;
     }
-
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-
         TextView txt = new TextView(context);
         txt.setText(groupName[i]);
         txt.setPadding(100, 0, 0, 0);
@@ -91,10 +77,8 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         txt.setTextSize(25);
         return txt;
     }
-
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup parent) {
-
         TextView txt = new TextView(context);
         txt.setText(getChild(groupPosition, childPosition));
         txt.setPadding(100, 0, 0, 0);
@@ -102,7 +86,6 @@ public class ELVAdapter extends BaseExpandableListAdapter{
         txt.setTextSize(20);
         return txt;
     }
-
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return false;

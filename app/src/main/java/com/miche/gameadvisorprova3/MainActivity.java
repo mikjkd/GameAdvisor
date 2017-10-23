@@ -1,5 +1,5 @@
 package com.miche.gameadvisorprova3;
-import android.content.SharedPreferences;
+
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.miche.gameadvisorprova3.Model.AuthenticationClass;
-import com.miche.gameadvisorprova3.Model.DataUtente;
 import com.miche.gameadvisorprova3.Model.DatabaseLink;
+import com.miche.gameadvisorprova3.View.Adapter.ViewPagerAdapter;
 import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogLogin;
 import com.miche.gameadvisorprova3.View.AlertDialog.AlertDialogUtente;
 import com.miche.gameadvisorprova3.View.Fragment.GenereFragment;
@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity  {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private static final String EXTRA_GIOCHI = "GIOCHI";
-    private static final String EXTRA_GENERI = "GENERI";
+    private static final String FRAGMENT_GIOCHI = "GIOCHI";
+    private static final String FRAGMENT_GENERI = "GENERI";
 
     private AlertDialogLogin adl;
     private GiochiFragment giochiFragment;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
+
         adl = new AlertDialogLogin(MainActivity.this);
         adl.show();
         setupViewPager(viewPager);
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity  {
         giochiFragment = new GiochiFragment();
         genereFragment = new GenereFragment();
 
-        adapter.addFragment(giochiFragment,EXTRA_GIOCHI);
-        adapter.addFragment(genereFragment,EXTRA_GENERI);
+        adapter.addFragment(giochiFragment,FRAGMENT_GIOCHI);
+        adapter.addFragment(genereFragment,FRAGMENT_GENERI);
 
         viewPager.setAdapter(adapter);
     }

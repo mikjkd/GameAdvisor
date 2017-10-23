@@ -28,8 +28,6 @@ public class DatabaseLink {
     private String DB_GIOCHI = "Giochi";
     private String DB_GENERE = "Genere";
     private String DB_LISTGIOCHI="ListaGiochi";
-
-
     private ArrayList<DataGioco> giochi;
     private ArrayList<DataGenere> generi;
     private ArrayList<DataGioco> gbg;
@@ -72,6 +70,7 @@ public class DatabaseLink {
     public interface UpdateGBGListener{
         void gbgAggiornati();
     }
+
     public void osservaGiochi(final UpdateListener notifica){
         DatabaseReference ref = db.getReference().child(DB_LISTGIOCHI);
 
@@ -79,17 +78,19 @@ public class DatabaseLink {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 giochi.clear();
+                int i=0;
                 for(DataSnapshot e: dataSnapshot.getChildren()){
                     final DataGioco dg = e.getValue(DataGioco.class);
                     dg.setKey(e.getKey());
                     giochi.add(dg);
                     notifica.giochiAggiornati();
-                    scaricaImmagine(dg, new DatabaseLink.BitmapListener(){
+                    scaricaImmagine(giochi.get(i), new DatabaseLink.BitmapListener(){
                         @Override
                         public void BitmapPronta() {
                             notifica.giochiAggiornati();
                         }
                     });
+                    i++;
                 }
                 notifica.giochiAggiornati();
             }
@@ -109,8 +110,6 @@ public class DatabaseLink {
                 gioco= dataSnapshot.getValue(DataGiocoDettaglio.class);
                 gioco.setKey(dataSnapshot.getKey());
                 if(dataSnapshot.hasChild("Commento")){
-                    //Log.e("commento",dataSnapshot.child("Commento").getValue(String.class).toString());
-                    Log.e("Ok ci sono","i commenti");
                     for (DataSnapshot c: dataSnapshot.child("Commento").getChildren())
                         gioco.addCommenti(c.getValue(String.class));
 
@@ -220,7 +219,7 @@ public class DatabaseLink {
                 }
             });
         } catch (IOException e) {
-            Log.e("IOEXCEPTION","errore try catch");
+            Log.e("IOEXCEPTION","errore creazione file");
         }
     }
     private void scaricaImmagineHD(final DataGiocoDettaglio dg,final BitmapListener immagineCaricata){

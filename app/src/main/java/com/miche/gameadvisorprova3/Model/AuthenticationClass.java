@@ -27,11 +27,6 @@ import java.util.Map;
  */
 
 public class AuthenticationClass {
-    private FirebaseDatabase db;
-
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private static Context cont;
-
     private static final String Autenticazione = "AUTENTICAZIONE";
     private static final String Preferenze = "authPref";
     private static final String Ospite = "Ospite";
@@ -43,6 +38,9 @@ public class AuthenticationClass {
 
     private static AuthenticationClass authenticationClass = null;
     private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseDatabase db;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private static Context cont;
 
     private DataUtente utente;
    private AuthenticationClass(){
@@ -56,7 +54,6 @@ public class AuthenticationClass {
         if(authenticationClass == null){
             cont = context;
             authenticationClass = new AuthenticationClass();
-
         }
         return authenticationClass;
     }
@@ -92,7 +89,6 @@ public class AuthenticationClass {
         });
     }
     public void login(final String Email, final String Password, final LoginUpdate loginUpdate){
-        Log.e("Login","class");
         setAuth(true);
         mAuth.signInWithEmailAndPassword(Email,Password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -109,10 +105,9 @@ public class AuthenticationClass {
                         }
                         else{
                             Log.e("Errore ","Autenticazione non riuscita");
-                            utente.setAutenticated(false);
+                            setAuth(false);
                             utente.setPassword(Ospite);
                             utente.setEmail(Ospite);
-                            setAuth(false);
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -128,13 +123,12 @@ public class AuthenticationClass {
                         if(task.isSuccessful()){
                             FirebaseUser u = mAuth.getCurrentUser();
                             if(u != null){
-                                utente.setAutenticated(true);
                                 utente.setEmail(Email);
                                 utente.setPassword(Password);
                                 u.sendEmailVerification();
                                 db = FirebaseDatabase.getInstance();
                                 //creazione utente nel database
-                                Map<String,String> userData = new HashMap<String, String>();
+                                Map<String,String> userData = new HashMap<>();
                                 userData.put("Email",utente.getEmail());
                                 DatabaseReference ref = db.getReference()
                                         .child(Utenti)
@@ -145,10 +139,9 @@ public class AuthenticationClass {
                         }
                         else {
                             Log.e("Errore ","Registrazione non riuscita");
-                            utente.setAutenticated(false);
-                            utente.setPassword("");
-                            utente.setEmail("");
                             setAuth(false);
+                            utente.setPassword(Ospite);
+                            utente.setEmail(Ospite);
                             loginUpdate.erroreAutenticazione();
                         }
                     }
@@ -162,6 +155,7 @@ public class AuthenticationClass {
         utente.setUID("");
         mAuth.signOut();
     }
+
 
     public void vota(final DataGiocoDettaglio dataGiocoDettaglio, final String commento,final Float rating){
         final Map<String,Float> userData = new HashMap<String, Float>();
@@ -230,12 +224,7 @@ public class AuthenticationClass {
 
             }
         });
-
-
-
         Toast.makeText(cont,"Hai votato correttamente",Toast.LENGTH_SHORT).show();
-
-
     }
 
     public void createListener(final LoginUpdate u){
@@ -255,8 +244,8 @@ public class AuthenticationClass {
 
                 }
                 else if(user!= null && utente.isAutenticated()==false){
-                    utente.setEmail("");
-                    utente.setUID(user.getUid());
+                    utente.setEmail(Ospite);
+                    utente.setUID(Ospite);
                     Log.e("Accesso","Ospite");
                     u.loginNonEffettuato();
                 }
@@ -264,9 +253,7 @@ public class AuthenticationClass {
         };
         mAuth.addAuthStateListener(mAuthListener);
     }
-    public void removeListener(){
-        mAuth.removeAuthStateListener(mAuthListener);
-    }
+    
 
     public DataUtente getUtente(){return utente;}
 

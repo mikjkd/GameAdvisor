@@ -50,7 +50,6 @@ public class CommentiDialog  extends AlertDialog.Builder {
         mBuilder.setView(mView);
         mAlertDialog=mBuilder.create();
         mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mAlertDialog.show();
         return mAlertDialog;
     }
